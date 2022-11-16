@@ -12,25 +12,34 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.edu.project1.Adapter.FeaturesAdapter;
 import com.edu.project1.Dao.UserDao;
 import com.edu.project1.Fragments.AccountFragment;
 import com.edu.project1.Fragments.DasboardFragment;
 import com.edu.project1.Fragments.ExportFragment;
 import com.edu.project1.Fragments.ImportFragment;
 import com.edu.project1.Fragments.ReportFragment;
+import com.edu.project1.Models.FeaturesModel;
 import com.edu.project1.Models.User;
-import com.edu.project1.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
 
     private BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
-    private TextView tvHello,tvUser;
+    private TextView tvHello,tvUser,tvNameWareHouse;
+    private ImageView img;
+    private GridView gridView;
+    private List<FeaturesModel> featureList;
+    private FeaturesAdapter featuresAdapter;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +47,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNavigationView=findViewById(R.id.myBottomNavigationView);
+
         toolbar=findViewById(R.id.toolbar);
         tvHello=findViewById(R.id.tvHelloToolbar);
         tvUser=findViewById(R.id.tvNameUserr);
+        tvNameWareHouse=findViewById(R.id.tvNameWareHouse);
+        img=findViewById(R.id.imgUser);
+
+        gridView=findViewById(R.id.gridFunntion);
         setSupportActionBar(toolbar);
 
 
@@ -50,9 +64,12 @@ public class MainActivity extends AppCompatActivity {
         UserDao dao=new UserDao(this);
         User item=dao.getID(username);
         String name=item.getHoTen();
+        String nameW=item.getTenKhoHang();
+
         ActionBar actionBar=getSupportActionBar();
 //        actionBar.setTitle("Xin  chào \n"+name);
         tvUser.setText(name);
+        tvNameWareHouse.setText(nameW);
 
         replaceFragment(new DasboardFragment());
         bottomNavigationView.setSelectedItemId(R.id.dashboard);
@@ -79,6 +96,27 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        featureList=new ArrayList<>();
+        featureList.add(new FeaturesModel("Loại hàng nhập", R.drawable.box));
+        featureList.add(new FeaturesModel("Nhập hàng", R.drawable.im));
+        featureList.add(new FeaturesModel("Xuất hàng", R.drawable.ex));
+        featureList.add(new FeaturesModel("Hàng Tồn", R.drawable.inventory));
+        featureList.add(new FeaturesModel("Doanh số", R.drawable.financial_profit));
+        featureList.add(new FeaturesModel("Top hàng", R.drawable.warehouse));
+        featuresAdapter=new FeaturesAdapter(featureList,MainActivity.this);
+        gridView.setAdapter(featuresAdapter);
+
+//        img.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+
+
+
+
 
 
     }
