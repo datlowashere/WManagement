@@ -68,7 +68,7 @@ public class DasboardFragment extends Fragment {
         tvUser.setText(nameUser);
         tvNameWareHouse.setText(nameW);
 
-        gridView=view.findViewById(R.id.gridFunntion);
+        gridView=view.findViewById(R.id.gridFeatures);
 
         featureList=new ArrayList<>();
         featureList.add(new FeaturesModel("Loại hàng nhập", R.drawable.box));
