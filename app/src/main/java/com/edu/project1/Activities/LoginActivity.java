@@ -5,10 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.widget.Toast;
 
 import com.edu.project1.Dao.UserDao;
+import com.edu.project1.Helper.CustomToasts;
 import com.edu.project1.MainActivity;
 import com.edu.project1.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -45,21 +44,28 @@ public class LoginActivity extends AppCompatActivity {
     private void checkLogin(){
         String user=edUsername.getText().toString();
         String pass=edPassword.getText().toString();
+
+        CustomToasts customToast=new CustomToasts();
+
         UserDao dao=new UserDao(LoginActivity.this);
+
         if(user.isEmpty() || pass.isEmpty()){
-            Toast.makeText(LoginActivity.this,"Tên đăng nhập và mật khẩu không được để trống",Toast.LENGTH_SHORT).show();
+            customToast.warningToast(LoginActivity.this,"Tên đăng nhập và mật khẩu không được để trống");
         }else {
             if (dao.checkLogin(user, pass) > 0) {
-                Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                customToast.successToast(LoginActivity.this,"Đăng nhập thành công");
                 Intent ilogin=new Intent(getApplicationContext(), MainActivity.class);
+                overridePendingTransition(R.anim.in_right_animation,R.anim.out_left_animation);
                 ilogin.putExtra("username",user);
                 ilogin.putExtra("pass",pass);
                 startActivity(ilogin);
                 finish();
             }else{
-                Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu sai", Toast.LENGTH_SHORT).show();
+                customToast.errorToast(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu sai");
             }
         }
 
     }
+
+
 }

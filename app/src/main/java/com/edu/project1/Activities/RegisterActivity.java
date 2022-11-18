@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.edu.project1.Dao.UserDao;
+import com.edu.project1.Helper.CustomToasts;
 import com.edu.project1.Models.User;
 import com.edu.project1.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -35,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                overridePendingTransition(R.anim.in_left_animation,R.anim.out_right_animation);
             }
         });
 
@@ -55,6 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         String email=edEmail.getText().toString();
         String tenKho=edKhoHang.getText().toString();
         String pass=edPassword.getText().toString();
+
         UserDao dao=new UserDao(RegisterActivity.this);
         User list=new User();
         list.setUsername(user);
@@ -63,23 +66,23 @@ public class RegisterActivity extends AppCompatActivity {
         list.setTenKhoHang(tenKho);
         list.setPassword(pass);
 
+        CustomToasts customToasts=new CustomToasts();
         if(user.isEmpty() || name.isEmpty() || email.isEmpty() || tenKho.isEmpty() || pass.isEmpty()){
-            Toast.makeText(RegisterActivity.this,"Phải điền đầy đủ thông tin",Toast.LENGTH_SHORT).show();
+            customToasts.warningToast(RegisterActivity.this,"Phải điền đầy đủ thông tin");
         }else{
             boolean check=dao.checkUsername(user);
             if(check==false){
                 try {
                     dao.insert(list);
-                    Toast.makeText(RegisterActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                    customToasts.successToast(RegisterActivity.this, "Đăng ký thành công");
                     clear();
                 }catch (Exception e){
                     e.printStackTrace();
                     System.out.println("Lỗi"+e);
-                    Toast.makeText(RegisterActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+                    customToasts.errorToast(RegisterActivity.this, "Lỗi");
                 }
             }else{
-                Toast.makeText(RegisterActivity.this,"Tên đăng nhập đã tồn tại!!!",Toast.LENGTH_SHORT).show();
-
+                customToasts.errorToast(RegisterActivity.this,"Tên đăng nhập đã tồn tại!!!");
             }
         }
     }

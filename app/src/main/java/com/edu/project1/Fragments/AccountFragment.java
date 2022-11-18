@@ -10,15 +10,19 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.edu.project1.Activities.LoginActivity;
 import com.edu.project1.Dao.UserDao;
+import com.edu.project1.Helper.CustomToasts;
 import com.edu.project1.MainActivity;
 import com.edu.project1.Models.User;
 import com.edu.project1.R;
@@ -85,6 +89,7 @@ public class AccountFragment extends Fragment {
                     }
                 });
                 AlertDialog alertDialog=builder.create();
+                alertDialog.getWindow().setWindowAnimations(R.style.animationDialog);
                 alertDialog.show();
             }
         });
@@ -102,29 +107,6 @@ public class AccountFragment extends Fragment {
                 dialogShowInformationApp();
             }
         });
-
-        view.findViewById(R.id.tvLogout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-                builder.setTitle("Thông báo");
-                builder.setMessage("Chắc chắn thoát?");
-                builder.setPositiveButton("Thoát", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(getActivity(),LoginActivity.class));
-                    }
-                });
-                builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-                AlertDialog alertDialog=builder.create();
-                alertDialog.show();
-            }
-        });
-
 
 
         return view;
@@ -150,6 +132,8 @@ public class AccountFragment extends Fragment {
     private void dialogChangeInformation(){
         dialog=new Dialog(getContext());
         dialog.setContentView(R.layout.dialog_change_information_user);
+        dialog.getWindow().setWindowAnimations(R.style.animationDialog);
+
         edName=dialog.findViewById(R.id.edChangeName);
         edWName=dialog.findViewById(R.id.edChangeWareHouseName);
         edEmail=dialog.findViewById(R.id.edChangeEmail);
@@ -181,21 +165,21 @@ public class AccountFragment extends Fragment {
                 obj.setEmail(email);
                 obj.setPassword(newPass);
 
+                CustomToasts customToasts=new CustomToasts();
+
                 if(name.isEmpty() || nameW.isEmpty() || email.isEmpty() || oldPass.isEmpty() || newPass.isEmpty() || reNewPass.isEmpty()){
-                    Toast.makeText(getContext(),"Phải nhập đủ thông tin",Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getContext(),"Username"+obj.getUsername(),Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getActivity(),"Mật khẩu"+obj.getPassword(),Toast.LENGTH_SHORT).show();
+                    customToasts.warningToast(getContext(),"Phải nhập đủ thông tin");
                 }else{
                     if(!reNewPass.equals(newPass)){
-                        Toast.makeText(getContext(),"Mật khẩu mới không trùng",Toast.LENGTH_SHORT).show();
+                        customToasts.errorToast(getContext(),"Mật khẩu mới không trùng");
                     }else if(!oldPass.equals(oldpass)){
-                        Toast.makeText(getContext(),"Mật khẩu cũ không đúng",Toast.LENGTH_SHORT).show();
+                        customToasts.errorToast(getContext(),"Mật khẩu cũ không đúng");
                     }else {
                         if (dao.update(obj) > 0) {
-                            Toast.makeText(getContext(), "Thay đổi thành công", Toast.LENGTH_SHORT).show();
+                            customToasts.successToast(getContext(), "Thay đổi thành công");
                             clear();
                         } else {
-                            Toast.makeText(getContext(), "Lỗi", Toast.LENGTH_SHORT).show();
+                            customToasts.errorToast(getContext(), "Lỗi");
                         }
                     }
                 }
