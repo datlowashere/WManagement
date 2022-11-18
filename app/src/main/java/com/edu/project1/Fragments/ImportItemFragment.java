@@ -10,14 +10,16 @@ import android.view.ViewGroup;
 
 import com.edu.project1.R;
 
-public class IntroFragment extends Fragment {
+public class ImportItemFragment extends Fragment {
 
-    public IntroFragment() {
+
+    public ImportItemFragment() {
         // Required empty public constructor
     }
 
-    public static IntroFragment newInstance(String param1, String param2) {
-        IntroFragment fragment = new IntroFragment();
+
+    public static ImportItemFragment newInstance() {
+        ImportItemFragment fragment = new ImportItemFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -26,12 +28,14 @@ public class IntroFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_intro, container, false);
+        View view=inflater.inflate(R.layout.fragment_import_item, container, false);
+        return view;
     }
 }

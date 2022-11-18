@@ -10,14 +10,16 @@ import android.view.ViewGroup;
 
 import com.edu.project1.R;
 
-public class IntroFragment extends Fragment {
 
-    public IntroFragment() {
+public class RevenueReportFragment extends Fragment {
+
+
+    public RevenueReportFragment() {
         // Required empty public constructor
     }
 
-    public static IntroFragment newInstance(String param1, String param2) {
-        IntroFragment fragment = new IntroFragment();
+    public static RevenueReportFragment newInstance(String param1, String param2) {
+        RevenueReportFragment fragment = new RevenueReportFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -32,6 +34,6 @@ public class IntroFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_intro, container, false);
+        return inflater.inflate(R.layout.fragment_revenue_report, container, false);
     }
 }

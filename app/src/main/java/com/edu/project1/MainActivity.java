@@ -34,12 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private BottomNavigationView bottomNavigationView;
-    private Toolbar toolbar;
-    private TextView tvHello,tvUser,tvNameWareHouse;
-    private ImageView img;
-    private GridView gridView;
-    private List<FeaturesModel> featureList;
-    private FeaturesAdapter featuresAdapter;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,29 +42,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNavigationView=findViewById(R.id.myBottomNavigationView);
-
-        toolbar=findViewById(R.id.toolbar);
-        tvHello=findViewById(R.id.tvHelloToolbar);
-        tvUser=findViewById(R.id.tvNameUserr);
-        tvNameWareHouse=findViewById(R.id.tvNameWareHouse);
-        img=findViewById(R.id.imgUser);
-
-        gridView=findViewById(R.id.gridFunntion);
-        setSupportActionBar(toolbar);
-
-
-        Intent ilogin=getIntent();
-        String username=ilogin.getStringExtra("username");
-
-        UserDao dao=new UserDao(this);
-        User item=dao.getID(username);
-        String name=item.getHoTen();
-        String nameW=item.getTenKhoHang();
-
-        ActionBar actionBar=getSupportActionBar();
-//        actionBar.setTitle("Xin  chào \n"+name);
-        tvUser.setText(name);
-        tvNameWareHouse.setText(nameW);
 
         replaceFragment(new DasboardFragment());
         bottomNavigationView.setSelectedItemId(R.id.dashboard);
@@ -96,34 +68,21 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-        featureList=new ArrayList<>();
-        featureList.add(new FeaturesModel("Loại hàng nhập", R.drawable.box));
-        featureList.add(new FeaturesModel("Nhập hàng", R.drawable.im));
-        featureList.add(new FeaturesModel("Xuất hàng", R.drawable.ex));
-        featureList.add(new FeaturesModel("Hàng Tồn", R.drawable.inventory));
-        featureList.add(new FeaturesModel("Doanh số", R.drawable.financial_profit));
-        featureList.add(new FeaturesModel("Top hàng", R.drawable.warehouse));
-        featuresAdapter=new FeaturesAdapter(featureList,MainActivity.this);
-        gridView.setAdapter(featuresAdapter);
-
-//        img.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
-
-
-
-
-
     }
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout,fragment);
         fragmentTransaction.commit();
+    }
+    public String getUsername(){
+        Intent ilogin=getIntent();
+        String username=ilogin.getStringExtra("username");
+        return username;
+    }
+    public String getPassword(){
+        Intent ilogin=getIntent();
+        String pass=ilogin.getStringExtra("pass");
+        return pass;
     }
 }

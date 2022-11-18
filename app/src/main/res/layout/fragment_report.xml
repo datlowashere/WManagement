@@ -3,13 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8DC9ED"
-    tools:context=".Fragments.ReportFragment">
+    android:background="@drawable/gradient_backgroud"
+    tools:context=".Fragments.ReportFragment" >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Thống kê" />
+        android:orientation="vertical">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItemReport1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hàng tồn" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItemReport2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Doanh số" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItemReport3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Top hàng" />
+        </com.google.android.material.tabs.TabLayout>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view2PagerReport"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
 
 </FrameLayout>

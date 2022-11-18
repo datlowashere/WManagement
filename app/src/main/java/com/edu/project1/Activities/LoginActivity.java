@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                 Intent ilogin=new Intent(getApplicationContext(), MainActivity.class);
                 ilogin.putExtra("username",user);
+                ilogin.putExtra("pass",pass);
                 startActivity(ilogin);
                 finish();
             }else{
