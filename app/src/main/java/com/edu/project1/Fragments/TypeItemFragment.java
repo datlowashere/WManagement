@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -29,7 +30,6 @@ import java.util.List;
 
 public class TypeItemFragment extends Fragment {
 
-    private RecyclerView recyclerView;
     private ListView lv;
     private FloatingActionButton fab;
     private Dialog dialog;
@@ -43,13 +43,6 @@ public class TypeItemFragment extends Fragment {
     public TypeItemFragment() {
     }
 
-    public static TypeItemFragment newInstance(String param1, String param2) {
-        TypeItemFragment fragment = new TypeItemFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +54,6 @@ public class TypeItemFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_type_item, container, false);
-//        recyclerView=view.findViewById(R.id.rvTypeItem);
         fab=view.findViewById(R.id.fabTypeItem);
         lv=view.findViewById(R.id.lvTypeItem);
 
@@ -71,27 +63,28 @@ public class TypeItemFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                obj=list.get(position);
-//               diaLogTypeItem(getContext(),1);
 
-               dialog=new Dialog(getContext());
-               dialog.setContentView(R.layout.dialog_choose);
-               dialog.getWindow().setWindowAnimations(R.style.animationDialog);
-               dialog.findViewById(R.id.btnChooseUpdate).setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       diaLogTypeItem(getContext(),1);
-                   }
-               });
-               dialog.findViewById(R.id.btnChooseDelete).setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       String id= String.valueOf(list.get(position).getMaLoaiHang());
-                       deleteTypeItem(id);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Chọn chức năng");
 
-                   }
-               });
-
-               dialog.show();
+                String[] choose = {"Sửa", "Xóa"};
+                builder.setItems(choose, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                diaLogTypeItem(getContext(),1);
+                                break;
+                            case 1:
+                                String id= String.valueOf(list.get(position).getMaLoaiHang());
+                                deleteTypeItem(id);
+                                break;
+                        }
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.getWindow().setWindowAnimations(R.style.animationDialog);
+                alertDialog.show();
                return false;
             }
         });
@@ -169,6 +162,7 @@ public class TypeItemFragment extends Fragment {
                     dao.delete(id);
                     customToasts.successToast(getContext(),"Xóa thành công");
                     reLoad();
+                    dialog.dismiss();
                 }catch (Exception e){
                     e.printStackTrace();
                     customToasts.errorToast(getContext(),"Lỗi: "+e);
