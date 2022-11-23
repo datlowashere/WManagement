@@ -23,7 +23,6 @@ public class ImportFragment extends Fragment {
     private View2PagerImportAdapter adapter;
 
     public ImportFragment() {
-        // Required empty public constructor
     }
 
     public static ImportFragment newInstance(String param1, String param2) {
@@ -59,14 +58,7 @@ public class ImportFragment extends Fragment {
             }
         }).attach();
 
-
-
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        adapter.notifyDataSetChanged();
-    }
 }
