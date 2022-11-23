@@ -5,6 +5,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,7 +44,7 @@ public class TypeItemsAdapter extends BaseAdapter {
     }
 
     public static class ViewHolder{
-        TextView tvMaLoaiHang, tvTenLoaiHang;
+        TextView tvTenLoaiHang;
 
     }
     @Override
@@ -52,16 +54,16 @@ public class TypeItemsAdapter extends BaseAdapter {
         if(view==null){
             view= LayoutInflater.from(context).inflate(R.layout.item_type_item,null);
             holder=new ViewHolder();
-            holder.tvMaLoaiHang=view.findViewById(R.id.tvMaLoaiHang);
             holder.tvTenLoaiHang=view.findViewById(R.id.tvTenLoaiHang);
             view.setTag(holder);
         }else {
             holder=(ViewHolder) view.getTag();
         }
         TypeItems obj=list.get(position);
-        holder.tvMaLoaiHang.setText(""+obj.getMaLoaiHang());
         holder.tvTenLoaiHang.setText(obj.getTenLoaiHang());
 
+        Animation animation=AnimationUtils.loadAnimation(context,R.anim.scale_animation);
+        view.startAnimation(animation);
         return view;
     }
 
