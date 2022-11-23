@@ -28,7 +28,6 @@ public class TypeItemsDao {
 //    them loai hang
     public  long insert(TypeItems obj){
         ContentValues values=new ContentValues();
-        values.put("maLoaiHang",obj.getMaLoaiHang());
         values.put("tenLoaiHang",obj.getTenLoaiHang());
         values.put("username",obj.getUsername());
         return db.insert("LoaiHang",null,values);
@@ -38,7 +37,6 @@ public class TypeItemsDao {
     public int update(TypeItems obj){
         ContentValues values=new ContentValues();
         values.put("tenLoaiHang",obj.getTenLoaiHang());
-        values.put("username",obj.getUsername());
         return db.update("LoaiHang",values,"maLoaiHang=?",new String[]{String.valueOf(obj.getMaLoaiHang())});
     }
 //    xoa loai hang
@@ -70,6 +68,18 @@ public class TypeItemsDao {
     public List<TypeItems> getAllByUser(String id){
         String sql="select * from LoaiHang where username=?";
         return getData(sql,id);
+    }
+//    lay toan bo ten hang theo nguoi dung
+    public String[]getArrTenLoai(String id){
+        String sql="select tenLoaiHang from LoaiHang where username=?";
+        ArrayList<String>arr=new ArrayList<>();
+        Cursor c=db.rawQuery(sql,new String[]{id});
+        while (c.moveToNext()){
+            c.moveToFirst();
+            arr.add(c.getString(0));
+        }
+        return (String[]) arr.toArray();
+
     }
 
 }
