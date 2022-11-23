@@ -35,7 +35,7 @@ public class SpinnerTypeItemsAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
     public class ViewHolder{
         TextView tvSingleItem;
@@ -43,19 +43,39 @@ public class SpinnerTypeItemsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        ViewHolder holder=new ViewHolder();
+        ViewHolder holder;
         if(view==null){
             view= LayoutInflater.from(context).inflate(R.layout.item_single_spinner,null);
+            holder=new ViewHolder();
             holder.tvSingleItem=view.findViewById(R.id.tvSingleSpinner);
             view.setTag(holder);
         }else{
-            view.getTag();
-            TypeItems obj=list.get(position);
-            holder.tvSingleItem.setText(obj.getTenLoaiHang());
-
-            Animation animation= AnimationUtils.loadAnimation(context,R.anim.scale_animation);
-            view.startAnimation(animation);
+            holder=(ViewHolder)view.getTag();
         }
+        TypeItems obj=list.get(position);
+        holder.tvSingleItem.setText(obj.getTenLoaiHang());
+
+        Animation animation= AnimationUtils.loadAnimation(context,R.anim.scale_animation);
+        view.startAnimation(animation);
+        return view;
+    }
+
+    @Override
+    public View getDropDownView(int position, View view, ViewGroup parent) {
+        ViewHolder holder;
+        if(view==null){
+            view= LayoutInflater.from(context).inflate(R.layout.item_single_spinner,null);
+            holder=new ViewHolder();
+            holder.tvSingleItem=view.findViewById(R.id.tvSingleSpinner);
+            view.setTag(holder);
+        }else{
+            holder=(ViewHolder)view.getTag();
+        }
+        TypeItems obj=list.get(position);
+        holder.tvSingleItem.setText(obj.getTenLoaiHang());
+
+        Animation animation= AnimationUtils.loadAnimation(context,R.anim.scale_animation);
+        view.startAnimation(animation);
         return view;
     }
 }
