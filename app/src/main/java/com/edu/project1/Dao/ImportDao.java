@@ -24,21 +24,9 @@ public class ImportDao {
         db=dbHelper.getWritableDatabase();
 
     }
-    String createTBNhapHang="create table NhapHang(" +
-            "maNhapHang integer primary key autoincrement," +
-            "tenHang text," +
-            "tenLoaiHang text," +
-            "soLuongNhap integer," +
-            "donGia float," +
-            "ngayNhapHang date," +
-            "ngaySanXuat date," +
-            "maLoaiHang integer references LoaiHang(maLoaiHang)," +
-            "username text references User(username))";
-
-//    nhap hang
+//    Nhập hàng
     public long insert(ImportItems obj){
         ContentValues values=new ContentValues();
-        values.put("maNhapHang",obj.getMaNhapHang());
         values.put("tenHang",obj.getTenHang());
         values.put("tenLoaiHang",obj.getTenLoaiHang());
         values.put("soLuongNhap",obj.getSoLuongNhap());
@@ -49,7 +37,7 @@ public class ImportDao {
         values.put("username",obj.getUsername());
         return db.insert("NhapHang",null,values);
     }
-//    sua hang da nhap
+//    Sửa nhập hàng
     public int update(ImportItems obj){
         ContentValues values=new ContentValues();
         values.put("tenHang",obj.getTenHang());
@@ -62,12 +50,12 @@ public class ImportDao {
         values.put("username",obj.getUsername());
         return db.update("NhapHang",values,"maNhapHang=?",new String[]{String.valueOf(obj.getMaNhapHang())});
     }
-//    xoa hang nhap
+//    Xóa hàng
     public int delete(String id){
         return db.delete("NhapHang","maNhapHang=?",new String[]{id});
 
     }
-//    lay data nhieu tham so
+//    Lấy data nhiều tham số
     @SuppressLint("Range")
     private List<ImportItems>getData(String sql, String...selectionArgs){
         list=new ArrayList<>();
@@ -97,19 +85,21 @@ public class ImportDao {
         return list;
     }
 
-//    lay data theo id
+//    Lấy data theo mã
     public ImportItems getById(String id){
         String sql="select * from NhapHang where maNhapHang=?";
         list=getData(sql,id);
         return list.get(0);
     }
-//    lay toan bo danh sach hang da nhap theo nguoi dung
+//    Lấy danh sách hàng theo user
     public List<ImportItems>getAllByUsername(String id){
         String sql="select * from NhapHang where username=?";
         return getData(sql,id);
     }
-
-
-
+//    Lấy danh sách hàng theo mã loại hàng
+    public List<ImportItems>getAllByMaLoaiHang(String id){
+        String sql="select * from NhapHang where maLoaiHang=?";
+        return getData(sql,id);
+    }
 
 }
