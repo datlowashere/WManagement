@@ -209,7 +209,7 @@ public class ImportItemFragment extends Fragment {
                             customToasts.successToast(context, "Thêm thành công");
                             dialog.dismiss();
                         } else {
-                            customToasts.errorToast(context, "Thêm thất bại");
+                            customToasts.errorToast(context, "Thêm thất bại!!");
                         }
                     } else {
                         obj.setMaNhapHang(Integer.parseInt(tvMaNhapHang.getText().toString()));
@@ -217,11 +217,9 @@ public class ImportItemFragment extends Fragment {
                             customToasts.successToast(context, "Cập nhật thành công");
                             dialog.dismiss();
                         } else {
-                            customToasts.errorToast(context, "Cập nhật thất bại \n" +
-                                    "mã" + tvMaNhapHang.getText().toString() + "tên" + obj.getTenHang() + "mãLoại" + positionML + "tên loại" + typeItems.getTenLoaiHang() + "donGia" + obj.getDonGia() + "soLuong" + obj.getSoLuongNhap() + "Ngaynhap" + obj.getNgayNhapHang() + "Ngày xuẩts" + obj.getNgaySanXuat() + "username" + obj.getUsername());
-                            System.out.println("Cập nhật thất bại \n" +
-                                    "mã" + tvMaNhapHang.getText().toString() + "tên" + obj.getTenHang() + "mãLoại" + positionML + "tên loại" + typeItems.getTenLoaiHang() + "donGia" + obj.getDonGia() + "soLuong" + obj.getSoLuongNhap() + "Ngaynhap" + obj.getNgayNhapHang() + "Ngày xuẩts" + obj.getNgaySanXuat() + "username" + obj.getUsername());
+                            customToasts.errorToast(context, "Cập nhật thất bại!!!");
                         }
+
 
                     }
                     reLoadData();
@@ -259,7 +257,6 @@ public class ImportItemFragment extends Fragment {
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
-
     }
     private void dialogDelete(String id){
         dialog=new Dialog(getContext());
