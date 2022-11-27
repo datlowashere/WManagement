@@ -10,13 +10,11 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -24,6 +22,7 @@ import android.widget.TextView;
 
 import com.edu.project1.Adapter.ImportItemsAdapter;
 import com.edu.project1.Adapter.SpinnerTypeItemsAdapter;
+import com.edu.project1.Adapter.TypeItemsAdapter;
 import com.edu.project1.Dao.ImportDao;
 import com.edu.project1.Dao.TypeItemsDao;
 import com.edu.project1.Helper.CustomToasts;
@@ -83,8 +82,7 @@ public class ImportItemFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_import_item, container, false);
         lv=view.findViewById(R.id.lvImportItem);
         fab=view.findViewById(R.id.fabImportItem);
-        searchView=view.findViewById(R.id.searchViewImport);
-        spFilter=view.findViewById(R.id.spFilteImport);
+        searchView=view.findViewById(R.id.svImport);
 
         reLoadData();
         fab.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +117,29 @@ public class ImportItemFragment extends Fragment {
                 return false;
             }
         });
+        searchView.setQueryHint("search...");
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchByName(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchByName(newText);
+                return false;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                reLoadData();
+                return false;
+            }
+        });
+
         return view;
     }
 
@@ -318,6 +339,13 @@ public class ImportItemFragment extends Fragment {
         MainActivity activity=(MainActivity)getActivity();
         String username=activity.getUsername();
         return username;
+    }
+    private void searchByName(String name){
+        dao=new ImportDao(getContext());
+        list=dao.searchByName(name);
+        if(list!=null){
+            lv.setAdapter(new ImportItemsAdapter(getContext(),list));
+        }
     }
 
 
