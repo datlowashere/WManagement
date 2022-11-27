@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 
 import com.edu.project1.Adapter.TypeItemsAdapter;
 import com.edu.project1.Dao.TypeItemsDao;
@@ -32,6 +34,7 @@ public class TypeItemFragment extends Fragment {
 
     private ListView lv;
     private FloatingActionButton fab;
+    private SearchView searchView;
     private Dialog dialog;
     private TextInputEditText edTenLoaiHang,edMaLoaiHang;
     private  List<TypeItems>list;
@@ -56,6 +59,7 @@ public class TypeItemFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_type_item, container, false);
         fab=view.findViewById(R.id.fabTypeItem);
         lv=view.findViewById(R.id.lvTypeItem);
+        searchView=view.findViewById(R.id.svTypeItems);
 
         dao=new TypeItemsDao(getActivity());
         reLoad();
@@ -96,6 +100,28 @@ public class TypeItemFragment extends Fragment {
             }
         });
 
+        searchView.setQueryHint("search...");
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchName(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchName(newText);
+                return true;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                reLoad();
+                return true;
+            }
+        });
 
         return view;
     }
@@ -177,6 +203,13 @@ public class TypeItemFragment extends Fragment {
             }
         });
         dialog.show();
+    }
+    private void searchName(String name){
+        dao=new TypeItemsDao(getContext());
+        list=dao.searchByName(name);
+        if(list!=null){
+            lv.setAdapter(new TypeItemsAdapter(getContext(),list));
+        }
     }
 
     private void reLoad(){
