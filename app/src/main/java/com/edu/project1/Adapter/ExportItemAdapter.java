@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.edu.project1.Dao.ImportDao;
 import com.edu.project1.Models.ExportItems;
 import com.edu.project1.Models.ImportItems;
 import com.edu.project1.R;
@@ -66,16 +67,18 @@ public class ExportItemAdapter extends BaseAdapter {
         }
 
         ExportItems obj=list.get(position);
+        ImportDao importDao=new ImportDao(context);
+        ImportItems items=importDao.getById(String.valueOf(obj.getMaNhapHang()));
         holder.tvMaXuatHang.setText("Mã: "+obj.getMaXuatHang());
         holder.tvSoLuongXuat.setText("Số lượng:"+obj.getSoLuongXuat());
-        holder.tvDonGiaXuat.setText("Đơn giá: "+obj.getDonGiaXuat());
+        holder.tvDonGiaXuat.setText("Đơn giá:\n "+obj.getDonGiaXuat());
         holder.tvTenHangXuat.setText("Tên: "+obj.getTenHang());
         holder.tvLoaiHangXuat.setText("Loại: "+obj.getTenLoaiHang());
-        holder.tvNgayNhapHang.setText("Ngày nhập:"+sdf.format(obj.getNgayNhapHang()));
+        holder.tvNgayNhapHang.setText("Ngày nhập"+sdf.format(items.getNgayNhapHang()));
         holder.tvNgayXuatHang.setText("Ngày xuất"+sdf.format(obj.getNgayXuatHang()));
 
-        Animation animation= AnimationUtils.loadAnimation(context,R.anim.scale_animation);
-        view.startAnimation(animation);
+//        Animation animation= AnimationUtils.loadAnimation(context,R.anim.scale_animation);
+//        view.startAnimation(animation);
 
         return view;
     }
