@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -44,11 +46,12 @@ public class ImportItemFragment extends Fragment {
     private ListView lv;
     private FloatingActionButton fab;
     private SearchView searchView;
+    private ImageView imgFilter;
     private Dialog dialog;
 
     private TextView tvMaNhapHang;
     private TextInputEditText edTenHang,edSoLuongNhap,edDonGia,edNgayNhapHang,edNgaySanXuat;
-    private Spinner spLoaiHang,spFilter;
+    private Spinner spLoaiHang;
 
     List<ImportItems> list;
     ImportItems obj;
@@ -83,6 +86,7 @@ public class ImportItemFragment extends Fragment {
         lv=view.findViewById(R.id.lvImportItem);
         fab=view.findViewById(R.id.fabImportItem);
         searchView=view.findViewById(R.id.svImport);
+        imgFilter=view.findViewById(R.id.imgFilterImport);
 
         reLoadData();
         fab.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +141,35 @@ public class ImportItemFragment extends Fragment {
             public boolean onClose() {
                 reLoadData();
                 return false;
+            }
+        });
+
+        imgFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                typeItemsDao=new TypeItemsDao(getContext());
+                typeItemsList=typeItemsDao.getAllByUser(getUsername());
+                ListAdapter listAdapter=new TypeItemsAdapter(getContext(),typeItemsList);
+                AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+                builder.setTitle("Lọc");
+                builder.setAdapter(listAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        list=new ArrayList<>();
+                        dao=new ImportDao(getContext());
+                        list=dao.getAllByMaLoaiHang(String.valueOf(typeItemsList.get(which).getMaLoaiHang()));
+                        adapter=new ImportItemsAdapter(getContext(),list);
+                        lv.setAdapter(adapter);
+                    }
+                });
+                builder.setPositiveButton("Tất cả", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        reLoadData();
+                    }
+                });
+                AlertDialog alertDialog=builder.create();
+                alertDialog.show();
             }
         });
 
