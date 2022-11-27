@@ -15,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -49,11 +51,13 @@ public class ExportFragment extends Fragment {
     private ImportDao importDao;
     private ImportItems importItems;
     private ImportItemsAdapter importItemsAdapter;
-    private  List<ImportItems>importItemsList;
+    private List<ImportItems>importItemsList;
     private SpinnerItemsAdapter spinnerItemsAdapter;
 
     private ListView lv;
     private FloatingActionButton fab;
+    private SearchView searchView;
+    private ImageView img;
 
     private Dialog dialog;
     private TextInputEditText edSoLuongXuat,edDonGia,edNgayXuatHang;
@@ -83,6 +87,7 @@ public class ExportFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_export, container, false);
         lv=view.findViewById(R.id.lvExport);
         fab=view.findViewById(R.id.fabExport);
+        searchView=view.findViewById(R.id.svExport);
 
         reLoadData();
         fab.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +125,29 @@ public class ExportFragment extends Fragment {
             }
         });
 
+        searchView.setQueryHint("search...");
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchByName(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchByName(newText);
+                return false;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                reLoadData();
+                return true;
+            }
+        });
+
 
         return view;
     }
@@ -148,10 +176,11 @@ public class ExportFragment extends Fragment {
         if(possition!=0){
             tvMaXuat.setText(String.valueOf(obj.getMaXuatHang()));
             for(int i=0;i<importItemsList.size();i++){
-                if(importItemsList.get(possition).getTenHang()==obj.getTenHang()){
+                if(obj.getTenHang().equals(importItemsList.get(i).getTenHang())){
                     positionIP=i;
                 }
             }
+
             spTenHang.setSelection(positionIP);
             tvTenLoaiHang.setText(obj.getTenLoaiHang());
             edSoLuongXuat.setText(String.valueOf(obj.getSoLuongXuat()));
@@ -272,6 +301,14 @@ public class ExportFragment extends Fragment {
         list=dao.getAllByUsername(getUser());
         adapter=new ExportItemAdapter(list,getContext());
         lv.setAdapter(adapter);
+    }
+    private void searchByName(String name){
+        dao=new ExportDao(getContext());
+        list=dao.searchByName(name);
+        adapter=new ExportItemAdapter(list,getContext());
+        if(list!=null){
+            lv.setAdapter(adapter);
+        }
     }
 
 
