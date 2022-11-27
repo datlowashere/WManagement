@@ -82,4 +82,21 @@ public class TypeItemsDao {
 
     }
 
+//    search theo ten
+    @SuppressLint("Range")
+    public List<TypeItems> searchByName(String name){
+        list=new ArrayList<>();
+        String sql="select * from LoaiHang where tenLoaiHang =?";
+        Cursor c=db.rawQuery(sql,new String[]{name});
+        while (c.moveToNext()){
+            c.moveToFirst();
+            TypeItems obj=new TypeItems();
+            obj.setMaLoaiHang(c.getInt(c.getColumnIndex("maLoaiHang")));
+            obj.setTenLoaiHang(c.getString(c.getColumnIndex("tenLoaiHang")));
+            obj.setUsername(c.getString(c.getColumnIndex("username")));
+            list.add(obj);
+        }
+        return list;
+    }
+
 }
