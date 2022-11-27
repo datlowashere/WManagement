@@ -28,7 +28,6 @@ public class ExportDao {
 //    xuat hang
     public long insert(ExportItems obj){
         ContentValues values=new ContentValues();
-        values.put("maXuatHang",obj.getMaXuatHang());
         values.put("tenHang",obj.getTenHang());
         values.put("tenLoaiHang",obj.getTenLoaiHang());
         values.put("soLuongNhap",obj.getSoLuongNhap());
@@ -109,5 +108,32 @@ public class ExportDao {
         String sql="select * from XuatHang where username=?";
         return getData(sql,id);
     }
+//    search theo ten
+@SuppressLint("Range")
+public List<ExportItems>searchByName(String name){
+    list=new ArrayList<>();
+    String sql="select * from XuatHang where tenHang=?";
+    Cursor c=db.rawQuery(sql,new String[]{name});
+    while (c.moveToNext()){
+        ExportItems obj=new ExportItems();
+        obj.setMaXuatHang(c.getInt(c.getColumnIndex("maXuatHang")));
+        obj.setTenHang(c.getString(c.getColumnIndex("tenHang")));
+        obj.setTenLoaiHang(c.getString(c.getColumnIndex("tenLoaiHang")));
+        obj.setSoLuongNhap(c.getInt(c.getColumnIndex("soLuongNhap")));
+        obj.setSoLuongXuat(c.getInt(c.getColumnIndex("soLuongXuat")));
+        obj.setDonGia(c.getFloat(c.getColumnIndex("donGia")));
+        obj.setDonGiaXuat(c.getFloat(c.getColumnIndex("donGiaXuat")));
+        try {
+            obj.setNgayXuatHang(sdf.parse(c.getString(c.getColumnIndex("ngayXuatHang"))));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        obj.setMaNhapHang(c.getInt(c.getColumnIndex("maNhapHang")));
+        obj.setUsername(c.getString(c.getColumnIndex("username")));
+        list.add(obj);
+
+    }
+    return list;
+}
 
 }
