@@ -8,10 +8,14 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.edu.project1.Fragments.TypeItemFragment;
+import com.edu.project1.Helper.CustomToasts;
 import com.edu.project1.Models.TypeItems;
 import com.edu.project1.R;
 
@@ -21,7 +25,6 @@ import java.util.List;
 public class TypeItemsAdapter extends BaseAdapter {
     private Context context;
     private List<TypeItems>list;
-
 
     public TypeItemsAdapter(Context context, List<TypeItems> list) {
         this.context = context;
@@ -62,9 +65,10 @@ public class TypeItemsAdapter extends BaseAdapter {
         TypeItems obj=list.get(position);
         holder.tvTenLoaiHang.setText(obj.getTenLoaiHang());
 
-        Animation animation=AnimationUtils.loadAnimation(context,R.anim.scale_animation);
-        view.startAnimation(animation);
+//        Animation animation=AnimationUtils.loadAnimation(context,R.anim.scale_animation);
+//        view.startAnimation(animation);
         return view;
     }
+
 
 }
