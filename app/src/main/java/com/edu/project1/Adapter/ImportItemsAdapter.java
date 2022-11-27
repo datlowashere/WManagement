@@ -79,8 +79,8 @@ public class ImportItemsAdapter extends BaseAdapter {
         holder.tvNgaySanXuat.setText("Ngày sản xuất: "+sdf.format(obj.getNgaySanXuat()));
         holder.tvNgayNhapHang.setText("Ngày nhập:"+sdf.format(obj.getNgayNhapHang()));
 
-        Animation animation= AnimationUtils.loadAnimation(context,R.anim.scale_animation);
-        view.startAnimation(animation);
+//        Animation animation= AnimationUtils.loadAnimation(context,R.anim.scale_animation);
+//        view.startAnimation(animation);
 
         return view;
     }
