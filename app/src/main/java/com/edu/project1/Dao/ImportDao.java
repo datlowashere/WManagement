@@ -101,5 +101,34 @@ public class ImportDao {
         String sql="select * from NhapHang where maLoaiHang=?";
         return getData(sql,id);
     }
+//    search theo tên
+@SuppressLint("Range")
+public List<ImportItems>searchByName(String name){
+    list=new ArrayList<>();
+    String sql="select * from NhapHang where tenHang=?";
+    Cursor c=db.rawQuery(sql,new String[]{name});
+    while (c.moveToNext()){
+        ImportItems obj=new ImportItems();
+        obj.setMaNhapHang(c.getInt(c.getColumnIndex("maNhapHang")));
+        obj.setTenHang(c.getString(c.getColumnIndex("tenHang")));
+        obj.setTenLoaiHang(c.getString(c.getColumnIndex("tenLoaiHang")));
+        obj.setSoLuongNhap(c.getInt(c.getColumnIndex("soLuongNhap")));
+        obj.setDonGia(c.getFloat(c.getColumnIndex("donGia")));
+        try {
+            obj.setNgayNhapHang(sdf.parse(c.getString(c.getColumnIndex("ngayNhapHang"))));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            obj.setNgaySanXuat(sdf.parse(c.getString(c.getColumnIndex("ngaySanXuat"))));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        obj.setMaLoaiHang(c.getInt(c.getColumnIndex("maLoaiHang")));
+        obj.setUsername(c.getString(c.getColumnIndex("username")));
+        list.add(obj);
+    }
+    return list;
+}
 
 }
