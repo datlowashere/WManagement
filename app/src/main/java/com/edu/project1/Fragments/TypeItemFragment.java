@@ -11,6 +11,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,7 +101,7 @@ public class TypeItemFragment extends Fragment {
             }
         });
 
-        searchView.setQueryHint("search...");
+        searchView.setQueryHint("Tên loại hàng...");
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -225,7 +226,7 @@ public class TypeItemFragment extends Fragment {
         if(edTenLoaiHang.getText().toString().isEmpty()){
             customToasts.warningToast(getContext(),"Chưa điền tên loại hàng");
             check=-1;
-        }else if(edTenLoaiHang.getText().toString().equals("[0-9]")){
+        }else if(Patterns.PHONE.matcher(edTenLoaiHang.getText().toString()).matches()){
             customToasts.warningToast(getContext(),"Tên loại hàng không bao gồm số");
             check=-1;
         }
