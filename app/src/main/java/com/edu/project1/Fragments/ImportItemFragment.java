@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -35,11 +36,13 @@ import com.edu.project1.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class ImportItemFragment extends Fragment {
 
@@ -121,7 +124,7 @@ public class ImportItemFragment extends Fragment {
                 return false;
             }
         });
-        searchView.setQueryHint("search...");
+        searchView.setQueryHint("Nhập tên hàng...");
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -169,6 +172,7 @@ public class ImportItemFragment extends Fragment {
                     }
                 });
                 AlertDialog alertDialog=builder.create();
+                alertDialog.getWindow().setWindowAnimations(R.style.animationDialog);
                 alertDialog.show();
             }
         });
@@ -190,23 +194,21 @@ public class ImportItemFragment extends Fragment {
         edNgayNhapHang=dialog.findViewById(R.id.edNgayNhapHang);
         spLoaiHang=dialog.findViewById(R.id.spLoaiHang);
 
-        typeItems=new TypeItems();
-        typeItemsList=new ArrayList<>();
         typeItemsDao=new TypeItemsDao(context);
-        typeItemsList=typeItemsDao.getAllByUser(getUsername());
-        spinnerTypeItemsAdapter=new SpinnerTypeItemsAdapter(typeItemsList,getContext());
+        typeItemsList=(List<TypeItems>) typeItemsDao.getAllByUser(getUsername());
+        spinnerTypeItemsAdapter=new SpinnerTypeItemsAdapter(typeItemsList,context);
         spLoaiHang.setAdapter(spinnerTypeItemsAdapter);
 
         if(position!=0){
             tvMaNhapHang.setText(String.valueOf(obj.getMaNhapHang()));
             edTenHang.setText(obj.getTenHang());
-
             for(int i=0;i<typeItemsList.size();i++){
-                if(obj.getTenLoaiHang().equals(typeItemsList.get(i).getTenLoaiHang())){
+                if(obj.getMaLoaiHang()==typeItemsList.get(i).getMaLoaiHang()){
                     positionML=i;
                 }
             }
             spLoaiHang.setSelection(positionML);
+            spLoaiHang.setEnabled(false);
             edSoLuongNhap.setText(String.valueOf(obj.getSoLuongNhap()));
             edDonGia.setText(String.valueOf(obj.getDonGia()));
             edNgaySanXuat.setText(sdf.format(obj.getNgaySanXuat()));
@@ -254,32 +256,39 @@ public class ImportItemFragment extends Fragment {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
-                obj.setMaLoaiHang(typeItems.getMaLoaiHang());
+                try {
+                    obj.setMaLoaiHang(typeItems.getMaLoaiHang());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 obj.setUsername(getUsername());
-                if(checkInput()>0) {
-                    if (position == 0) {
-                        if (dao.insert(obj) > 0) {
-                            customToasts.successToast(context, "Thêm thành công");
-                            dialog.dismiss();
+                try {
+                    if(checkInput()>0) {
+                        if (position == 0) {
+                            if (dao.insert(obj) > 0) {
+                                customToasts.successToast(context, "Thêm thành công");
+                                dialog.dismiss();
+                            } else {
+                                customToasts.errorToast(context, "Thêm thất bại!!");
+                            }
                         } else {
-                            customToasts.errorToast(context, "Thêm thất bại!!");
-                        }
-                    } else {
-                        obj.setMaNhapHang(Integer.parseInt(tvMaNhapHang.getText().toString()));
-                        if (dao.update(obj) > 0) {
-                            customToasts.successToast(context, "Cập nhật thành công");
-                            dialog.dismiss();
-                        } else {
-                            customToasts.errorToast(context, "Cập nhật thất bại!!!");
-                        }
+                            obj.setMaNhapHang(Integer.parseInt(tvMaNhapHang.getText().toString()));
+                            if (dao.update(obj) > 0) {
+                                customToasts.successToast(context, "Cập nhật thành công");
+                                dialog.dismiss();
+                            } else {
+                                customToasts.errorToast(context, "Cập nhật thất bại!!!");
+                            }
 
 
+                        }
+                        reLoadData();
+                        dialog.dismiss();
                     }
-                    reLoadData();
-                    dialog.dismiss();
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-                }
+            }
 
         });
 //        Hủy lưu
@@ -339,25 +348,28 @@ public class ImportItemFragment extends Fragment {
         dialog.show();
 
     }
-    private int checkInput(){
+    private int checkInput() throws ParseException {
         int check=1;
-//        if(edTenHang.getText().toString().isEmpty() || edSoLuongNhap.getText().toString().isEmpty() || edDonGia.getText().toString().isEmpty() || edNgayNhapHang.getText().toString().isEmpty() || edNgaySanXuat.getText().toString().isEmpty()){
-//            customToasts.warningToast(getContext(),"Phải điền đầy đủ thông tin");
-//            check=-1;
-//        }else{
-//            if(edTenHang.getText().toString().matches("[0-9]")){
-//                customToasts.warningToast(getContext(),"Tên hàng phải là các ký tự");
-//                check=-1;
-//            }
-//            if(!edDonGia.getText().toString().matches("[+-]?([0-9]*[.])?[0-9]+")){
-//                customToasts.warningToast(getContext(),"Đơn giá sai");
-//                check=-1;
-//            }
-//            if(!edSoLuongNhap.getText().toString().matches("[0-9]")){
-//                customToasts.warningToast(getContext(),"Số lượng giá sai");
-//                check=-1;
-//            }
-//        }
+        if(edTenHang.getText().toString().isEmpty() || edSoLuongNhap.getText().toString().isEmpty() || edDonGia.getText().toString().isEmpty() || edNgayNhapHang.getText().toString().isEmpty() || edNgaySanXuat.getText().toString().isEmpty()){
+            customToasts.warningToast(getContext(),"Phải điền đầy đủ thông tin");
+            check=-1;
+        }
+        if(edTenHang.getText().toString().matches("\\d+")){
+            customToasts.warningToast(getContext(),"Tên hàng không phải là số !");
+            check=-1;
+        }
+        if(!edSoLuongNhap.getText().toString().matches("\\d+")){
+            customToasts.warningToast(getContext(),"Số lượng phải là số!!");
+            check=-1;
+        }
+        if(!edDonGia.getText().toString().matches("\\d+")){
+            customToasts.warningToast(getContext(),"Đơn giá phải là số!!");
+            check=-1;
+        }
+        if(!sdf.parse(edNgayNhapHang.getText().toString()).after(sdf.parse(edNgaySanXuat.getText().toString()))){
+            customToasts.warningToast(getContext(),"Ngày nhập hàng phải lớn hơn ngày sản xuất!");
+            check=-1;
+        }
 
         return check;
     }
@@ -380,6 +392,5 @@ public class ImportItemFragment extends Fragment {
             lv.setAdapter(new ImportItemsAdapter(getContext(),list));
         }
     }
-
 
 }
