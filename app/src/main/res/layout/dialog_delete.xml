@@ -22,7 +22,8 @@
         android:padding="15dp"
         android:text="Chắc chắn xóa?"
         android:textAlignment="center"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"

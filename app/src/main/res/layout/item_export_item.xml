@@ -4,26 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="2dp"
-        app:cardUseCompatPadding="false"
+        app:cardCornerRadius="10dp"
+        app:cardUseCompatPadding="true"
         tools:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="5dp">
+            android:padding="10dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@drawable/border"
-                android:orientation="vertical">
+                android:minWidth="120dp"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp">
 
                 <TextView
                     android:id="@+id/tvMaXuatHang"
@@ -40,7 +44,7 @@
                     android:text="TextView" />
 
                 <TextView
-                    android:id="@+id/tvTienXuatHang"
+                    android:id="@+id/tvDonGiaXuat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -50,7 +54,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/tvTenHangXuat"
@@ -61,13 +67,6 @@
 
                 <TextView
                     android:id="@+id/tvTenLoaiHangXuat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="TextView" />
-
-                <TextView
-                    android:id="@+id/tvNgayNhapHangXH"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"

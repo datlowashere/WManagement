@@ -18,7 +18,6 @@ public class TopItemsFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     public static TopItemsFragment newInstance(String param1, String param2) {
         TopItemsFragment fragment = new TopItemsFragment();
         Bundle args = new Bundle();

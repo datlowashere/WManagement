@@ -4,21 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.TypeItemFragment" >
+    tools:context=".Fragments.TypeItemFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTypeItem"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/svTypeItems"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content"
+        android:background="#F2F8F2" />
 
-    </androidx.recyclerview.widget.RecyclerView>
+    <ListView
+        android:id="@+id/lvTypeItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabTypeItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@drawable/plus"
         android:layout_gravity="bottom|end"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:src="@drawable/plus" />
 </FrameLayout>

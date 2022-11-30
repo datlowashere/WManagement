@@ -5,12 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.ImportItemFragment" >
+    android:padding="5dp"
+    tools:context=".Fragments.ImportItemFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvImortItem"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:background="#F2F8F2"
+        android:orientation="horizontal">
+
+        <SearchView
+            android:id="@+id/svImport"
+            style="@android:style/Widget.Material.Light.SearchView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5">
+
+        </SearchView>
+
+        <ImageView
+            android:id="@+id/imgFilterImport"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:padding="7dp"
+            android:src="@drawable/filter" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvImportItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:padding="10dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabImportItem"

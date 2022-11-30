@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="errorToast">
-        <item name="stColorBackground">#FF5D5D</item>
-        <item name="stTextColor">@color/white</item>
+        <item name="stColorBackground">#FFFFFF</item>
+        <item name="stTextColor">@color/black</item>
         <item name="stIconStart">@drawable/warningred</item>
         <item name="stLength">LONG</item>
         <item name="stRadius">10dp</item>
 
     </style>
     <style name="warningToast">
-        <item name="stColorBackground">#FFD764</item>
-        <item name="stTextColor">@color/white</item>
+        <item name="stColorBackground">#FFFFFF</item>
+        <item name="stTextColor">@color/black</item>
         <item name="stIconStart">@drawable/warningg</item>
         <item name="stLength">LONG</item>
         <item name="stRadius">10dp</item>
     </style>
     <style name="successToast">
-        <item name="stColorBackground">#32BA7C</item>
-        <item name="stTextColor">@color/white</item>
+        <item name="stColorBackground">#FFFFFF</item>
+        <item name="stTextColor">@color/black</item>
         <item name="stIconStart">@drawable/success</item>
         <item name="stLength">LONG</item>
         <item name="stRadius">10dp</item>
@@ -26,4 +26,9 @@
         <item name="android:windowEnterAnimation">@anim/top_animation</item>
         <item name="android:windowExitAnimation">@anim/top_bot_animation</item>
     </style>
+    <style name="animationBottoTopDialog">
+        <item name="android:windowEnterAnimation">@anim/bottom_animation</item>
+        <item name="android:windowExitAnimation">@anim/bottom_top_animation</item>
+    </style>
+
 </resources>
