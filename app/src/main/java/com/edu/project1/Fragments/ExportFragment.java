@@ -16,20 +16,25 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.edu.project1.Adapter.ExportItemAdapter;
-import com.edu.project1.Adapter.ImportItemsAdapter;
+import com.edu.project1.Adapter.SpinnerTypeItemsFromImportAdapter;
 import com.edu.project1.Adapter.SpinnerItemsAdapter;
+import com.edu.project1.Adapter.SpinnerTypeItemsAdapter;
+import com.edu.project1.Adapter.TypeItemsAdapter;
 import com.edu.project1.Dao.ExportDao;
 import com.edu.project1.Dao.ImportDao;
+import com.edu.project1.Dao.TypeItemsDao;
 import com.edu.project1.Helper.CustomToasts;
 import com.edu.project1.MainActivity;
 import com.edu.project1.Models.ExportItems;
 import com.edu.project1.Models.ImportItems;
+import com.edu.project1.Models.TypeItems;
 import com.edu.project1.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -50,21 +55,25 @@ public class ExportFragment extends Fragment {
 
     private ImportDao importDao;
     private ImportItems importItems;
-    private ImportItemsAdapter importItemsAdapter;
     private List<ImportItems>importItemsList;
+    private List<ImportItems>importListLoai;
     private SpinnerItemsAdapter spinnerItemsAdapter;
+
+    private List<TypeItems>typeItemsList;
+    private TypeItemsDao typeItemsDao;
+    private SpinnerTypeItemsAdapter spinnerTypeItemsAdapter;
 
     private ListView lv;
     private FloatingActionButton fab;
     private SearchView searchView;
-    private ImageView img;
+    private ImageView imgFilter;
 
     private Dialog dialog;
     private TextInputEditText edSoLuongXuat,edDonGia,edNgayXuatHang;
     private TextView tvMaXuat,tvTenLoaiHang;
-    private Spinner spTenHang;
+    private Spinner spTenHang,spLoaiHang;
 
-    int positionIP;
+    int positionIP,positionTL;
 
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -80,6 +89,7 @@ public class ExportFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,6 +98,7 @@ public class ExportFragment extends Fragment {
         lv=view.findViewById(R.id.lvExport);
         fab=view.findViewById(R.id.fabExport);
         searchView=view.findViewById(R.id.svExport);
+        imgFilter=view.findViewById(R.id.imgFilterExport);
 
         reLoadData();
         fab.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +136,7 @@ public class ExportFragment extends Fragment {
             }
         });
 
-        searchView.setQueryHint("search...");
+        searchView.setQueryHint("Nhập tên hàng...");
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -147,6 +158,35 @@ public class ExportFragment extends Fragment {
                 return true;
             }
         });
+        imgFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                typeItemsDao=new TypeItemsDao(getContext());
+                typeItemsList=typeItemsDao.getAllByUser(getUser());
+                ListAdapter listAdapter=new TypeItemsAdapter(getContext(),typeItemsList);
+                AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+                builder.setTitle("Lọc");
+                builder.setAdapter(listAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        list=new ArrayList<>();
+                        dao=new ExportDao(getContext());
+                        list=dao.getAllByTenLoaiHang(typeItemsList.get(which).getTenLoaiHang());
+                        adapter=new ExportItemAdapter(list,getContext());
+                        lv.setAdapter(adapter);
+                    }
+                });
+                builder.setPositiveButton("Tất cả", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        reLoadData();
+                    }
+                });
+                AlertDialog alertDialog=builder.create();
+                alertDialog.show();
+
+            }
+        });
 
 
         return view;
@@ -160,31 +200,55 @@ public class ExportFragment extends Fragment {
         tvMaXuat=dialog.findViewById(R.id.tvMaXH);
         tvMaXuat.setVisibility(View.GONE);
         spTenHang=dialog.findViewById(R.id.spTenHang);
+        spLoaiHang=dialog.findViewById(R.id.spTenLoaiHangXuat);
         tvTenLoaiHang=dialog.findViewById(R.id.tvLoaiHangX);
         edSoLuongXuat=dialog.findViewById(R.id.edSoLuongXuat);
         edDonGia=dialog.findViewById(R.id.edDonGiaXuat);
         edNgayXuatHang=dialog.findViewById(R.id.edNgayXuatHang);
 
 
-        importItemsList=new ArrayList<>();
         importDao=new ImportDao(context);
-        importItemsList=importDao.getAllByUsername(getUser());
-        spinnerItemsAdapter=new SpinnerItemsAdapter(importItemsList,context);
-        spTenHang.setAdapter(spinnerItemsAdapter);
+        importListLoai=(List<ImportItems>)importDao.getAllByUserGroupByMaLoai(getUser());
+        SpinnerTypeItemsFromImportAdapter filterTyeItemImportAdapter=new SpinnerTypeItemsFromImportAdapter(importListLoai,context);
+        spLoaiHang.setAdapter(filterTyeItemImportAdapter);
+        spLoaiHang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                importItemsList=new ArrayList<>();
+                importDao=new ImportDao(context);
+                importItemsList=importDao.getAllByMaLoaiHang(String.valueOf(importListLoai.get(position).getMaLoaiHang()));
+                spinnerItemsAdapter=new SpinnerItemsAdapter(importItemsList,context);
+                spTenHang.setAdapter(spinnerItemsAdapter);
+
+                if(possition!=0){
+                    for(int i=0;i<importItemsList.size();i++){
+                        if(obj.getTenHang().equals(importItemsList.get(i).getTenHang())){
+                            positionIP=i;
+                        }
+                    }
+                    spTenHang.setSelection(positionIP);
+                    spTenHang.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
         if(possition!=0){
             tvMaXuat.setText(String.valueOf(obj.getMaXuatHang()));
-            for(int i=0;i<importItemsList.size();i++){
-                if(obj.getTenHang().equals(importItemsList.get(i).getTenHang())){
-                    positionIP=i;
+            for(int i=0;i<importListLoai.size();i++){
+                if(obj.getTenLoaiHang().equals(importListLoai.get(i).getTenLoaiHang())){
+                    positionTL=i;
                 }
             }
-
-            spTenHang.setSelection(positionIP);
-            tvTenLoaiHang.setText(obj.getTenLoaiHang());
+            spLoaiHang.setSelection(positionTL);
+            spLoaiHang.setEnabled(false);
             edSoLuongXuat.setText(String.valueOf(obj.getSoLuongXuat()));
-            edDonGia.setText(String.valueOf(obj.getDonGia()));
+            edDonGia.setText(String.valueOf(obj.getDonGiaXuat()));
             edNgayXuatHang.setText(sdf.format(obj.getNgayXuatHang()));
         }
 
@@ -210,10 +274,9 @@ public class ExportFragment extends Fragment {
                 }
                 try {
                     obj.setSoLuongXuat(Integer.parseInt(edSoLuongXuat.getText().toString()));
-                }catch (Exception e){
-
+                }catch (NumberFormatException e){
+                    e.printStackTrace();
                 }
-
                 try {
                     obj.setDonGiaXuat(Float.parseFloat(edDonGia.getText().toString()));
                 } catch (NumberFormatException e) {
@@ -235,23 +298,27 @@ public class ExportFragment extends Fragment {
                     e.printStackTrace();
                 }
                 obj.setUsername(getUser());
-                if(checkInput()>0){
-                    if(possition==0){
-                        if(dao.insert(obj)>0){
-                            customToasts.successToast(context,"Thêm thành công!");
-                            dialog.dismiss();
-                        }else{
-                            customToasts.errorToast(context,"Thêm thất bại");
-                        }
-                    }else {
-                        obj.setMaXuatHang(Integer.parseInt(tvMaXuat.getText().toString()));
-                        if (dao.update(obj)>0){
-                            customToasts.successToast(context,"Cập nhật thành công!");
-                            dialog.dismiss();
+                try {
+                    if(checkInput()>0){
+                        if(possition==0){
+                            if(dao.insert(obj)>0){
+                                customToasts.successToast(context,"Thêm thành công!");
+                                dialog.dismiss();
+                            }else{
+                                customToasts.errorToast(context,"Thêm thất bại");
+                            }
                         }else {
-                            customToasts.errorToast(context,"Cập nhật thất bại");
+                            obj.setMaXuatHang(Integer.parseInt(tvMaXuat.getText().toString()));
+                            if (dao.update(obj)>0){
+                                customToasts.successToast(context,"Cập nhật thành công!");
+                                dialog.dismiss();
+                            }else {
+                                customToasts.errorToast(context,"Cập nhật thất bại");
+                            }
                         }
                     }
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
                 reLoadData();
                 dialog.dismiss();
@@ -335,18 +402,28 @@ public class ExportFragment extends Fragment {
         String username=activity.getUsername();
         return username;
     }
-    private int checkInput(){
+    private int checkInput() throws ParseException {
         int check=1;
 //        if(edDonGia.getText().toString().isEmpty() || edSoLuongXuat.getText().toString().isEmpty() || edNgayXuatHang.getText().toString().isEmpty()){
 //            customToasts.warningToast(getContext(),"Phải điền đầy đủ thông tin");
 //            check=-1;
 //        }
-//        if(!edSoLuongXuat.getText().toString().matches("[0-9]")){
+//        if(!edSoLuongXuat.getText().toString().matches("[0-9]+")){
 //            customToasts.errorToast(getContext(),"Số lượng phải là số!");
 //            check=-1;
 //        }
 //        if(!edDonGia.getText().toString().matches("[+-]?([0-9]*[.])?[0-9]+")){
 //            customToasts.errorToast(getContext(),"Đơn giá không đúng !");
+//            check=-1;
+//        }
+//        importItems=new ImportItems();
+//        int sl=importItems.getSoLuongNhap();
+//        if(Integer.parseInt(edSoLuongXuat.getText().toString())>sl){
+//            customToasts.warningToast(getContext(),"Số lượng xuất lớn hơn số lượng nhập!"+sl);
+//            check=-1;
+//        }
+//        if(sdf.parse(edNgayXuatHang.getText().toString()).after(importItems.getNgayNhapHang())){
+//            customToasts.warningToast(getContext(),"Ngày xuất phải bằng hoặc sau ngày nhập!");
 //            check=-1;
 //        }
         return check;
