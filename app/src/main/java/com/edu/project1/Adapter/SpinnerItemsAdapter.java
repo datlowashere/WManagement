@@ -35,7 +35,7 @@ public class SpinnerItemsAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return 0;
     }
     public static class viewOfItems{
         TextView tvSingleSpinner;
@@ -45,7 +45,7 @@ public class SpinnerItemsAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup parent) {
         viewOfItems holder;
         if(view==null){
-            view= LayoutInflater.from(context).inflate(R.layout.item_single_spinner,null);
+            view= LayoutInflater.from(context).inflate(R.layout.item_single_spinner,parent,false);
             holder=new viewOfItems();
             holder.tvSingleSpinner=view.findViewById(R.id.tvSingleSpinner);
             view.setTag(holder);
@@ -59,4 +59,6 @@ public class SpinnerItemsAdapter extends BaseAdapter {
         view.startAnimation(animation);
         return view;
     }
+
+
 }
