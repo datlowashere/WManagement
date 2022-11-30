@@ -55,7 +55,7 @@ public class TypeItemsAdapter extends BaseAdapter {
         View view=convertview;
         ViewHolder holder;
         if(view==null){
-            view= LayoutInflater.from(context).inflate(R.layout.item_type_item,null);
+            view= LayoutInflater.from(context).inflate(R.layout.item_type_item,parent,false);
             holder=new ViewHolder();
             holder.tvTenLoaiHang=view.findViewById(R.id.tvTenLoaiHang);
             view.setTag(holder);
