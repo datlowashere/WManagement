@@ -41,10 +41,10 @@ public class ExportItemAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return 0;
     }
     public static class viewOfItem{
-        TextView tvMaXuatHang,tvSoLuongXuat,tvDonGiaXuat,tvTenHangXuat,tvLoaiHangXuat,tvNgayNhapHang,tvNgayXuatHang;
+        TextView tvMaXuatHang,tvSoLuongXuat,tvDonGiaXuat,tvTenHangXuat,tvLoaiHangXuat,tvNgayXuatHang;
     }
 
     @SuppressLint("SetTextI18n")
@@ -52,14 +52,13 @@ public class ExportItemAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup parent) {
         viewOfItem holder;
         if(view==null){
-            view= LayoutInflater.from(context).inflate(R.layout.item_export_item,null);
+            view= LayoutInflater.from(context).inflate(R.layout.item_export_item,parent,false);
             holder=new viewOfItem();
             holder.tvMaXuatHang=view.findViewById(R.id.tvMaXuatHang);
             holder.tvSoLuongXuat=view.findViewById(R.id.tvSoLuongXuat);
             holder.tvDonGiaXuat=view.findViewById(R.id.tvDonGiaXuat);
             holder.tvTenHangXuat=view.findViewById(R.id.tvTenHangXuat);
             holder.tvLoaiHangXuat=view.findViewById(R.id.tvTenLoaiHangXuat);
-            holder.tvNgayNhapHang=view.findViewById(R.id.tvNgayNhapHangXH);
             holder.tvNgayXuatHang=view.findViewById(R.id.tvNgayXuatHang);
             view.setTag(holder);
         }else {
@@ -67,15 +66,12 @@ public class ExportItemAdapter extends BaseAdapter {
         }
 
         ExportItems obj=list.get(position);
-        ImportDao importDao=new ImportDao(context);
-        ImportItems items=importDao.getById(String.valueOf(obj.getMaNhapHang()));
-        holder.tvMaXuatHang.setText("Mã: "+obj.getMaXuatHang());
-        holder.tvSoLuongXuat.setText("Số lượng:"+obj.getSoLuongXuat());
-        holder.tvDonGiaXuat.setText("Đơn giá:\n "+obj.getDonGiaXuat());
-        holder.tvTenHangXuat.setText("Tên: "+obj.getTenHang());
-        holder.tvLoaiHangXuat.setText("Loại: "+obj.getTenLoaiHang());
-        holder.tvNgayNhapHang.setText("Ngày nhập"+sdf.format(items.getNgayNhapHang()));
-        holder.tvNgayXuatHang.setText("Ngày xuất"+sdf.format(obj.getNgayXuatHang()));
+        holder.tvMaXuatHang.setText("Mã: "+" "+obj.getMaXuatHang());
+        holder.tvSoLuongXuat.setText("Số lượng:"+" "+obj.getSoLuongXuat());
+        holder.tvDonGiaXuat.setText("Giá: "+""+obj.getDonGiaXuat()+""+"đ");
+        holder.tvTenHangXuat.setText("Tên: "+""+obj.getTenHang());
+        holder.tvLoaiHangXuat.setText("Loại: "+""+obj.getTenLoaiHang());
+        holder.tvNgayXuatHang.setText("Ngày xuất:"+""+sdf.format(obj.getNgayXuatHang()));
 
 //        Animation animation= AnimationUtils.loadAnimation(context,R.anim.scale_animation);
 //        view.startAnimation(animation);
