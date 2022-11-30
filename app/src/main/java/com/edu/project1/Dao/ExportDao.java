@@ -25,7 +25,7 @@ public class ExportDao {
     }
 
 
-//    xuat hang
+    //    xuat hang
     public long insert(ExportItems obj){
         ContentValues values=new ContentValues();
         values.put("tenHang",obj.getTenHang());
@@ -39,7 +39,7 @@ public class ExportDao {
         values.put("username",obj.getUsername());
         return db.insert("XuatHang",null,values);
     }
-//    sua hang xuat
+    //    sua hang xuat
     public int update(ExportItems obj){
         ContentValues values=new ContentValues();
         values.put("tenHang",obj.getTenHang());
@@ -53,23 +53,10 @@ public class ExportDao {
         values.put("username",obj.getUsername());
         return db.update("XuatHang",values,"maXuatHang=?",new String[]{String.valueOf(obj.getMaXuatHang())});
     }
-//    xoa hang xuat
+    //    xoa hang xuat
     public int delete(String id){
         return db.delete("XuatHang","maXuatHang=?",new String[]{id});
     }
-
-
-    String createTBXuatHang="create table XuatHang(" +
-            "maXuatHang integer primary key autoincrement," +
-            "tenHang text," +
-            "tenLoaiHang text," +
-            "soLuongNhap integer," +
-            "soLuongXuat integer," +
-            "donGia float," +
-            "donGiaXuat float," +
-            "ngayXuatHang date," +
-            "maNhapHang integer references NhapHang(maNhapHang)," +
-            "username text references User(username))";
     //    lay data nhieu tham so
     @SuppressLint("Range")
     private List<ExportItems>getData(String sql, String...selectionArgs){
@@ -109,31 +96,15 @@ public class ExportDao {
         return getData(sql,id);
     }
 //    search theo ten
-@SuppressLint("Range")
-public List<ExportItems>searchByName(String name){
-    list=new ArrayList<>();
-    String sql="select * from XuatHang where tenHang=?";
-    Cursor c=db.rawQuery(sql,new String[]{name});
-    while (c.moveToNext()){
-        ExportItems obj=new ExportItems();
-        obj.setMaXuatHang(c.getInt(c.getColumnIndex("maXuatHang")));
-        obj.setTenHang(c.getString(c.getColumnIndex("tenHang")));
-        obj.setTenLoaiHang(c.getString(c.getColumnIndex("tenLoaiHang")));
-        obj.setSoLuongNhap(c.getInt(c.getColumnIndex("soLuongNhap")));
-        obj.setSoLuongXuat(c.getInt(c.getColumnIndex("soLuongXuat")));
-        obj.setDonGia(c.getFloat(c.getColumnIndex("donGia")));
-        obj.setDonGiaXuat(c.getFloat(c.getColumnIndex("donGiaXuat")));
-        try {
-            obj.setNgayXuatHang(sdf.parse(c.getString(c.getColumnIndex("ngayXuatHang"))));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        obj.setMaNhapHang(c.getInt(c.getColumnIndex("maNhapHang")));
-        obj.setUsername(c.getString(c.getColumnIndex("username")));
-        list.add(obj);
-
+    @SuppressLint("Range")
+    public List<ExportItems>searchByName(String name){
+        String sql="select * from XuatHang where tenHang=?";
+        return getData(sql,name);
     }
-    return list;
-}
+//    lay danh sach hang theo tenLoaiHang
+    public List<ExportItems>getAllByTenLoaiHang(String name){
+        String sql="select * from XuatHang where tenLoaiHang=?";
+        return getData(sql,name);
+    }
 
 }
