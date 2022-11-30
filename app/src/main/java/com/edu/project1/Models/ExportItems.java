@@ -23,6 +23,7 @@ public class ExportItems {
         this.tenHang = tenHang;
         this.tenLoaiHang = tenLoaiHang;
         this.username = username;
+
     }
 
     public int getMaXuatHang() {
@@ -80,6 +81,7 @@ public class ExportItems {
     public void setNgayXuatHang(Date ngayXuatHang) {
         this.ngayXuatHang = ngayXuatHang;
     }
+
 
     public String getTenHang() {
         return tenHang;
