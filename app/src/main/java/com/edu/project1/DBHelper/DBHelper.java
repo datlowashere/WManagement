@@ -22,7 +22,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "tenKhoHang text," +
                 "password text)";
         String createTBLoaiHang="create table LoaiHang(" +
-                "maLoaiHang integer primary key autoincrement," +
+                "maLoaiHang INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "tenLoaiHang text," +
                 "username text references User(username))";
         String createTBNhapHang="create table NhapHang(" +
@@ -61,15 +61,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String dropUser="drop table  if exists User";
-        String dropLoaiHang="drop table  if exists LoaiHang";
-        String dropNhapHang="drop table  if exists NhapHang";
-        String dropXuatHang="drop table  if exists XuatHang";
-        db.execSQL(dropUser);
-        db.execSQL(dropLoaiHang);
-        db.execSQL(dropNhapHang);
-        db.execSQL(dropXuatHang);
-        onCreate(db);
+        if(oldVersion!=newVersion) {
+            String dropUser = "drop table  if exists User";
+            String dropLoaiHang = "drop table  if exists LoaiHang";
+            String dropNhapHang = "drop table  if exists NhapHang";
+            String dropXuatHang = "drop table  if exists XuatHang";
+            db.execSQL(dropUser);
+            db.execSQL(dropLoaiHang);
+            db.execSQL(dropNhapHang);
+            db.execSQL(dropXuatHang);
+            onCreate(db);
+        }
 
 
 
