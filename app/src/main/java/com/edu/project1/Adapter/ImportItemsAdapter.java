@@ -43,7 +43,7 @@ public class ImportItemsAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return 0;
     }
     public static class viewOfItem{
         TextView tvMaNhapHang,tvSoLuongNhap,tvDonGia,tvTenHang,tvTenLoaiHang,tvNgaySanXuat,tvNgayNhapHang;
@@ -55,7 +55,7 @@ public class ImportItemsAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup parent) {
         viewOfItem holder;
         if(view==null){
-            view= LayoutInflater.from(context).inflate(R.layout.item_import_item,null);
+            view= LayoutInflater.from(context).inflate(R.layout.item_import_item,parent,false);
             holder=new viewOfItem();
             holder.tvMaNhapHang=view.findViewById(R.id.tvMaNhapHang);
             holder.tvSoLuongNhap=view.findViewById(R.id.tvSoLuongNhap);
@@ -71,13 +71,13 @@ public class ImportItemsAdapter extends BaseAdapter {
 
         ImportItems obj=list.get(position);
 
-        holder.tvMaNhapHang.setText(""+obj.getMaNhapHang());
-        holder.tvSoLuongNhap.setText("Số lượng: "+obj.getSoLuongNhap());
-        holder.tvDonGia.setText("Đơn giá: "+obj.getDonGia());
-        holder.tvTenHang.setText("Tên Hàng:"+obj.getTenHang());
-        holder.tvTenLoaiHang.setText("Loại hàng: "+obj.getTenLoaiHang());
-        holder.tvNgaySanXuat.setText("Ngày sản xuất: "+sdf.format(obj.getNgaySanXuat()));
-        holder.tvNgayNhapHang.setText("Ngày nhập:"+sdf.format(obj.getNgayNhapHang()));
+        holder.tvMaNhapHang.setText("Mã: "+""+obj.getMaNhapHang());
+        holder.tvSoLuongNhap.setText("Số lượng: "+""+obj.getSoLuongNhap());
+        holder.tvDonGia.setText("Giá: "+""+obj.getDonGia()+" đ");
+        holder.tvTenHang.setText("Tên:"+""+obj.getTenHang());
+        holder.tvTenLoaiHang.setText("Loại: "+""+obj.getTenLoaiHang());
+        holder.tvNgaySanXuat.setText("NSX: "+""+sdf.format(obj.getNgaySanXuat()));
+        holder.tvNgayNhapHang.setText("NN:"+""+sdf.format(obj.getNgayNhapHang()));
 
 //        Animation animation= AnimationUtils.loadAnimation(context,R.anim.scale_animation);
 //        view.startAnimation(animation);
