@@ -34,14 +34,14 @@ public class FeaturesAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return 0;
     }
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
 
         if(view==null){
-            view= LayoutInflater.from(context).inflate(R.layout.item_feature,null);
+            view= LayoutInflater.from(context).inflate(R.layout.item_feature,parent,false);
 
             TextView tvName=view.findViewById(R.id.tvFeaturesName);
             ImageView img=view.findViewById(R.id.imgFeatures);
