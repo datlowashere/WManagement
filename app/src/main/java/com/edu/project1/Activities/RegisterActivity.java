@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class RegisterActivity extends AppCompatActivity {
 
     private TextInputEditText edUsername,edName,edEmail,edKhoHang,edPassword;
+    CustomToasts customToasts=new CustomToasts();
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
         list.setEmail(email);
         list.setTenKhoHang(tenKho);
         list.setPassword(pass);
-
-        CustomToasts customToasts=new CustomToasts();
-        if(user.isEmpty() || name.isEmpty() || email.isEmpty() || tenKho.isEmpty() || pass.isEmpty()){
-            customToasts.warningToast(RegisterActivity.this,"Phải điền đầy đủ thông tin");
-        }else{
+        if(checkInput()>0){
             boolean check=dao.checkUsername(user);
             if(check==false){
                 try {
@@ -85,6 +83,27 @@ public class RegisterActivity extends AppCompatActivity {
                 customToasts.errorToast(RegisterActivity.this,"Tên đăng nhập đã tồn tại!!!");
             }
         }
+    }
+    private int checkInput(){
+        String user=edUsername.getText().toString();
+        String name=edName.getText().toString();
+        String email=edEmail.getText().toString();
+        String tenKho=edKhoHang.getText().toString();
+        String pass=edPassword.getText().toString();
+        int check=1;
+        if(user.isEmpty() || name.isEmpty() || email.isEmpty() || tenKho.isEmpty() || pass.isEmpty()){
+            customToasts.warningToast(RegisterActivity.this,"Phải điền đầy đủ thông tin");
+            check=-1;
+        }
+        if(name.matches("\\d+")){
+            customToasts.warningToast(RegisterActivity.this,"Họ tên không được là số");
+            check=-1;
+        }
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            customToasts.warningToast(RegisterActivity.this,"Email không hợp lệ");
+            check=-1;
+        }
+        return check;
     }
 
     private void clear(){
