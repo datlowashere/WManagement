@@ -21,16 +21,17 @@ public class ReportDao {
     }
 //    hang ton
     @SuppressLint("Range")
-    public List<InventoryItems> getAllHangTon(){
-        String sql="select tenHang,tenLoaiHang,soLuongNhap,soLuongXuat, subtract(soLuongXuat-soLuongNhap) as conLai from XuatHang where conLai>0";
-        Cursor c=db.rawQuery(sql,null);
-        do{
+    public List<InventoryItems> getAllHangTon(String name){
+        list=new ArrayList<>();
+        String sql="select tenHang,tenLoaiHang,soLuongNhap,soLuongXuat,(soLuongNhap-soLuongXuat) as conLai from XuatHang where username=? and conLai>0";
+        Cursor c=db.rawQuery(sql,new String[]{name});
+        while (c.moveToNext()){
             InventoryItems obj=new InventoryItems();
             obj.setTenHang(c.getString(c.getColumnIndex("tenHang")));
             obj.setTenLoai(c.getString(c.getColumnIndex("tenLoaiHang")));
             obj.setSoLuongTon(c.getInt(c.getColumnIndex("conLai")));
             list.add(obj);
-        }while (c.moveToNext());
+        };
         return list;
     }
 //   tong so luong nhap hang
