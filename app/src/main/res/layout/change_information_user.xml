@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minWidth="400dp"
@@ -13,27 +14,27 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradient_backgroud"
+            android:background="@color/ABBAAB"
             android:padding="10dp"
             android:text="Đổi thông tin"
             android:textAlignment="center"
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/imageView"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgUserAccount"
             android:layout_width="match_parent"
             android:layout_height="162dp"
-            android:padding="10dp"
+            android:padding="20dp"
             android:src="@drawable/ic_icon_blossom_round" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="40dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edChangeName"
@@ -47,9 +48,9 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="40dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edChangeWareHouseName"
@@ -62,9 +63,9 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="40dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edChangeEmail"
@@ -77,45 +78,51 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="40dp"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edOldPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Mật khẩu cũ" />
+                android:hint="Mật khẩu cũ"
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="40dp"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edNewPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Mật khẩu mới" />
+                android:hint="Mật khẩu mới"
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="40dp"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edReNewPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nhập Mật khẩu mới" />
+                android:hint="Nhập Mật khẩu mới"
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
