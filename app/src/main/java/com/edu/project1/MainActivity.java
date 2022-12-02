@@ -1,9 +1,7 @@
 package com.edu.project1;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,23 +10,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.edu.project1.Adapter.FeaturesAdapter;
-import com.edu.project1.Dao.UserDao;
 import com.edu.project1.Fragments.AccountFragment;
 import com.edu.project1.Fragments.DasboardFragment;
 import com.edu.project1.Fragments.ExportFragment;
 import com.edu.project1.Fragments.ImportFragment;
 import com.edu.project1.Fragments.ReportFragment;
-import com.edu.project1.Models.FeaturesModel;
-import com.edu.project1.Models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -68,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
     }
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager=getSupportFragmentManager();

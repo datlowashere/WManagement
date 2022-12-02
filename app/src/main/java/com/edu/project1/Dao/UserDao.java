@@ -24,6 +24,7 @@ public class UserDao {
     public long insert(User obj){
         ContentValues values=new ContentValues();
         values.put("username",obj.getUsername());
+        values.put("anh",obj.getImg());
         values.put("hoTen",obj.getHoTen());
         values.put("email",obj.getEmail());
         values.put("tenKhoHang",obj.getTenKhoHang());
@@ -32,14 +33,20 @@ public class UserDao {
     }
 
 //    Doi thong tin
-public int update(User obj){
-    ContentValues values=new ContentValues();
-    values.put("hoTen",obj.getHoTen());
-    values.put("email",obj.getEmail());
-    values.put("tenKhoHang",obj.getTenKhoHang());
-    values.put("password",obj.getPassword());
-    return db.update("User",values,"username=?",new String[]{obj.getUsername()});
-}
+    public int update(User obj){
+        ContentValues values=new ContentValues();
+        values.put("anh",obj.getImg());
+        values.put("hoTen",obj.getHoTen());
+        values.put("email",obj.getEmail());
+        values.put("tenKhoHang",obj.getTenKhoHang());
+        values.put("password",obj.getPassword());
+        return db.update("User",values,"username=?",new String[]{obj.getUsername()});
+    }
+//    xóa tài khoản
+    public int delete(String id){
+        return db.delete("User","username=?",new String[]{id});
+    }
+
 
     //Lấy Data nhiều tham số
     @SuppressLint("Range")
@@ -50,6 +57,7 @@ public int update(User obj){
             User obj=new User();
             c.moveToFirst();
             obj.setUsername(c.getString(c.getColumnIndex("username")));
+            obj.setImg(c.getBlob(c.getColumnIndex("anh")));
             obj.setHoTen(c.getString(c.getColumnIndex("hoTen")));
             obj.setEmail(c.getString(c.getColumnIndex("email")));
             obj.setTenKhoHang(c.getString(c.getColumnIndex("tenKhoHang")));

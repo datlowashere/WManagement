@@ -62,10 +62,10 @@ public class ChangeInformationActivity extends AppCompatActivity {
 
         Bitmap bitmap= BitmapFactory.decodeByteArray(obj.getImg(),0,obj.getImg().length);
         img.setImageBitmap(bitmap);
-//        edName.setText(obj.getHoTen());
-//        edWName.setText(obj.getTenKhoHang());
-//        edEmail.setText(obj.getEmail());
-//        edOldPass.setText(obj.getPassword());
+        edName.setText(obj.getHoTen());
+        edWName.setText(obj.getTenKhoHang());
+        edEmail.setText(obj.getEmail());
+        edOldPass.setText(obj.getPassword());
 
 
         img.setOnClickListener(new View.OnClickListener() {

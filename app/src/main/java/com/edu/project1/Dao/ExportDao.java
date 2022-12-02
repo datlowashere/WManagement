@@ -84,6 +84,16 @@ public class ExportDao {
         return list;
     }
 
+//    Check hang xuat
+    public boolean checkHang(String name){
+        Cursor c=db.rawQuery("select * from XuatHang where tenHang=?",new String[]{name});
+        if (c.getCount()!=0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     //    lay data theo id
     public ExportItems getById(String id){
         String sql="select * from XuatHang where maXuatHang=?";

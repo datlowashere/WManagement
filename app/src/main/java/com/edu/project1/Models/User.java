@@ -2,16 +2,18 @@ package com.edu.project1.Models;
 
 public class User {
     private String username,hoTen,email,tenKhoHang,password;
+    private byte[] img;
 
     public User() {
     }
 
-    public User(String username, String hoTen, String tenKhoHang, String password,String email) {
+    public User(String username, String hoTen, String tenKhoHang, String password,String email,byte[]img) {
         this.username = username;
         this.hoTen = hoTen;
         this.tenKhoHang = tenKhoHang;
         this.password = password;
         this.email=email;
+        this.img=img;
     }
 
     public String getUsername() {
@@ -52,5 +54,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public byte[] getImg() {
+        return img;
+    }
+
+    public void setImg(byte[] img) {
+        this.img = img;
     }
 }

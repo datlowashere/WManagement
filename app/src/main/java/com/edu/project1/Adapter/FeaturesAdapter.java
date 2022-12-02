@@ -44,11 +44,15 @@ public class FeaturesAdapter extends BaseAdapter {
             view= LayoutInflater.from(context).inflate(R.layout.item_feature,parent,false);
 
             TextView tvName=view.findViewById(R.id.tvFeaturesName);
+            TextView tvP1=view.findViewById(R.id.tvFeaturesp1);
+            TextView tvP2=view.findViewById(R.id.tvFeaturesp2);
             ImageView img=view.findViewById(R.id.imgFeatures);
 
             FeaturesModel obj=list.get(position);
             tvName.setText(obj.getNameF());
             img.setImageResource(obj.getImg());
+            tvP1.setText(obj.getP1());
+            tvP2.setText(obj.getP2());
         }
         return view;
     }

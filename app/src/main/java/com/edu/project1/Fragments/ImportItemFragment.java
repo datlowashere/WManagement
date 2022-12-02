@@ -194,10 +194,12 @@ public class ImportItemFragment extends Fragment {
         edNgayNhapHang=dialog.findViewById(R.id.edNgayNhapHang);
         spLoaiHang=dialog.findViewById(R.id.spLoaiHang);
 
+
         typeItemsDao=new TypeItemsDao(context);
         typeItemsList=(List<TypeItems>) typeItemsDao.getAllByUser(getUsername());
         spinnerTypeItemsAdapter=new SpinnerTypeItemsAdapter(typeItemsList,context);
         spLoaiHang.setAdapter(spinnerTypeItemsAdapter);
+
 
         if(position!=0){
             tvMaNhapHang.setText(String.valueOf(obj.getMaNhapHang()));
@@ -264,12 +266,17 @@ public class ImportItemFragment extends Fragment {
                 obj.setUsername(getUsername());
                 try {
                     if(checkInput()>0) {
+                        boolean checkHang=dao.checkHang(edTenHang.getText().toString());
                         if (position == 0) {
-                            if (dao.insert(obj) > 0) {
-                                customToasts.successToast(context, "Thêm thành công");
-                                dialog.dismiss();
-                            } else {
-                                customToasts.errorToast(context, "Thêm thất bại!!");
+                            if(!checkHang) {
+                                if (dao.insert(obj) > 0) {
+                                    customToasts.successToast(context, "Thêm thành công");
+                                    dialog.dismiss();
+                                } else {
+                                    customToasts.errorToast(context, "Thêm thất bại!!");
+                                }
+                            }else {
+                                customToasts.errorToast(context,"Hàng đã được nhập, vui lòng nhập hàng khác!");
                             }
                         } else {
                             obj.setMaNhapHang(Integer.parseInt(tvMaNhapHang.getText().toString()));
@@ -279,8 +286,6 @@ public class ImportItemFragment extends Fragment {
                             } else {
                                 customToasts.errorToast(context, "Cập nhật thất bại!!!");
                             }
-
-
                         }
                         reLoadData();
                         dialog.dismiss();
@@ -291,7 +296,6 @@ public class ImportItemFragment extends Fragment {
             }
 
         });
-//        Hủy lưu
         dialog.findViewById(R.id.btnCancelSaveNhapHang).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -299,7 +303,6 @@ public class ImportItemFragment extends Fragment {
             }
         });
         dialog.show();
-
 
     }
 
@@ -353,24 +356,24 @@ public class ImportItemFragment extends Fragment {
         if(edTenHang.getText().toString().isEmpty() || edSoLuongNhap.getText().toString().isEmpty() || edDonGia.getText().toString().isEmpty() || edNgayNhapHang.getText().toString().isEmpty() || edNgaySanXuat.getText().toString().isEmpty()){
             customToasts.warningToast(getContext(),"Phải điền đầy đủ thông tin");
             check=-1;
+        }else {
+            if (edTenHang.getText().toString().matches("\\d+")) {
+                customToasts.warningToast(getContext(), "Tên hàng không phải là số !");
+                check = -1;
+            }
+            if (!edSoLuongNhap.getText().toString().matches("\\d+")) {
+                customToasts.warningToast(getContext(), "Số lượng phải là số!!");
+                check = -1;
+            }
+            if (!edDonGia.getText().toString().matches("[+-]?([0-9]*[.])?[0-9]+")) {
+                customToasts.warningToast(getContext(), "Đơn giá phải là số!!");
+                check = -1;
+            }
+            if (!sdf.parse(edNgayNhapHang.getText().toString()).after(sdf.parse(edNgaySanXuat.getText().toString()))) {
+                customToasts.warningToast(getContext(), "Ngày nhập hàng phải lớn hơn ngày sản xuất!");
+                check = -1;
+            }
         }
-        if(edTenHang.getText().toString().matches("\\d+")){
-            customToasts.warningToast(getContext(),"Tên hàng không phải là số !");
-            check=-1;
-        }
-        if(!edSoLuongNhap.getText().toString().matches("\\d+")){
-            customToasts.warningToast(getContext(),"Số lượng phải là số!!");
-            check=-1;
-        }
-        if(!edDonGia.getText().toString().matches("\\d+")){
-            customToasts.warningToast(getContext(),"Đơn giá phải là số!!");
-            check=-1;
-        }
-        if(!sdf.parse(edNgayNhapHang.getText().toString()).after(sdf.parse(edNgaySanXuat.getText().toString()))){
-            customToasts.warningToast(getContext(),"Ngày nhập hàng phải lớn hơn ngày sản xuất!");
-            check=-1;
-        }
-
         return check;
     }
     private void reLoadData(){

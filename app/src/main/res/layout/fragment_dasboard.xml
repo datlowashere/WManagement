@@ -27,7 +27,8 @@
                 <LinearLayout
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp">
 
                     <TextView
                         android:id="@+id/tvHelloToolbar"
@@ -45,11 +46,13 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgUser"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_gravity="end"
+                    adnroid:civ_border_color="@color/black"
+                    adnroid:civ_border_width="2dp"
                     adnroid:srcCompat="@drawable/ic_icon_blossom_round" />
 
             </LinearLayout>
@@ -85,21 +88,30 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    </LinearLayout>
 
-            <GridView
-                android:id="@+id/gridFeatures"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:numColumns="2"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingRight="20dp" />
-        </LinearLayout>
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:text="Tổng quan"
+        android:textSize="16dp"
+        android:textStyle="bold" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <GridView
+            android:id="@+id/gridFeatures"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numColumns="2"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:paddingRight="20dp" />
     </LinearLayout>
 
 </LinearLayout>

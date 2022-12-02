@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -15,6 +19,8 @@ import com.edu.project1.Helper.CustomToasts;
 import com.edu.project1.Models.User;
 import com.edu.project1.R;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.io.ByteArrayOutputStream;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -62,7 +68,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         UserDao dao=new UserDao(RegisterActivity.this);
         User list=new User();
+        Resources res = getResources();
+
         list.setUsername(user);
+        list.setImg(drawableToByte(R.drawable.user));
         list.setHoTen(name);
         list.setEmail(email);
         list.setTenKhoHang(tenKho);
@@ -106,6 +115,15 @@ public class RegisterActivity extends AppCompatActivity {
         return check;
     }
 
+    private byte[] drawableToByte(int id){
+        Resources res=getResources();
+        Drawable drawable=res.getDrawable(id);
+        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] bitMapData = stream.toByteArray();
+        return bitMapData;
+    }
     private void clear(){
         edUsername.setText("");
         edName.setText("");

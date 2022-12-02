@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient_backgroud"
+        android:background="@color/ABBAAB"
         android:padding="10dp"
         android:text="Tài khoản"
         android:textAlignment="center"
@@ -34,11 +34,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/imageView"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgUserAccount"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
@@ -223,6 +223,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
+                        android:inputType="textPassword"
                         android:padding="10dp"
                         android:text="TextView"
                         android:textAlignment="viewStart" />
@@ -266,6 +267,38 @@
                     android:clickable="true"
                     android:padding="5dp"
                     android:text="Thông tin ứng dụng"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            app:cardUseCompatPadding="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="3dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/unfollow"
+                    android:padding="5dp" />
+
+                <TextView
+                    android:id="@+id/tvDeleteAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:padding="5dp"
+                    android:text="Xóa tài khoản"
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>

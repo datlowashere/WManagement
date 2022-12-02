@@ -1,5 +1,7 @@
 package com.edu.project1.Fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,20 +14,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.edu.project1.Adapter.FeaturesAdapter;
+import com.edu.project1.Dao.ReportDao;
 import com.edu.project1.Dao.UserDao;
 import com.edu.project1.MainActivity;
 import com.edu.project1.Models.FeaturesModel;
+import com.edu.project1.Models.TypeItems;
 import com.edu.project1.Models.User;
 import com.edu.project1.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class DasboardFragment extends Fragment {
 
     private TextView tvHello,tvUser,tvNameWareHouse;
-    private ImageView img;
+    private CircleImageView img;
     private GridView gridView;
     private List<FeaturesModel> featureList;
     private FeaturesAdapter featuresAdapter;
@@ -34,12 +40,6 @@ public class DasboardFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static DasboardFragment newInstance(String param1, String param2) {
-        DasboardFragment fragment = new DasboardFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,18 +65,29 @@ public class DasboardFragment extends Fragment {
         String nameUser=obj.getHoTen();
         String nameW=obj.getTenKhoHang();
 
+        Bitmap bitmap= BitmapFactory.decodeByteArray(obj.getImg(),0,obj.getImg().length);
+        img.setImageBitmap(bitmap);
+
         tvUser.setText(nameUser);
         tvNameWareHouse.setText(nameW);
 
         gridView=view.findViewById(R.id.gridFeatures);
+//        ReportDao reportDao=new ReportDao(getContext());
+//        int tongLoai=reportDao.getSoTongLoai(username);
+//        int tongSoNhap=reportDao.getTongSoLuongNhap(username);
+//        int tongSoXuat=reportDao.getTongSoLuongXuat(username);
+//        int tongSoTon=reportDao.getTongSoLuongTon(username);
+//        float tongTienNhap=reportDao.getTongTienNhap(username);
+//        float tongTienXuat=reportDao.getTongTienXuat(username);
+
 
         featureList=new ArrayList<>();
-        featureList.add(new FeaturesModel("Loại hàng nhập", R.drawable.box));
-        featureList.add(new FeaturesModel("Nhập hàng", R.drawable.im));
-        featureList.add(new FeaturesModel("Xuất hàng", R.drawable.ex));
-        featureList.add(new FeaturesModel("Hàng Tồn", R.drawable.inventory));
-        featureList.add(new FeaturesModel("Doanh số", R.drawable.financial_profit));
-        featureList.add(new FeaturesModel("Top hàng", R.drawable.warehouse));
+        featureList.add(new FeaturesModel("Loại hàng","Tổng: ","", R.drawable.box));
+        featureList.add(new FeaturesModel("Nhập hàng","Nhập: ","Tiền: ", R.drawable.im));
+        featureList.add(new FeaturesModel("Xuất hàng","Xuất: ","Tiền: ", R.drawable.ex));
+        featureList.add(new FeaturesModel("Hàng Tồn","Tổng: ","", R.drawable.inventory));
+//        featureList.add(new FeaturesModel("Doanh số","","", R.drawable.financial_profit));
+//        featureList.add(new FeaturesModel("Top hàng","","", R.drawable.warehouse));
         featuresAdapter=new FeaturesAdapter(featureList,getContext());
         gridView.setAdapter(featuresAdapter);
 

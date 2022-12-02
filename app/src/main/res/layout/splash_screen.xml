@@ -9,15 +9,16 @@
 
     <ImageView
         android:id="@+id/imgProduct"
-        android:layout_width="183dp"
+        android:layout_width="100dp"
         android:layout_height="0dp"
         android:layout_marginTop="265dp"
         android:layout_marginBottom="19dp"
+        android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/tvTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/production" />
+        app:srcCompat="@drawable/boxes" />
 
     <TextView
         android:id="@+id/tvTitle"

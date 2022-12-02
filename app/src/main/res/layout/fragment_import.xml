@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".Fragments.ImportFragment" >
+    tools:context=".Fragments.ImportFragment">
 
     <TextView
         android:id="@+id/textView18"
@@ -20,7 +21,8 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayoutImport"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:tabTextAppearance="@style/MineCustomTabText">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

@@ -17,14 +17,6 @@ public class TopItemsFragment extends Fragment {
     public TopItemsFragment() {
         // Required empty public constructor
     }
-
-    public static TopItemsFragment newInstance(String param1, String param2) {
-        TopItemsFragment fragment = new TopItemsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +26,7 @@ public class TopItemsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_top_items, container, false);
+        View view=inflater.inflate(R.layout.fragment_top_items, container, false);
+        return view;
     }
 }

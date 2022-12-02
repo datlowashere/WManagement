@@ -5,24 +5,19 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.edu.project1.Activities.ChangeInformationActivity;
+import com.edu.project1.Activities.InformationAppActivity;
 import com.edu.project1.Activities.LoginActivity;
 import com.edu.project1.Dao.UserDao;
 import com.edu.project1.Helper.CustomToasts;
@@ -31,13 +26,15 @@ import com.edu.project1.Models.User;
 import com.edu.project1.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class AccountFragment extends Fragment {
 
-
-    private Dialog dialog;
-    private TextInputEditText edName,edWName,edEmail,edOldPass,edNewPass,edReNewPass;
     private TextView tvAccountName,tvShowname,tvShownameW,tvUsername,tvPassword,tvEmail;
+    private CircleImageView img;
+
+    CustomToasts customToasts=new CustomToasts();
 
     public AccountFragment() {
         // Required empty public constructor
@@ -69,6 +66,7 @@ public class AccountFragment extends Fragment {
         tvEmail=view.findViewById(R.id.tvAccoutShowEmail);
         tvUsername=view.findViewById(R.id.tvAccountShowUsername);
         tvPassword=view.findViewById(R.id.tvAccoutShowPassword);
+        img=view.findViewById(R.id.imgUserAccount);
 
 
         showInformationUser();
@@ -88,7 +86,6 @@ public class AccountFragment extends Fragment {
                 builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 });
                 AlertDialog alertDialog=builder.create();
@@ -96,31 +93,60 @@ public class AccountFragment extends Fragment {
                 alertDialog.show();
             }
         });
-
         view.findViewById(R.id.btnChangeInfoAccount).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogChangeInformation();
+                moveToChangeInformationActivity();
 
             }
         });
         view.findViewById(R.id.tvInformationAccount).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                dialogShowInformationApp();
+            public void onClick(View v){
+                moveToShowInformationAppActivity();
             }
         });
+        view.findViewById(R.id.tvDeleteAccount).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+                builder.setTitle("Thông báo");
+                builder.setMessage("Chắc chắn xóa tài khoản?");
+                builder.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        UserDao dao=new UserDao(getContext());
+                        try {
+                            dao.delete(getUsername());
+                            customToasts.successToast(getContext(),"Xóa thành công");
+                            startActivity(new Intent(getActivity(),LoginActivity.class));
+                            return;
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            customToasts.errorToast(getContext(),"Lỗi");
+                        }
+                    }
+                });
+                builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                AlertDialog alertDialog=builder.create();
+                alertDialog.getWindow().setWindowAnimations(R.style.animationDialog);
+                alertDialog.show();
 
-
+            }
+        });
         return view;
     }
     private void showInformationUser(){
-        MainActivity activity=(MainActivity)getActivity();
-        String username= activity.getUsername();
         User obj=new User();
         UserDao dao=new UserDao(getContext());
-        obj=dao.getID(username);
+        obj=dao.getID(getUsername());
 
+        Bitmap bitmap= BitmapFactory.decodeByteArray(obj.getImg(),0,obj.getImg().length);
+        img.setImageBitmap(bitmap);
         tvAccountName.setText(obj.getHoTen());
         tvShowname.setText(obj.getHoTen());
         tvShownameW.setText(obj.getTenKhoHang());
@@ -129,91 +155,28 @@ public class AccountFragment extends Fragment {
         tvPassword.setText(obj.getPassword());
 
     }
-    private void dialogShowInformationApp(){
+    private String getUsername(){
+        MainActivity activity=(MainActivity)getActivity();
+        String username= activity.getUsername();
+        return username;
+    }
+    private void moveToChangeInformationActivity () {
+        MainActivity activity=(MainActivity)getActivity();
+        String username= activity.getUsername();
+        String oldpass=activity.getPassword();
+        Intent itoChangePass = new Intent(getActivity(), ChangeInformationActivity.class);
+        itoChangePass.putExtra("username",username);
+        itoChangePass.putExtra("pass",oldpass);
+        startActivity(itoChangePass);
 
     }
-    private void dialogChangeInformation(){
-        dialog=new Dialog(getContext());
-        dialog.setContentView(R.layout.dialog_change_information_user);
-        dialog.getWindow().setWindowAnimations(R.style.animationDialog);
-
-        edName=dialog.findViewById(R.id.edChangeName);
-        edWName=dialog.findViewById(R.id.edChangeWareHouseName);
-        edEmail=dialog.findViewById(R.id.edChangeEmail);
-        edOldPass=dialog.findViewById(R.id.edOldPass);
-        edNewPass=dialog.findViewById(R.id.edNewPass);
-        edReNewPass=dialog.findViewById(R.id.edReNewPass);
-
-
-
-        dialog.findViewById(R.id.btnSaveChangeInfor).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity activity=(MainActivity)getActivity();
-                String username= activity.getUsername();
-                String oldpass=activity.getPassword();
-
-                String name=edName.getText().toString();
-                String nameW=edWName.getText().toString();
-                String email=edEmail.getText().toString();
-                String oldPass=edOldPass.getText().toString();
-                String newPass=edNewPass.getText().toString();
-                String reNewPass=edReNewPass.getText().toString();
-
-                UserDao dao=new UserDao(getContext());
-                User obj=new User();
-                obj=dao.getID(username);
-                obj.setHoTen(name);
-                obj.setTenKhoHang(nameW);
-                obj.setEmail(email);
-                obj.setPassword(newPass);
-
-                CustomToasts customToasts=new CustomToasts();
-
-                if(name.isEmpty() || nameW.isEmpty() || email.isEmpty() || oldPass.isEmpty() || newPass.isEmpty() || reNewPass.isEmpty()){
-                    customToasts.warningToast(getContext(),"Phải nhập đủ thông tin");
-                }else{
-                    if(!reNewPass.equals(newPass)){
-                        customToasts.errorToast(getContext(),"Mật khẩu mới không trùng");
-                    }else if(!oldPass.equals(oldpass)){
-                        customToasts.errorToast(getContext(),"Mật khẩu cũ không đúng");
-                    }else {
-                        if (dao.update(obj) > 0) {
-                            customToasts.successToast(getContext(), "Thay đổi thành công");
-                            clear();
-                        } else {
-                            customToasts.errorToast(getContext(), "Lỗi");
-                        }
-                    }
-                }
-            }
-        });
-        dialog.findViewById(R.id.btnCancelSaveChangeInfo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
+    private void moveToShowInformationAppActivity(){
+        Intent itoShowInforApp=new Intent(getActivity(), InformationAppActivity.class);
+        startActivity(itoShowInforApp);
     }
-
-    private void clear(){
-        edName.setText("");
-        edWName.setText("");
-        edEmail.setText("");
-        edOldPass.setText("");
-        edNewPass.setText("");
-        edReNewPass.setText("");
-    }
-
     @Override
     public void onResume() {
         super.onResume();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        if (Build.VERSION.SDK_INT >= 26) {
-            ft.setReorderingAllowed(false);
-        }
-        ft.detach(this).attach(this).commit();
-
+        showInformationUser();
     }
 }

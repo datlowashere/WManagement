@@ -18,8 +18,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-//        getSupportActionBar().hide();
         setContentView(R.layout.login_activity);
 
         edUsername=findViewById(R.id.edUsername);
@@ -31,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
                 checkLogin();
             }
         });
-
 
         findViewById(R.id.tvRegister).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
         String pass=edPassword.getText().toString();
 
         CustomToasts customToast=new CustomToasts();
-
         UserDao dao=new UserDao(LoginActivity.this);
 
         if(user.isEmpty() || pass.isEmpty()){

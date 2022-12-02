@@ -61,7 +61,7 @@
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:layout_gravity="center"
-                            app:srcCompat="@drawable/production" />
+                            app:srcCompat="@drawable/boxes" />
 
                         <TextView
                             android:id="@+id/tv3"

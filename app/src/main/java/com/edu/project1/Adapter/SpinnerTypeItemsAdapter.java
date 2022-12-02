@@ -55,8 +55,8 @@ public class SpinnerTypeItemsAdapter extends BaseAdapter {
         TypeItems obj=list.get(position);
         holder.tvSingleItem.setText(obj.getTenLoaiHang());
 
-        Animation animation= AnimationUtils.loadAnimation(context,R.anim.scale_animation);
-        view.startAnimation(animation);
+//        Animation animation= AnimationUtils.loadAnimation(context,R.anim.scale_animation);
+//        view.startAnimation(animation);
         return view;
     }
 

@@ -85,6 +85,16 @@ public class ImportDao {
         return list;
     }
 
+//  Check hàng nhập
+    public boolean checkHang(String name){
+        Cursor c=db.rawQuery("select * from NhapHang where tenHang=?",new String[]{name});
+        if (c.getCount()!=0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 //    Lấy data theo mã
     public ImportItems getById(String id){
         String sql="select * from NhapHang where maNhapHang=?";

@@ -298,30 +298,33 @@ public class ExportFragment extends Fragment {
                     e.printStackTrace();
                 }
                 obj.setUsername(getUser());
-                try {
-                    if(checkInput()>0){
-                        if(possition==0){
-                            if(dao.insert(obj)>0){
-                                customToasts.successToast(context,"Thêm thành công!");
+
+                if(checkInput()>0){
+                    boolean checkHang=dao.checkHang(importItems.getTenHang());
+                    if(possition==0){
+                        if (!checkHang) {
+                            if (dao.insert(obj) > 0) {
+                                customToasts.successToast(context, "Thêm thành công!");
                                 dialog.dismiss();
-                            }else{
-                                customToasts.errorToast(context,"Thêm thất bại");
+                            } else {
+                                customToasts.errorToast(context, "Thêm thất bại");
                             }
                         }else {
-                            obj.setMaXuatHang(Integer.parseInt(tvMaXuat.getText().toString()));
-                            if (dao.update(obj)>0){
-                                customToasts.successToast(context,"Cập nhật thành công!");
-                                dialog.dismiss();
-                            }else {
-                                customToasts.errorToast(context,"Cập nhật thất bại");
-                            }
+                            customToasts.errorToast(context,"Hàng đã được xuất, vui lòng xuất hàng khác!!!");
+                        }
+                    }else {
+                        obj.setMaXuatHang(Integer.parseInt(tvMaXuat.getText().toString()));
+                        if (dao.update(obj)>0){
+                            customToasts.successToast(context,"Cập nhật thành công!");
+                            dialog.dismiss();
+                        }else {
+                            customToasts.errorToast(context,"Cập nhật thất bại");
                         }
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                    reLoadData();
+                    dialog.dismiss();
                 }
-                reLoadData();
-                dialog.dismiss();
+
 
             }
         });
@@ -402,30 +405,39 @@ public class ExportFragment extends Fragment {
         String username=activity.getUsername();
         return username;
     }
-    private int checkInput() throws ParseException {
+    private int checkInput()  {
         int check=1;
-//        if(edDonGia.getText().toString().isEmpty() || edSoLuongXuat.getText().toString().isEmpty() || edNgayXuatHang.getText().toString().isEmpty()){
-//            customToasts.warningToast(getContext(),"Phải điền đầy đủ thông tin");
-//            check=-1;
-//        }
-//        if(!edSoLuongXuat.getText().toString().matches("[0-9]+")){
-//            customToasts.errorToast(getContext(),"Số lượng phải là số!");
-//            check=-1;
-//        }
-//        if(!edDonGia.getText().toString().matches("[+-]?([0-9]*[.])?[0-9]+")){
-//            customToasts.errorToast(getContext(),"Đơn giá không đúng !");
-//            check=-1;
-//        }
-//        importItems=new ImportItems();
-//        int sl=importItems.getSoLuongNhap();
-//        if(Integer.parseInt(edSoLuongXuat.getText().toString())>sl){
-//            customToasts.warningToast(getContext(),"Số lượng xuất lớn hơn số lượng nhập!"+sl);
-//            check=-1;
-//        }
-//        if(sdf.parse(edNgayXuatHang.getText().toString()).after(importItems.getNgayNhapHang())){
-//            customToasts.warningToast(getContext(),"Ngày xuất phải bằng hoặc sau ngày nhập!");
-//            check=-1;
-//        }
+        if(edDonGia.getText().toString().isEmpty() || edSoLuongXuat.getText().toString().isEmpty() || edNgayXuatHang.getText().toString().isEmpty()){
+            customToasts.warningToast(getContext(),"Phải điền đầy đủ thông tin");
+            check=-1;
+        }else {
+            if (!edSoLuongXuat.getText().toString().matches("[0-9]+")) {
+                customToasts.errorToast(getContext(), "Số lượng phải là số!");
+                check = -1;
+            }
+            if (!edDonGia.getText().toString().matches("[+-]?([0-9]*[.])?[0-9]+")) {
+                customToasts.errorToast(getContext(), "Đơn giá không đúng !");
+                check = -1;
+            }
+            importItems=(ImportItems) spTenHang.getSelectedItem();
+            try {
+                if (Integer.parseInt("" + edSoLuongXuat.getText().toString()) > importItems.getSoLuongNhap()) {
+                    customToasts.warningToast(getContext(), "Số lượng xuất phải nhỏ hơn hoặc bằng số lượng nhập: "+importItems.getSoLuongNhap());
+                    check=-1;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            try {
+                if(sdf.parse(edNgayXuatHang.getText().toString()).before(importItems.getNgayNhapHang())){
+                    customToasts.warningToast(getContext(),"Ngày xuất hàng phải sau ngày nhập hàng: "+importItems.getNgayNhapHang());
+                    check=-1;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
         return check;
     }
 }
