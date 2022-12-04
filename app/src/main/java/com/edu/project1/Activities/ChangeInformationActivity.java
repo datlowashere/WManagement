@@ -18,6 +18,7 @@ import android.view.View;
 
 import com.edu.project1.Dao.UserDao;
 import com.edu.project1.Helper.CustomToasts;
+import com.edu.project1.MainActivity;
 import com.edu.project1.Models.User;
 import com.edu.project1.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -32,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChangeInformationActivity extends AppCompatActivity {
     private TextInputEditText edName,edWName,edEmail,edOldPass,edNewPass,edReNewPass;
-    private CircleImageView img;
+    private CircleImageView imgUser;
     User obj=new User();
     UserDao dao;
     CustomToasts customToasts=new CustomToasts();
@@ -55,20 +56,20 @@ public class ChangeInformationActivity extends AppCompatActivity {
         edOldPass=findViewById(R.id.edOldPass);
         edNewPass=findViewById(R.id.edNewPass);
         edReNewPass=findViewById(R.id.edReNewPass);
-        img=findViewById(R.id.imgUserAccount);
+        imgUser=findViewById(R.id.imgUserAccount);
 
         dao=new UserDao(ChangeInformationActivity.this);
         obj=dao.getID(username);
 
         Bitmap bitmap= BitmapFactory.decodeByteArray(obj.getImg(),0,obj.getImg().length);
-        img.setImageBitmap(bitmap);
+        imgUser.setImageBitmap(bitmap);
         edName.setText(obj.getHoTen());
         edWName.setText(obj.getTenKhoHang());
         edEmail.setText(obj.getEmail());
         edOldPass.setText(obj.getPassword());
 
 
-        img.setOnClickListener(new View.OnClickListener() {
+        imgUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActivityCompat.requestPermissions(
@@ -89,7 +90,7 @@ public class ChangeInformationActivity extends AppCompatActivity {
 
                 dao=new UserDao(ChangeInformationActivity.this);
                 obj=dao.getID(username);
-                obj.setImg(imageViewToByte(img));
+                obj.setImg(imageViewToByte(imgUser));
                 obj.setHoTen(name);
                 obj.setTenKhoHang(nameW);
                 obj.setEmail(email);
@@ -144,7 +145,7 @@ public class ChangeInformationActivity extends AppCompatActivity {
             try {
                 InputStream stream=getApplicationContext().getContentResolver().openInputStream(uri);
                 Bitmap bitmap= BitmapFactory.decodeStream(stream);
-                img.setImageBitmap(bitmap);
+                imgUser.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

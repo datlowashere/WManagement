@@ -8,29 +8,34 @@
     android:padding="5dp"
     tools:context=".Fragments.ImportItemFragment">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F2F8F2"
-        android:orientation="horizontal">
+        app:cardUseCompatPadding="true">
 
-        <SearchView
-            android:id="@+id/svImport"
-            style="@android:style/Widget.Material.Light.SearchView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="5">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        </SearchView>
+            <SearchView
+                android:id="@+id/svImport"
+                style="@android:style/Widget.Material.Light.SearchView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5">
 
-        <ImageView
-            android:id="@+id/imgFilterImport"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:padding="7dp"
-            android:src="@drawable/filter" />
-    </LinearLayout>
+            </SearchView>
+
+            <ImageView
+                android:id="@+id/imgFilterImport"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:padding="7dp"
+                android:src="@drawable/filter" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <ListView
         android:id="@+id/lvImportItem"

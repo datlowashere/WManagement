@@ -45,5 +45,8 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
     implementation 'io.github.muddz:styleabletoast:2.4.0'
+    implementation 'com.squareup.picasso:picasso:2.8'
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 }

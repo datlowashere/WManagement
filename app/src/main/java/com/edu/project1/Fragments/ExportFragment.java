@@ -76,7 +76,7 @@ public class ExportFragment extends Fragment {
     int positionIP,positionTL;
 
     @SuppressLint("SimpleDateFormat")
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     CustomToasts customToasts=new CustomToasts();
 
     public ExportFragment() {
@@ -183,6 +183,7 @@ public class ExportFragment extends Fragment {
                     }
                 });
                 AlertDialog alertDialog=builder.create();
+                alertDialog.getWindow().setWindowAnimations(R.style.animationDialog);
                 alertDialog.show();
 
             }
@@ -390,11 +391,12 @@ public class ExportFragment extends Fragment {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                 new DatePickerDialog.OnDateSetListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
 
-                        edText.setText(dayOfMonth  + "/"+(monthOfYear + 1) +"/" + year);
+                        edText.setText(year  + "-"+(monthOfYear + 1) +"-" + dayOfMonth);
 
                     }
                 }, mYear, mMonth, mDay);

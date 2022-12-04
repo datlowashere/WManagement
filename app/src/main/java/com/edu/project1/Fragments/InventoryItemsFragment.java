@@ -25,7 +25,6 @@ import java.util.List;
 public class InventoryItemsFragment extends Fragment {
 
     private ListView lv;
-    private ImageView img;
 
     private List<InventoryItems> list;
     private ReportDao dao;
@@ -48,8 +47,6 @@ public class InventoryItemsFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_inventory_items_fragments, container, false);
         lv=view.findViewById(R.id.lvInventory);
         reloadData();
-        img=view.findViewById(R.id.imgFilterInventory);
-
         return view;
     }
     private void reloadData(){

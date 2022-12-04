@@ -65,7 +65,7 @@ public class ImportItemFragment extends Fragment {
     ImportItemsAdapter adapter;
     SpinnerTypeItemsAdapter spinnerTypeItemsAdapter;
     @SuppressLint("SimpleDateFormat")
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     CustomToasts customToasts=new CustomToasts();
     int positionML;
 
@@ -210,7 +210,6 @@ public class ImportItemFragment extends Fragment {
                 }
             }
             spLoaiHang.setSelection(positionML);
-            spLoaiHang.setEnabled(false);
             edSoLuongNhap.setText(String.valueOf(obj.getSoLuongNhap()));
             edDonGia.setText(String.valueOf(obj.getDonGia()));
             edNgaySanXuat.setText(sdf.format(obj.getNgaySanXuat()));
@@ -314,11 +313,12 @@ public class ImportItemFragment extends Fragment {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                 new DatePickerDialog.OnDateSetListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
 
-                       edText.setText(dayOfMonth  + "/"+(monthOfYear + 1) +"/" + year);
+                       edText.setText(year  + "-"+(monthOfYear + 1) +"-" + dayOfMonth);
 
                     }
                 }, mYear, mMonth, mDay);

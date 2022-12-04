@@ -17,7 +17,7 @@ import java.util.List;
 public class ExportDao {
     private SQLiteDatabase db;
     private List<ExportItems> list;
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     public ExportDao(Context context) {
         DBHelper dbHelper=new DBHelper(context);

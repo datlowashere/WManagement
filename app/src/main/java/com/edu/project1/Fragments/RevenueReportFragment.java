@@ -144,7 +144,6 @@ public class RevenueReportFragment extends Fragment {
         xAxis.setDrawGridLines(false);
         xAxis.setCenterAxisLabels(false);
         xAxis.setLabelCount(ten.length);
-        xAxis.setLabelRotationAngle(70);
 
 
         YAxis yAxis=barchartTQ.getAxis(YAxis.AxisDependency.LEFT);
@@ -159,6 +158,8 @@ public class RevenueReportFragment extends Fragment {
 
         yAxis1.setGranularity(1.0f);
         yAxis1.setGranularityEnabled(true);
+
+        barchartTQ.getXAxis().setSpaceMax(0.5f);
 
         barchartTQ.getDescription().setEnabled(true);
         barchartTQ.getDescription().setText("VNĐ");
@@ -212,6 +213,7 @@ public class RevenueReportFragment extends Fragment {
         yAxis1.setGranularity(1.0f);
         yAxis1.setGranularityEnabled(true);
 
+        barChartNhap.getXAxis().setSpaceMax(0.5f);
         barChartNhap.getDescription().setEnabled(true);
         barChartNhap.getDescription().setText("VNĐ");
         barChartNhap.getDescription().setPosition(100, 50);
@@ -264,6 +266,7 @@ public class RevenueReportFragment extends Fragment {
         yAxis1.setGranularity(1.0f);
         yAxis1.setGranularityEnabled(true);
 
+        barChartXuat.getXAxis().setSpaceMax(0.5f);
         barChartXuat.getDescription().setEnabled(true);
         barChartXuat.getDescription().setText("VNĐ");
         barChartXuat.getDescription().setPosition(100, 50);

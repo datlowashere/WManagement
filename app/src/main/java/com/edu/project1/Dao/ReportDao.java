@@ -2,6 +2,7 @@ package com.edu.project1.Dao;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -46,7 +47,7 @@ public class ReportDao {
     public Float[] getDSTienNhapTheoGiaiDoan(String username, String tuNgay, String denNgay){
         db=dbHelper.getReadableDatabase();
         ArrayList<Float>tong=new ArrayList<>();
-        String sql="SELECT ngayNhapHang, sum( (donGia * soLuongNhap)) as tien from NhapHang WHERE  username=? and ngayNhapHang BETWEEN ? and ? GROUP BY ngayNhapHang ORDER by ngayNhapHang";
+        String sql="SELECT ngayNhapHang, sum((donGia * soLuongNhap)) as tien from NhapHang WHERE  username=? and ngayNhapHang BETWEEN ? and ? GROUP BY ngayNhapHang ORDER by ngayNhapHang";
         Cursor c=db.rawQuery(sql,new String[]{username,tuNgay,denNgay});
         if(c.moveToFirst()){
             while (!c.isAfterLast()){
@@ -60,7 +61,7 @@ public class ReportDao {
     public String[] getDSNgayNhapHangTheoGiaiDoan(String username, String tuNgay, String denNgay) throws ParseException {
         db=dbHelper.getReadableDatabase();
         ArrayList<String> allDate=new ArrayList<>();
-        String sql="SELECT ngayNhapHang as tien from NhapHang WHERE  username=? and ngayNhapHang BETWEEN ? and ? GROUP BY ngayNhapHang ORDER by ngayNhapHang";
+        String sql="SELECT ngayNhapHang from NhapHang WHERE  username=? and ngayNhapHang BETWEEN ? and ? GROUP BY ngayNhapHang ORDER by ngayNhapHang";
         @SuppressLint("Recycle") Cursor c=db.rawQuery(sql,new String[]{username,tuNgay,denNgay});
         if(c.moveToFirst()){
             while (!c.isAfterLast()){
@@ -75,16 +76,8 @@ public class ReportDao {
     public Float[] getDSTienXuatTheoGiaiDoan(String username,String tuNgay,String denNgay){
         db=dbHelper.getReadableDatabase();
         ArrayList<Float>tong=new ArrayList<>();
-        String sql="SELECT ngayXuatHang,sum( (donGiaXuat * soLuongXuat)) as tien from XuatHang WHERE  username=? and ngayXuatHang BETWEEN ? and ? GROUP BY ngayXuatHang ORDER by ngayXuatHang ";
+        String sql="SELECT ngayXuatHang,sum((donGiaXuat * soLuongXuat))as tien from XuatHang WHERE  username=? and ngayXuatHang BETWEEN ? and ? GROUP BY ngayXuatHang ORDER by ngayXuatHang ";
         @SuppressLint("Recycle") Cursor c=db.rawQuery(sql,new String[]{username,tuNgay,denNgay});
-//        if(c!=null){
-//            if(c.moveToFirst()){
-//                do{
-//                    tong.add((float) c.getInt(1));
-//                }while (c.moveToNext());
-//            }
-//            c.close();
-//        }
         if(c.moveToFirst()){
             while (!c.isAfterLast()){
                 tong.add(c.getFloat(1));
@@ -99,14 +92,6 @@ public class ReportDao {
         ArrayList<String> allDate=new ArrayList<>();
         String sql="SELECT ngayXuatHang from XuatHang WHERE username=? and ngayXuatHang BETWEEN ? and ? GROUP BY ngayXuatHang  ORDER by ngayXuatHang";
         @SuppressLint("Recycle") Cursor c=db.rawQuery(sql,new String[]{username,tuNgay,denNgay});
-//        if(c!=null){
-//            if(c.moveToFirst()){
-//                do{
-//                    allDate.add(c.getString(0));
-//                }while (c.moveToNext());
-//            }
-//            c.close();
-//        }
         if(c.moveToFirst()){
             while (!c.isAfterLast()){
                 allDate.add(c.getString(0));
@@ -176,5 +161,57 @@ public class ReportDao {
         return tong;
     }
 
+//  ds top so luong nhap theo giai doan
+    public Integer[] getDSTopSLNhap(String username, String tuNgay, String denNgay){
+        db=dbHelper.getReadableDatabase();
+        ArrayList<Integer> sl=new ArrayList<>();
+        Cursor c=db.rawQuery("select tenHang, ngayNhapHang, soLuongNhap from NhapHang where username=? and ngayNhapHang between ? and ? order by soLuongNhap desc limit 10",new String[]{username,tuNgay,denNgay});
+        if(c.moveToFirst()){
+            while (!c.isAfterLast()){
+                sl.add(c.getInt(2));
+                c.moveToNext();
+            };
+        }
+        return sl.toArray(new Integer[sl.size()]);
+    }
+//    ds ten hang of top sl nhap theo giai doan
+    public String[] getDSTenTopSLNhap(String username, String tuNgay, String denNgay){
+        db=dbHelper.getReadableDatabase();
+        ArrayList<String> ten=new ArrayList<>();
+        Cursor c=db.rawQuery("select tenHang, ngayNhapHang, soLuongNhap from NhapHang where username=? and ngayNhapHang between ? and ? order by soLuongNhap desc limit 10",new String[]{username,tuNgay,denNgay});
+        if(c.moveToFirst()){
+            while (!c.isAfterLast()){
+                ten.add(c.getString(0));
+                c.moveToNext();
+            };
+        }
+        return ten.toArray(new String[ten.size()]);
+}
+// ds top so luong xuat theo giai doan
+    public Integer[] getDSTopSLXuat(String username, String tuNgay, String denNgay){
+        db=dbHelper.getReadableDatabase();
+        ArrayList<Integer> sl=new ArrayList<>();
+        Cursor c=db.rawQuery("select tenHang, ngayXuatHang, soLuongXuat from XuatHang where username=? and ngayXuatHang between ? and ? order by soLuongXuat desc limit 10",new String[]{username,tuNgay,denNgay});
+        if(c.moveToFirst()){
+            while (!c.isAfterLast()){
+                sl.add(c.getInt(2));
+                c.moveToNext();
+            };
+        }
+        return sl.toArray(new Integer[sl.size()]);
+}
+    // ds ten oftop so luong xuat theo giai doan
+    public String[] getDSTenTopSLXuat(String username, String tuNgay, String denNgay){
+        db=dbHelper.getReadableDatabase();
+        ArrayList<String> ten=new ArrayList<>();
+        Cursor c=db.rawQuery("select tenHang, ngayXuatHang, soLuongXuat from XuatHang where username=? and ngayXuatHang between ? and ? order by soLuongXuat desc limit 10",new String[]{username,tuNgay,denNgay});
+        if(c.moveToFirst()){
+            while (!c.isAfterLast()){
+                ten.add(c.getString(0));
+                c.moveToNext();
+            };
+        }
+        return ten.toArray(new String[ten.size()]);
+    }
 
 }

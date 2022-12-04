@@ -33,7 +33,9 @@ public class AccountFragment extends Fragment {
 
     private TextView tvAccountName,tvShowname,tvShownameW,tvUsername,tvPassword,tvEmail;
     private CircleImageView img;
-
+    private TextInputEditText edName,edWName,edEmail,edOldPass,edNewPass,edReNewPass;
+    User obj=new User();
+    UserDao dao;
     CustomToasts customToasts=new CustomToasts();
 
     public AccountFragment() {

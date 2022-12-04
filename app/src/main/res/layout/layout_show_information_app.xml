@@ -8,10 +8,25 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient_backgroud"
+        android:background="@color/ABBAAB"
         android:padding="10dp"
         android:text="Thông tin ứng dụng"
         android:textAlignment="center"
         android:textSize="20dp"
         android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/lvInforApp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="datlowashere"
+        android:textAlignment="center"
+        android:textSize="14dp" />
 </LinearLayout>

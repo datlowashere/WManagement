@@ -24,7 +24,8 @@ import java.util.logging.Handler;
 public class ImportItemsAdapter extends BaseAdapter {
     private Context context;
     private List<ImportItems>list;
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     public ImportItemsAdapter(Context context, List<ImportItems> list) {
         this.context = context;

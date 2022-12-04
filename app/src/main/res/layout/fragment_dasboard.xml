@@ -9,109 +9,123 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="ScrollViewSize">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/half_shape"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:gravity="fill_horizontal">
+                android:background="@drawable/half_shape"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="30dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="fill_horizontal">
 
-                    <TextView
-                        android:id="@+id/tvHelloToolbar"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:text="Xin Chào" />
+                        android:orientation="vertical"
+                        android:paddingLeft="30dp">
 
-                    <TextView
-                        android:id="@+id/tvNameUserr"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="10dp"
-                        android:text="TextView"
-                        android:textSize="16sp" />
+                        <TextView
+                            android:id="@+id/tvHelloToolbar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans_light"
+                            android:paddingLeft="10dp"
+                            android:text="Xin Chào"
+                            android:textAppearance="@style/openSanFont"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvNameUserr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingLeft="10dp"
+                            android:text="TextView"
+                            android:textAppearance="@style/openSanFont"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgUser"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="end"
+                        adnroid:civ_border_color="@color/black"
+                        adnroid:civ_border_width="2dp"
+                        adnroid:srcCompat="@drawable/ic_icon_blossom_round" />
+
                 </LinearLayout>
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgUser"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="end"
-                    adnroid:civ_border_color="@color/black"
-                    adnroid:civ_border_width="2dp"
-                    adnroid:srcCompat="@drawable/ic_icon_blossom_round" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="40dp">
-
-                <TextView
-                    android:id="@+id/textView13"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Chào mừng bạn trở lại !"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    tools:textAlignment="center" />
+                    android:orientation="vertical"
+                    android:padding="40dp">
 
-                <TextView
-                    android:id="@+id/tvNameWareHouse"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingTop="10dp"
-                    android:text="TextView"
-                    android:textAlignment="center"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Chào mừng bạn trở lại !"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        tools:textAlignment="center" />
 
+                    <TextView
+                        android:id="@+id/tvNameWareHouse"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="10dp"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/openSanFont"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
             </LinearLayout>
+
+
         </LinearLayout>
 
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:text="Tổng quan"
-        android:textSize="16dp"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <GridView
-            android:id="@+id/gridFeatures"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:numColumns="2"
-            android:paddingLeft="20dp"
-            android:paddingTop="20dp"
-            android:paddingRight="20dp" />
+            android:layout_marginTop="40dp"
+            android:paddingLeft="40dp"
+            android:text="Tổng quan"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <GridView
+                android:id="@+id/gridFeatures"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:numColumns="2"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:paddingRight="20dp" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

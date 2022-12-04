@@ -22,7 +22,7 @@ public class ExportItemAdapter extends BaseAdapter {
     private final List<ExportItems>list;
     private final Context context;
     @SuppressLint("SimpleDateFormat")
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     public ExportItemAdapter(List<ExportItems> list, Context context) {
         this.list = list;

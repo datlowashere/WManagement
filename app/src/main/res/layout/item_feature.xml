@@ -7,7 +7,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
         app:cardPreventCornerOverlap="true"
@@ -15,13 +15,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:padding="10dp">
 
             <ImageView
                 android:id="@+id/imgFeatures"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 app:srcCompat="@drawable/exportpr" />
@@ -36,10 +37,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_margin="5dp"
+                    android:layout_marginTop="10dp"
                     android:text="TextView"
                     android:textAlignment="center"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView

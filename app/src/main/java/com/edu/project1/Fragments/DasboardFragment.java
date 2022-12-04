@@ -72,22 +72,12 @@ public class DasboardFragment extends Fragment {
         tvNameWareHouse.setText(nameW);
 
         gridView=view.findViewById(R.id.gridFeatures);
-//        ReportDao reportDao=new ReportDao(getContext());
-//        int tongLoai=reportDao.getSoTongLoai(username);
-//        int tongSoNhap=reportDao.getTongSoLuongNhap(username);
-//        int tongSoXuat=reportDao.getTongSoLuongXuat(username);
-//        int tongSoTon=reportDao.getTongSoLuongTon(username);
-//        float tongTienNhap=reportDao.getTongTienNhap(username);
-//        float tongTienXuat=reportDao.getTongTienXuat(username);
-
 
         featureList=new ArrayList<>();
-        featureList.add(new FeaturesModel("Loại hàng","Tổng: ","", R.drawable.box));
-        featureList.add(new FeaturesModel("Nhập hàng","Nhập: ","Tiền: ", R.drawable.im));
-        featureList.add(new FeaturesModel("Xuất hàng","Xuất: ","Tiền: ", R.drawable.ex));
-        featureList.add(new FeaturesModel("Hàng Tồn","Tổng: ","", R.drawable.inventory));
-//        featureList.add(new FeaturesModel("Doanh số","","", R.drawable.financial_profit));
-//        featureList.add(new FeaturesModel("Top hàng","","", R.drawable.warehouse));
+        featureList.add(new FeaturesModel("Nhập Hàng"," ","", R.drawable.im));
+        featureList.add(new FeaturesModel("Xuất Hàng"," "," ", R.drawable.ex));
+        featureList.add(new FeaturesModel("Thống Kê","","", R.drawable.barchart));
+        featureList.add(new FeaturesModel("Tài Khoản","","", R.drawable.account));
         featuresAdapter=new FeaturesAdapter(featureList,getContext());
         gridView.setAdapter(featuresAdapter);
 
