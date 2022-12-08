@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 
 import com.edu.project1.Dao.UserDao;
@@ -99,11 +100,7 @@ public class ChangeInformationActivity extends AppCompatActivity {
                 if(name.isEmpty() || nameW.isEmpty() || email.isEmpty() || oldPass.isEmpty() || newPass.isEmpty() || reNewPass.isEmpty()){
                     customToasts.warningToast(ChangeInformationActivity.this,"Phải nhập đủ thông tin");
                 }else{
-                    if(!reNewPass.equals(newPass)){
-                        customToasts.errorToast(ChangeInformationActivity.this,"Mật khẩu mới không trùng");
-                    }else if(!oldPass.equals(oldpass)){
-                        customToasts.errorToast(ChangeInformationActivity.this,"Mật khẩu cũ không đúng");
-                    }else {
+                    if (checkInput()>0){
                         if (dao.update(obj) > 0) {
                             customToasts.successToast(ChangeInformationActivity.this, "Thay đổi thành công");
                             clear();
@@ -160,6 +157,35 @@ public class ChangeInformationActivity extends AppCompatActivity {
         byte[] byteArr=stream.toByteArray();
         return byteArr;
     }
+
+    private int checkInput(){
+        Intent itoChangePass=getIntent();
+        String oldpass=itoChangePass.getStringExtra("pass");
+        int check=1;
+        if(edName.getText().toString().isEmpty() || edWName.getText().toString().isEmpty() || edEmail.getText().toString().isEmpty() || edOldPass.getText().toString().isEmpty() || edNewPass.getText().toString().isEmpty() || edReNewPass.getText().toString().isEmpty()){
+            customToasts.warningToast(ChangeInformationActivity.this,"Chưa điền đầy đủ thông tin");
+            check=-1;
+        }else {
+            if(edName.getText().toString().matches("[0-9]+")){
+                customToasts.errorToast(ChangeInformationActivity.this,"Tên không được là số!!");
+                check=-1;
+            }
+            if(!Patterns.EMAIL_ADDRESS.matcher(edEmail.getText().toString()).matches()){
+                customToasts.errorToast(ChangeInformationActivity.this,"Email định dạng không đúng!!");
+                check=-1;
+            }
+            if(!edReNewPass.getText().toString().equals(edNewPass.getText().toString())){
+                customToasts.errorToast(ChangeInformationActivity.this,"Mật khẩu mới không trùng");
+                check=-1;
+            }else if(!edOldPass.getText().toString().equals(oldpass)){
+                customToasts.errorToast(ChangeInformationActivity.this,"Mật khẩu cũ không đúng");
+                check=-1;
+            }
+        }
+        return check;
+    }
+
+
 
 
     private void clear(){

@@ -61,4 +61,10 @@ public class InventoryItemsFragment extends Fragment {
         String username=activity.getUsername();
         return  username;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        reloadData();
+    }
 }

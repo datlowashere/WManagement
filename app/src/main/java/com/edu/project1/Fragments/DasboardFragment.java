@@ -1,5 +1,6 @@
 package com.edu.project1.Fragments;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.edu.project1.Activities.ChangeInformationActivity;
 import com.edu.project1.Adapter.FeaturesAdapter;
 import com.edu.project1.Dao.ReportDao;
 import com.edu.project1.Dao.UserDao;

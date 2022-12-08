@@ -148,12 +148,17 @@ public class TypeItemFragment extends Fragment {
                 obj.setUsername(username);
                 obj.setTenLoaiHang(edTenLoaiHang.getText().toString());
               if(checkInput()>0){
+                  boolean checkLoai=dao.checkTenLoai(edTenLoaiHang.getText().toString());
                     if(position==0){
-                        if(dao.insert(obj)>0){
-                            customToasts.successToast(context,"Thêm thành công");
-                            edTenLoaiHang.setText("");
-                        }else{
-                            customToasts.errorToast(context,"Thêm thất bại");
+                        if(!checkLoai) {
+                            if (dao.insert(obj) > 0) {
+                                customToasts.successToast(context, "Thêm thành công");
+                                edTenLoaiHang.setText("");
+                            } else {
+                                customToasts.errorToast(context, "Thêm thất bại");
+                            }
+                        }else {
+                            customToasts.errorToast(context,"Loại hàng đã được tạo vui lòng tạo loại hàng khác");
                         }
                     }else{
                         obj.setMaLoaiHang(Integer.parseInt(edMaLoaiHang.getText().toString()));

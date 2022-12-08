@@ -442,4 +442,10 @@ public class ExportFragment extends Fragment {
 
         return check;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        reLoadData();
+    }
 }

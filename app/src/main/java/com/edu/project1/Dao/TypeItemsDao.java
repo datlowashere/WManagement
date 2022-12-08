@@ -52,6 +52,15 @@ public class TypeItemsDao {
         }
         return list;
     }
+//    check ten loai hang
+    public boolean checkTenLoai(String name){
+        Cursor c=db.rawQuery("select * from LoaiHang where tenLoaiHang=?",new String[]{name});
+        if (c.getCount()!=0){
+            return true;
+        }else {
+            return false;
+        }
+}
 
 //    lay data theo id
     public TypeItems getByID(String id){
