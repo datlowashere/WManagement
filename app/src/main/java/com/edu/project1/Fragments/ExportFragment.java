@@ -207,7 +207,6 @@ public class ExportFragment extends Fragment {
         edDonGia=dialog.findViewById(R.id.edDonGiaXuat);
         edNgayXuatHang=dialog.findViewById(R.id.edNgayXuatHang);
 
-
         importDao=new ImportDao(context);
         importListLoai=(List<ImportItems>)importDao.getAllByUserGroupByMaLoai(getUser());
         SpinnerTypeItemsFromImportAdapter filterTyeItemImportAdapter=new SpinnerTypeItemsFromImportAdapter(importListLoai,context);
@@ -231,13 +230,10 @@ public class ExportFragment extends Fragment {
                     spTenHang.setEnabled(false);
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
-
 
         if(possition!=0){
             tvMaXuat.setText(String.valueOf(obj.getMaXuatHang()));
@@ -432,7 +428,7 @@ public class ExportFragment extends Fragment {
             }
             try {
                 if(sdf.parse(edNgayXuatHang.getText().toString()).before(importItems.getNgayNhapHang())){
-                    customToasts.warningToast(getContext(),"Ngày xuất hàng phải sau ngày nhập hàng: "+importItems.getNgayNhapHang());
+                    customToasts.warningToast(getContext(),"Ngày xuất hàng phải sau ngày nhập hàng: "+sdf.format(importItems.getNgayNhapHang()));
                     check=-1;
                 }
             } catch (ParseException e) {

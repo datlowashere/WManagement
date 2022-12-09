@@ -25,7 +25,7 @@ public class ReportDao {
     public ReportDao(Context context) {
         this.dbHelper=new DBHelper(context);
     }
-//    hang ton
+//    Lấy ds hàng tồn
     @SuppressLint("Range")
     public List<InventoryItems> getAllHangTon(String name){
         db=dbHelper.getReadableDatabase();
@@ -41,8 +41,7 @@ public class ReportDao {
         };
         return list;
     }
-
-//    ds tien nhap theo giai doan
+//    DS tiền nhập hàng theo giai đoạn
     @SuppressLint("Range")
     public Float[] getDSTienNhapTheoGiaiDoan(String username, String tuNgay, String denNgay){
         db=dbHelper.getReadableDatabase();
@@ -57,6 +56,7 @@ public class ReportDao {
         }
         return tong.toArray(new Float[tong.size()]);
     }
+//    DS ngày nhập hàng theo giai đoạn
     @SuppressLint("Range")
     public String[] getDSNgayNhapHangTheoGiaiDoan(String username, String tuNgay, String denNgay) throws ParseException {
         db=dbHelper.getReadableDatabase();
@@ -71,8 +71,7 @@ public class ReportDao {
         }
         return allDate.toArray(new String[allDate.size()]);
     }
-
-    //    ds tien nhap theo giai doan
+//    DS tiền xuất theo giai đoạn
     public Float[] getDSTienXuatTheoGiaiDoan(String username,String tuNgay,String denNgay){
         db=dbHelper.getReadableDatabase();
         ArrayList<Float>tong=new ArrayList<>();
@@ -86,6 +85,7 @@ public class ReportDao {
         }
         return tong.toArray(new Float[tong.size()]);
     }
+//    DS ngày xuất hàng theo giai đoạn
     @SuppressLint("Range")
     public String[] getDSNgayXuatHangTheoGiaiDoan(String username, String tuNgay, String denNgay) throws ParseException {
         db=dbHelper.getReadableDatabase();
@@ -98,11 +98,9 @@ public class ReportDao {
                 c.moveToNext();
             };
         }
-
         return allDate.toArray(new String[allDate.size()]);
     }
-
-    //    tien nhap theo giai doan(2 khoang ngay)
+//    Tổng tiền nhập hàng theo giai đoạn
     public float getTongTienNhapTheoGiaiDoan(String username,String tuNgay,String denNgay){
         db=dbHelper.getReadableDatabase();
         String sql="select  sum(donGia*soLuongNhap) as tonTien from NhapHang where username=? and ngayNhapHang between ? and ?";
@@ -113,7 +111,7 @@ public class ReportDao {
         }
         return tong.get(0);
     }
-    //    tien xuat theo giai doan(2 khoang ngay)
+//    Tổng tiền xuất hàng theo giai đoạn
     public float getTongTienXuatTheoGaiDoan(String username,String tuNgay,String denNgay){
         db=dbHelper.getReadableDatabase();
         String sql="select  sum(donGiaXuat*soLuongXuat) as tonTien from XuatHang where username=? and ngayXuatHang between ? and ?";
@@ -124,8 +122,7 @@ public class ReportDao {
         };
         return tong.get(0);
     }
-
-//    tong tien nhap, xuat theo gia doan
+//    Tổng tiền nhập & xuất theo giai đoạn
     public float[]getTongNhapXuatTheoGiaiDoan(String username,String tuNgay,String denNgay){
         db=dbHelper.getReadableDatabase();
         float nhap=0,xuat=0;
@@ -142,8 +139,7 @@ public class ReportDao {
         float[] tong=new float[]{nhap,xuat};
         return tong;
     }
-//    tong nhap+xuat theo giai doan
-
+//  Tổng tiền nhập + tổng tiền xuất theo giai đoạn
     public float getTongTienNhapXuatTheoGiaiDoan(String username,String tuNgay,String denNgay){
         db=dbHelper.getReadableDatabase();
         float nhap=0,xuat=0;
@@ -160,8 +156,7 @@ public class ReportDao {
         float tong=nhap+xuat;
         return tong;
     }
-
-//  ds top so luong nhap theo giai doan
+// Ds số lượng hàng nhập nhiều theo giai đoạn
     public Integer[] getDSTopSLNhap(String username, String tuNgay, String denNgay){
         db=dbHelper.getReadableDatabase();
         ArrayList<Integer> sl=new ArrayList<>();
@@ -174,7 +169,7 @@ public class ReportDao {
         }
         return sl.toArray(new Integer[sl.size()]);
     }
-//    ds ten hang of top sl nhap theo giai doan
+//    DS tên hàng of số lượng hàng nhập nhiều
     public String[] getDSTenTopSLNhap(String username, String tuNgay, String denNgay){
         db=dbHelper.getReadableDatabase();
         ArrayList<String> ten=new ArrayList<>();
@@ -187,7 +182,7 @@ public class ReportDao {
         }
         return ten.toArray(new String[ten.size()]);
 }
-// ds top so luong xuat theo giai doan
+//  DS top số lượng hàng xuất nhiều
     public Integer[] getDSTopSLXuat(String username, String tuNgay, String denNgay){
         db=dbHelper.getReadableDatabase();
         ArrayList<Integer> sl=new ArrayList<>();
@@ -200,7 +195,7 @@ public class ReportDao {
         }
         return sl.toArray(new Integer[sl.size()]);
 }
-    // ds ten oftop so luong xuat theo giai doan
+//    DS tên of số lượng hàng xuất nhiều
     public String[] getDSTenTopSLXuat(String username, String tuNgay, String denNgay){
         db=dbHelper.getReadableDatabase();
         ArrayList<String> ten=new ArrayList<>();

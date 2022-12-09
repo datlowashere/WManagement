@@ -36,14 +36,14 @@ public class InformationAppActivity extends AppCompatActivity {
         list.add(new AppInfor("Lớp","CP17301/FA2022"));
         list.add(new AppInfor("Cập Nhật Lần Cuối","0:00 AM 05/12/2022"));
         list.add(new AppInfor("","@datlowashere"));
-        adapter=new AppInforAdapter(list,this);
+        adapter= new AppInforAdapter(list, this);
         lv.setAdapter(adapter);
 
     }
 
-    private class AppInforAdapter extends BaseAdapter {
-        private List<AppInfor>list;
-        private Context context;
+    private static class AppInforAdapter extends BaseAdapter {
+        private final List<AppInfor>list;
+        private final Context context;
 
         public AppInforAdapter(List<AppInfor> list, Context context) {
             this.list = list;
@@ -64,7 +64,7 @@ public class InformationAppActivity extends AppCompatActivity {
         public long getItemId(int position) {
             return 0;
         }
-        public class viewOfItem{
+        public static class viewOfItem{
             TextView tvTitle,tvName;
         }
 
@@ -73,7 +73,7 @@ public class InformationAppActivity extends AppCompatActivity {
             viewOfItem viewOfItem;
             if(view==null){
                 view= LayoutInflater.from(context).inflate(R.layout.item_infor_app,parent,false);
-                viewOfItem=new viewOfItem();
+                viewOfItem= new viewOfItem();
                 viewOfItem.tvTitle=view.findViewById(R.id.tvTitleInforApp);
                 viewOfItem.tvName=view.findViewById(R.id.tvNameInforApp);
                 view.setTag(viewOfItem);

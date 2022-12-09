@@ -109,7 +109,6 @@ public class TypeItemFragment extends Fragment {
                 searchName(query);
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
                 searchName(newText);

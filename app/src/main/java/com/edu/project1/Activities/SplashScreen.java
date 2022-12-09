@@ -15,7 +15,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
-
+//        Sau 2s sẽ chuyển sang màn hình đăng ký
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

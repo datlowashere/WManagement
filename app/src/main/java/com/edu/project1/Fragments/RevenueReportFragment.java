@@ -132,7 +132,7 @@ public class RevenueReportFragment extends Fragment {
         for(int i=0;i<dsTien.length;i++){
             entries.add(new BarEntry(i,dsTien[i]));
         }
-        BarDataSet barDataSet=new BarDataSet(entries,"Tổng: "+tong+" đ");
+        @SuppressLint("DefaultLocale") BarDataSet barDataSet=new BarDataSet(entries,"Tổng: "+String.format("%,.2f",tong)+" đ");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         BarData barData=new BarData(barDataSet);
         barchartTQ.setData(barData);
@@ -185,7 +185,7 @@ public class RevenueReportFragment extends Fragment {
         for(int i=0;i<dsTien.length;i++){
             entries.add(new BarEntry(i,dsTien[i]));
         }
-        BarDataSet barDataSet=new BarDataSet(entries,"Tổng: "+tong+" đ");
+        BarDataSet barDataSet=new BarDataSet(entries,"Tổng: "+String.format("%,.2f",tong)+" đ");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         BarData barData=new BarData(barDataSet);
         barChartNhap.setData(barData);
@@ -238,7 +238,7 @@ public class RevenueReportFragment extends Fragment {
         for(int i=0;i<dsTien.length;i++){
             entries.add(new BarEntry(i,dsTien[i]));
         }
-        BarDataSet barDataSet=new BarDataSet(entries,"Tổng: "+tong+" đ");
+        BarDataSet barDataSet=new BarDataSet(entries,"Tổng: "+String.format("%,.2f",tong)+" đ");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         BarData barData=new BarData(barDataSet);
         barChartXuat.setData(barData);

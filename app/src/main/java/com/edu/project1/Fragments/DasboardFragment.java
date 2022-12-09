@@ -42,7 +42,6 @@ public class DasboardFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +57,6 @@ public class DasboardFragment extends Fragment {
         tvUser=view.findViewById(R.id.tvNameUserr);
         tvNameWareHouse=view.findViewById(R.id.tvNameWareHouse);
         img=view.findViewById(R.id.imgUser);
-
         MainActivity activity=(MainActivity)getActivity();
         String username=activity.getUsername();
 

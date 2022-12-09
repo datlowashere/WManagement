@@ -19,7 +19,6 @@ public class UserDao {
         DBHelper dbHelper=new DBHelper(context);
         db=dbHelper.getWritableDatabase();
     }
-
 //    Đăng ký người dùng
     public long insert(User obj){
         ContentValues values=new ContentValues();
@@ -31,7 +30,6 @@ public class UserDao {
         values.put("password",obj.getPassword());
         return db.insert("User",null,values);
     }
-
 //    Doi thong tin
     public int update(User obj){
         ContentValues values=new ContentValues();
@@ -46,8 +44,6 @@ public class UserDao {
     public int delete(String id){
         return db.delete("User","username=?",new String[]{id});
     }
-
-
     //Lấy Data nhiều tham số
     @SuppressLint("Range")
     private List<User> getData(String sql, String...selectionArgs){
@@ -66,14 +62,12 @@ public class UserDao {
         }
         return list;
     }
-
     //  Lấy theo ID
     public User getID(String id){
         String sql="select * from User where username=?";
         list=getData(sql,id);
         return list.get(0);
     }
-
 //    Dang Nhap
     public int checkLogin(String username,String password){
         String sql="select * from User where username=? and password=?";
@@ -92,6 +86,4 @@ public class UserDao {
             return false;
         }
     }
-
-
 }

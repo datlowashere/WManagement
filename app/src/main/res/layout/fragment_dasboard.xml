@@ -76,7 +76,6 @@
                     android:padding="40dp">
 
                     <TextView
-                        android:id="@+id/textView13"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -104,7 +103,6 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView22"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"

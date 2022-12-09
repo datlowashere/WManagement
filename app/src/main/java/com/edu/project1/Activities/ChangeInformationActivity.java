@@ -97,19 +97,16 @@ public class ChangeInformationActivity extends AppCompatActivity {
                 obj.setEmail(email);
                 obj.setPassword(newPass);
 
-                if(name.isEmpty() || nameW.isEmpty() || email.isEmpty() || oldPass.isEmpty() || newPass.isEmpty() || reNewPass.isEmpty()){
-                    customToasts.warningToast(ChangeInformationActivity.this,"Phải nhập đủ thông tin");
-                }else{
-                    if (checkInput()>0){
-                        if (dao.update(obj) > 0) {
-                            customToasts.successToast(ChangeInformationActivity.this, "Thay đổi thành công");
-                            clear();
-                        } else {
-                            customToasts.errorToast(ChangeInformationActivity.this, "Lỗi");
-                        }
+                if (checkInput()>0){
+                    if (dao.update(obj) > 0) {
+                        customToasts.successToast(ChangeInformationActivity.this, "Thay đổi thành công");
+                        clear();
+                    } else {
+                        customToasts.errorToast(ChangeInformationActivity.this, "Lỗi");
                     }
                 }
             }
+
         });
         findViewById(R.id.btnCancelSaveChangeInfo).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,9 +182,6 @@ public class ChangeInformationActivity extends AppCompatActivity {
         return check;
     }
 
-
-
-
     private void clear(){
         edName.setText("");
         edWName.setText("");
@@ -196,6 +190,4 @@ public class ChangeInformationActivity extends AppCompatActivity {
         edNewPass.setText("");
         edReNewPass.setText("");
     }
-
-
 }

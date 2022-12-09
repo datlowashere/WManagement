@@ -23,13 +23,14 @@ public class LoginActivity extends AppCompatActivity {
         edUsername=findViewById(R.id.edUsername);
         edPassword=findViewById(R.id.edPass);
 
+//        Bắt sự kiện onlick khi click vào nút đăng ký
         findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkLogin();
             }
         });
-
+//      Chuyển đến màn hình đăng ký
         findViewById(R.id.tvRegister).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +63,5 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
-
 
 }
