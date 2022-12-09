@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -28,7 +27,7 @@ import com.edu.project1.Adapter.SpinnerTypeItemsAdapter;
 import com.edu.project1.Adapter.TypeItemsAdapter;
 import com.edu.project1.Dao.ImportDao;
 import com.edu.project1.Dao.TypeItemsDao;
-import com.edu.project1.Helper.CustomToasts;
+import com.edu.project1.Helper.CustomToast;
 import com.edu.project1.MainActivity;
 import com.edu.project1.Models.ImportItems;
 import com.edu.project1.Models.TypeItems;
@@ -36,13 +35,11 @@ import com.edu.project1.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class ImportItemFragment extends Fragment {
 
@@ -66,7 +63,7 @@ public class ImportItemFragment extends Fragment {
     SpinnerTypeItemsAdapter spinnerTypeItemsAdapter;
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    CustomToasts customToasts=new CustomToasts();
+    CustomToast customToasts=new CustomToast();
     int positionML;
 
 
@@ -265,7 +262,7 @@ public class ImportItemFragment extends Fragment {
                 obj.setUsername(getUsername());
                 try {
                     if(checkInput()>0) {
-                        boolean checkHang=dao.checkHang(edTenHang.getText().toString());
+                        boolean checkHang=dao.checkHang(edTenHang.getText().toString(),getUsername());
                         if (position == 0) {
                             if(!checkHang) {
                                 if (dao.insert(obj) > 0) {

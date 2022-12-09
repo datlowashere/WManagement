@@ -2,7 +2,6 @@ package com.edu.project1.Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,7 +19,7 @@ import com.edu.project1.Activities.ChangeInformationActivity;
 import com.edu.project1.Activities.InformationAppActivity;
 import com.edu.project1.Activities.LoginActivity;
 import com.edu.project1.Dao.UserDao;
-import com.edu.project1.Helper.CustomToasts;
+import com.edu.project1.Helper.CustomToast;
 import com.edu.project1.MainActivity;
 import com.edu.project1.Models.User;
 import com.edu.project1.R;
@@ -36,7 +35,7 @@ public class AccountFragment extends Fragment {
     private TextInputEditText edName,edWName,edEmail,edOldPass,edNewPass,edReNewPass;
     User obj=new User();
     UserDao dao;
-    CustomToasts customToasts=new CustomToasts();
+    CustomToast customToasts=new CustomToast();
 
     public AccountFragment() {
         // Required empty public constructor

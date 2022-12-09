@@ -5,21 +5,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.edu.project1.Helper.CustomToasts;
 import com.edu.project1.Models.ImportItems;
 import com.edu.project1.R;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.logging.Handler;
 
 public class ImportItemsAdapter extends BaseAdapter {
     private Context context;

@@ -9,9 +9,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,7 @@ import android.widget.ListView;
 
 import com.edu.project1.Adapter.TypeItemsAdapter;
 import com.edu.project1.Dao.TypeItemsDao;
-import com.edu.project1.Helper.CustomToasts;
+import com.edu.project1.Helper.CustomToast;
 import com.edu.project1.MainActivity;
 import com.edu.project1.Models.TypeItems;
 import com.edu.project1.R;
@@ -42,7 +40,7 @@ public class TypeItemFragment extends Fragment {
     private TypeItemsDao dao;
     private TypeItemsAdapter adapter;
     private TypeItems obj;
-    CustomToasts customToasts=new CustomToasts();
+    CustomToast customToasts=new CustomToast();
 
     public TypeItemFragment() {
     }
@@ -109,7 +107,6 @@ public class TypeItemFragment extends Fragment {
                 searchName(query);
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
                 searchName(newText);
@@ -148,7 +145,7 @@ public class TypeItemFragment extends Fragment {
                 obj.setUsername(username);
                 obj.setTenLoaiHang(edTenLoaiHang.getText().toString());
               if(checkInput()>0){
-                  boolean checkLoai=dao.checkTenLoai(edTenLoaiHang.getText().toString());
+                  boolean checkLoai=dao.checkTenLoai(edTenLoaiHang.getText().toString(),username);
                     if(position==0){
                         if(!checkLoai) {
                             if (dao.insert(obj) > 0) {
@@ -231,7 +228,7 @@ public class TypeItemFragment extends Fragment {
         if(edTenLoaiHang.getText().toString().isEmpty()){
             customToasts.warningToast(getContext(),"Chưa điền tên loại hàng");
             check=-1;
-        }else if(Patterns.PHONE.matcher(edTenLoaiHang.getText().toString()).matches()){
+        }else if(edTenLoaiHang.getText().toString().matches("[0-9]+")){
             customToasts.warningToast(getContext(),"Tên loại hàng không bao gồm số");
             check=-1;
         }

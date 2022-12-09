@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Project1" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@android:color/holo_orange_dark</item>
+        <item name="colorPrimary">@color/ABBAAB</item>
+        <item name="colorPrimaryVariant">@color/ABBAAB</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -12,5 +12,6 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/lora</item>
     </style>
 </resources>

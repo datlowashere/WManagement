@@ -13,7 +13,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.edu.project1.Dao.ReportDao;
-import com.edu.project1.Helper.CustomToasts;
+import com.edu.project1.Helper.CustomToast;
 import com.edu.project1.MainActivity;
 import com.edu.project1.R;
 import com.github.mikephil.charting.charts.BarChart;
@@ -39,7 +39,7 @@ public class TopItemsFragment extends Fragment {
 
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    CustomToasts customToasts=new CustomToasts();
+    CustomToast customToasts=new CustomToast();
 
     public TopItemsFragment() {
         // Required empty public constructor

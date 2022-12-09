@@ -30,7 +30,7 @@ import com.edu.project1.Adapter.TypeItemsAdapter;
 import com.edu.project1.Dao.ExportDao;
 import com.edu.project1.Dao.ImportDao;
 import com.edu.project1.Dao.TypeItemsDao;
-import com.edu.project1.Helper.CustomToasts;
+import com.edu.project1.Helper.CustomToast;
 import com.edu.project1.MainActivity;
 import com.edu.project1.Models.ExportItems;
 import com.edu.project1.Models.ImportItems;
@@ -77,7 +77,7 @@ public class ExportFragment extends Fragment {
 
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    CustomToasts customToasts=new CustomToasts();
+    CustomToast customToasts=new CustomToast();
 
     public ExportFragment() {
         // Required empty public constructor
@@ -207,7 +207,6 @@ public class ExportFragment extends Fragment {
         edDonGia=dialog.findViewById(R.id.edDonGiaXuat);
         edNgayXuatHang=dialog.findViewById(R.id.edNgayXuatHang);
 
-
         importDao=new ImportDao(context);
         importListLoai=(List<ImportItems>)importDao.getAllByUserGroupByMaLoai(getUser());
         SpinnerTypeItemsFromImportAdapter filterTyeItemImportAdapter=new SpinnerTypeItemsFromImportAdapter(importListLoai,context);
@@ -231,13 +230,10 @@ public class ExportFragment extends Fragment {
                     spTenHang.setEnabled(false);
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
-
 
         if(possition!=0){
             tvMaXuat.setText(String.valueOf(obj.getMaXuatHang()));
@@ -301,7 +297,7 @@ public class ExportFragment extends Fragment {
                 obj.setUsername(getUser());
 
                 if(checkInput()>0){
-                    boolean checkHang=dao.checkHang(importItems.getTenHang());
+                    boolean checkHang=dao.checkHang(importItems.getTenHang(),getUser());
                     if(possition==0){
                         if (!checkHang) {
                             if (dao.insert(obj) > 0) {
@@ -432,7 +428,7 @@ public class ExportFragment extends Fragment {
             }
             try {
                 if(sdf.parse(edNgayXuatHang.getText().toString()).before(importItems.getNgayNhapHang())){
-                    customToasts.warningToast(getContext(),"Ngày xuất hàng phải sau ngày nhập hàng: "+importItems.getNgayNhapHang());
+                    customToasts.warningToast(getContext(),"Ngày xuất hàng phải sau ngày nhập hàng: "+sdf.format(importItems.getNgayNhapHang()));
                     check=-1;
                 }
             } catch (ParseException e) {

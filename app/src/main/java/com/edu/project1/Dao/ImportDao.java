@@ -22,9 +22,8 @@ public class ImportDao {
     public ImportDao(Context context) {
         DBHelper dbHelper=new DBHelper(context);
         db=dbHelper.getWritableDatabase();
-
     }
-//    Nhập hàng
+//    Thêm hàng/ nhập hàng
     public long insert(ImportItems obj){
         ContentValues values=new ContentValues();
         values.put("tenHang",obj.getTenHang());
@@ -37,7 +36,7 @@ public class ImportDao {
         values.put("username",obj.getUsername());
         return db.insert("NhapHang",null,values);
     }
-//    Sửa nhập hàng
+//    Sửa nhập đã hàng
     public int update(ImportItems obj){
         ContentValues values=new ContentValues();
         values.put("tenHang",obj.getTenHang());
@@ -53,7 +52,6 @@ public class ImportDao {
 //    Xóa hàng
     public int delete(String id){
         return db.delete("NhapHang","maNhapHang=?",new String[]{id});
-
     }
 //    Lấy data nhiều tham số
     @SuppressLint("Range")
@@ -85,9 +83,9 @@ public class ImportDao {
         return list;
     }
 
-//  Check hàng nhập
-    public boolean checkHang(String name){
-        Cursor c=db.rawQuery("select * from NhapHang where tenHang=?",new String[]{name});
+//  Check hàng đã nhập theo tên
+    public boolean checkHang(String name, String username){
+        Cursor c=db.rawQuery("select * from NhapHang where tenHang=? and username=?",new String[]{name,username});
         if (c.getCount()!=0){
             return true;
         }else {
@@ -111,7 +109,6 @@ public class ImportDao {
         String sql="select * from NhapHang where maLoaiHang=?";
         return getData(sql,id);
     }
-
 //    search theo tên
     @SuppressLint("Range")
     public List<ImportItems>searchByName(String name){
@@ -123,8 +120,4 @@ public class ImportDao {
         String sql="select * from NhapHang where username=? group by tenloaihang" ;
         return getData(sql,id);
     }
-
-
-
-
 }

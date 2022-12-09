@@ -18,8 +18,7 @@ import android.util.Patterns;
 import android.view.View;
 
 import com.edu.project1.Dao.UserDao;
-import com.edu.project1.Helper.CustomToasts;
-import com.edu.project1.MainActivity;
+import com.edu.project1.Helper.CustomToast;
 import com.edu.project1.Models.User;
 import com.edu.project1.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -27,8 +26,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -37,7 +34,7 @@ public class ChangeInformationActivity extends AppCompatActivity {
     private CircleImageView imgUser;
     User obj=new User();
     UserDao dao;
-    CustomToasts customToasts=new CustomToasts();
+    CustomToast customToasts=new CustomToast();
 
     public static final int REQUEST_CODE_GALARY=999;
 
@@ -97,19 +94,16 @@ public class ChangeInformationActivity extends AppCompatActivity {
                 obj.setEmail(email);
                 obj.setPassword(newPass);
 
-                if(name.isEmpty() || nameW.isEmpty() || email.isEmpty() || oldPass.isEmpty() || newPass.isEmpty() || reNewPass.isEmpty()){
-                    customToasts.warningToast(ChangeInformationActivity.this,"Phải nhập đủ thông tin");
-                }else{
-                    if (checkInput()>0){
-                        if (dao.update(obj) > 0) {
-                            customToasts.successToast(ChangeInformationActivity.this, "Thay đổi thành công");
-                            clear();
-                        } else {
-                            customToasts.errorToast(ChangeInformationActivity.this, "Lỗi");
-                        }
+                if (checkInput()>0){
+                    if (dao.update(obj) > 0) {
+                        customToasts.successToast(ChangeInformationActivity.this, "Thay đổi thành công");
+                        clear();
+                    } else {
+                        customToasts.errorToast(ChangeInformationActivity.this, "Lỗi");
                     }
                 }
             }
+
         });
         findViewById(R.id.btnCancelSaveChangeInfo).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,9 +179,6 @@ public class ChangeInformationActivity extends AppCompatActivity {
         return check;
     }
 
-
-
-
     private void clear(){
         edName.setText("");
         edWName.setText("");
@@ -196,6 +187,4 @@ public class ChangeInformationActivity extends AppCompatActivity {
         edNewPass.setText("");
         edReNewPass.setText("");
     }
-
-
 }

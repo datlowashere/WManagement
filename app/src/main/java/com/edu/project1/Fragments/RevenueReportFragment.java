@@ -13,7 +13,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.edu.project1.Dao.ReportDao;
-import com.edu.project1.Helper.CustomToasts;
+import com.edu.project1.Helper.CustomToast;
 import com.edu.project1.MainActivity;
 import com.edu.project1.R;
 import com.github.mikephil.charting.charts.BarChart;
@@ -29,8 +29,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 
 public class RevenueReportFragment extends Fragment {
@@ -40,7 +38,7 @@ public class RevenueReportFragment extends Fragment {
     private BarChart barchartTQ,barChartNhap,barChartXuat;
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    CustomToasts customToasts=new CustomToasts();
+    CustomToast customToasts=new CustomToast();
 
 
 
@@ -132,7 +130,7 @@ public class RevenueReportFragment extends Fragment {
         for(int i=0;i<dsTien.length;i++){
             entries.add(new BarEntry(i,dsTien[i]));
         }
-        BarDataSet barDataSet=new BarDataSet(entries,"Tổng: "+tong+" đ");
+        @SuppressLint("DefaultLocale") BarDataSet barDataSet=new BarDataSet(entries,"Tổng: "+String.format("%,.2f",tong)+" đ");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         BarData barData=new BarData(barDataSet);
         barchartTQ.setData(barData);
@@ -185,7 +183,7 @@ public class RevenueReportFragment extends Fragment {
         for(int i=0;i<dsTien.length;i++){
             entries.add(new BarEntry(i,dsTien[i]));
         }
-        BarDataSet barDataSet=new BarDataSet(entries,"Tổng: "+tong+" đ");
+        BarDataSet barDataSet=new BarDataSet(entries,"Tổng: "+String.format("%,.2f",tong)+" đ");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         BarData barData=new BarData(barDataSet);
         barChartNhap.setData(barData);
@@ -238,7 +236,7 @@ public class RevenueReportFragment extends Fragment {
         for(int i=0;i<dsTien.length;i++){
             entries.add(new BarEntry(i,dsTien[i]));
         }
-        BarDataSet barDataSet=new BarDataSet(entries,"Tổng: "+tong+" đ");
+        BarDataSet barDataSet=new BarDataSet(entries,"Tổng: "+String.format("%,.2f",tong)+" đ");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         BarData barData=new BarData(barDataSet);
         barChartXuat.setData(barData);

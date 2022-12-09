@@ -25,13 +25,6 @@ public class ImportFragment extends Fragment {
     public ImportFragment() {
     }
 
-    public static ImportFragment newInstance(String param1, String param2) {
-        ImportFragment fragment = new ImportFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

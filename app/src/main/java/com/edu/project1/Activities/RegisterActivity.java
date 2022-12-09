@@ -11,11 +11,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
-import android.view.Window;
-import android.widget.Toast;
 
 import com.edu.project1.Dao.UserDao;
-import com.edu.project1.Helper.CustomToasts;
+import com.edu.project1.Helper.CustomToast;
 import com.edu.project1.Models.User;
 import com.edu.project1.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -25,13 +23,11 @@ import java.io.ByteArrayOutputStream;
 public class RegisterActivity extends AppCompatActivity {
 
     private TextInputEditText edUsername,edName,edEmail,edKhoHang,edPassword;
-    CustomToasts customToasts=new CustomToasts();
+    CustomToast customToasts=new CustomToast();
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-//        getSupportActionBar().hide();
         setContentView(R.layout.register_activity);
 
         edUsername=findViewById(R.id.edRegisterUsername);
@@ -40,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         edKhoHang=findViewById(R.id.edRegisterKhoHang);
         edPassword=findViewById(R.id.edRegisterPass);
 
+//        Chuyển đến màn hình đăng nhập
         findViewById(R.id.tvLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,18 +44,16 @@ public class RegisterActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.in_left_animation,R.anim.out_right_animation);
             }
         });
-
+//       Bắt sự kiện khi click vào nút đăng ký
         findViewById(R.id.btnRegister).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkRegister();
-
             }
         });
-
-
     }
 
+//    Kiểm tra đk
     private void checkRegister(){
         String user=edUsername.getText().toString();
         String name=edName.getText().toString();
@@ -69,13 +64,14 @@ public class RegisterActivity extends AppCompatActivity {
         UserDao dao=new UserDao(RegisterActivity.this);
         User list=new User();
         Resources res = getResources();
-
+//     add các thông tin nhập từ textinput editext vào list trừ ảnh là lấy tạm 1 1 tệp trong drawable
         list.setUsername(user);
         list.setImg(drawableToByte(R.drawable.user));
         list.setHoTen(name);
         list.setEmail(email);
         list.setTenKhoHang(tenKho);
         list.setPassword(pass);
+//        nếu các trường nhập đúng thì thêm các thông tin nhập vào bảng và ngược lại
         if(checkInput()>0){
             boolean check=dao.checkUsername(user);
             if(check==false){
@@ -93,6 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
     }
+//    validate đăng ký
     private int checkInput(){
         String user=edUsername.getText().toString();
         String name=edName.getText().toString();
@@ -114,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return check;
     }
-
+// chuyển tệp drawable thành byte[]
     private byte[] drawableToByte(int id){
         Resources res=getResources();
         Drawable drawable=res.getDrawable(id);
@@ -124,6 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
         byte[] bitMapData = stream.toByteArray();
         return bitMapData;
     }
+//    xóa trắng các trường
     private void clear(){
         edUsername.setText("");
         edName.setText("");

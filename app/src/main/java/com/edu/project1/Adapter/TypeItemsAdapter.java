@@ -1,25 +1,15 @@
 package com.edu.project1.Adapter;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.edu.project1.Fragments.TypeItemFragment;
-import com.edu.project1.Helper.CustomToasts;
 import com.edu.project1.Models.TypeItems;
 import com.edu.project1.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TypeItemsAdapter extends BaseAdapter {

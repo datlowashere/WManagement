@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.edu.project1.Dao.UserDao;
-import com.edu.project1.Helper.CustomToasts;
+import com.edu.project1.Helper.CustomToast;
 import com.edu.project1.MainActivity;
 import com.edu.project1.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -23,13 +23,14 @@ public class LoginActivity extends AppCompatActivity {
         edUsername=findViewById(R.id.edUsername);
         edPassword=findViewById(R.id.edPass);
 
+//        Bắt sự kiện onlick khi click vào nút đăng ký
         findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkLogin();
             }
         });
-
+//      Chuyển đến màn hình đăng ký
         findViewById(R.id.tvRegister).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         String user=edUsername.getText().toString();
         String pass=edPassword.getText().toString();
 
-        CustomToasts customToast=new CustomToasts();
+        CustomToast customToast=new CustomToast();
         UserDao dao=new UserDao(LoginActivity.this);
 
         if(user.isEmpty() || pass.isEmpty()){
@@ -62,6 +63,5 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
-
 
 }

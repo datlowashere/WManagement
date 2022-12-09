@@ -29,12 +29,6 @@ public class ReportFragment extends Fragment {
     }
 
 
-    public static ReportFragment newInstance() {
-        ReportFragment fragment = new ReportFragment();
-        Bundle args = new Bundle();
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
