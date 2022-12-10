@@ -23,7 +23,9 @@ public class ExportDao {
         DBHelper dbHelper=new DBHelper(context);
         db=dbHelper.getWritableDatabase();
     }
-    //    Xuất hang
+
+
+    //    xuat hang
     public long insert(ExportItems obj){
         ContentValues values=new ContentValues();
         values.put("tenHang",obj.getTenHang());
@@ -37,7 +39,7 @@ public class ExportDao {
         values.put("username",obj.getUsername());
         return db.insert("XuatHang",null,values);
     }
-    //    Sửa hàng đã xuất
+    //    sua hang xuat
     public int update(ExportItems obj){
         ContentValues values=new ContentValues();
         values.put("tenHang",obj.getTenHang());
@@ -51,11 +53,11 @@ public class ExportDao {
         values.put("username",obj.getUsername());
         return db.update("XuatHang",values,"maXuatHang=?",new String[]{String.valueOf(obj.getMaXuatHang())});
     }
-    //    Xóa hàng
+    //    xoa hang xuat
     public int delete(String id){
         return db.delete("XuatHang","maXuatHang=?",new String[]{id});
     }
-    //    Lấy data nhiều tham số
+    //    lay data nhieu tham so
     @SuppressLint("Range")
     private List<ExportItems>getData(String sql, String...selectionArgs){
         list=new ArrayList<>();
@@ -77,38 +79,42 @@ public class ExportDao {
             obj.setMaNhapHang(c.getInt(c.getColumnIndex("maNhapHang")));
             obj.setUsername(c.getString(c.getColumnIndex("username")));
             list.add(obj);
+
         }
         return list;
     }
-//    Check tên hàng
-    public boolean checkHang(String name,String username){
-        Cursor c=db.rawQuery("select * from XuatHang where tenHang=? and username=?",new String[]{name,username});
+
+//    Check hang xuat
+    public boolean checkHang(String name){
+        Cursor c=db.rawQuery("select * from XuatHang where tenHang=?",new String[]{name});
         if (c.getCount()!=0){
             return true;
         }else {
             return false;
         }
     }
-//    Lấy data theo id
+
+    //    lay data theo id
     public ExportItems getById(String id){
         String sql="select * from XuatHang where maXuatHang=?";
         list=getData(sql,id);
         return list.get(0);
     }
-//    Lấy toàn bộ ds hàng đã xuất theo user
+    //    lay toan bo danh sach hang da nhap theo nguoi dung
     public List<ExportItems>getAllByUsername(String id){
         String sql="select * from XuatHang where username=?";
         return getData(sql,id);
     }
-//    Lấy ds hàng theo tên (search)
+//    search theo ten
     @SuppressLint("Range")
     public List<ExportItems>searchByName(String name){
         String sql="select * from XuatHang where tenHang=?";
         return getData(sql,name);
     }
-//    Lấy ds hàng theo tên loại hàng  (lọc)
+//    lay danh sach hang theo tenLoaiHang
     public List<ExportItems>getAllByTenLoaiHang(String name){
         String sql="select * from XuatHang where tenLoaiHang=?";
         return getData(sql,name);
     }
+
 }
