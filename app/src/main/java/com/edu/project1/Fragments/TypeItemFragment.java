@@ -25,6 +25,7 @@ import com.edu.project1.Models.TypeItems;
 import com.edu.project1.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class TypeItemFragment extends Fragment {
     private SearchView searchView;
     private Dialog dialog;
     private TextInputEditText edTenLoaiHang,edMaLoaiHang;
+    private TextInputLayout tilTenLoai;
     private  List<TypeItems>list;
     private TypeItemsDao dao;
     private TypeItemsAdapter adapter;
@@ -129,6 +131,7 @@ public class TypeItemFragment extends Fragment {
         dialog.getWindow().setWindowAnimations(R.style.animationDialog);
         edTenLoaiHang=dialog.findViewById(R.id.edTenLoaiHang);
         edMaLoaiHang=dialog.findViewById(R.id.edMaLoaiHang);
+        tilTenLoai=dialog.findViewById(R.id.tilTenLoaiHang);
 
         edMaLoaiHang.setVisibility(View.GONE);
 
@@ -226,10 +229,10 @@ public class TypeItemFragment extends Fragment {
     private int checkInput(){
         int check=1;
         if(edTenLoaiHang.getText().toString().isEmpty()){
-            customToasts.warningToast(getContext(),"Chưa điền tên loại hàng");
+            tilTenLoai.setError("Chưa điền tên loại hàng");
             check=-1;
         }else if(edTenLoaiHang.getText().toString().matches("[0-9]+")){
-            customToasts.warningToast(getContext(),"Tên loại hàng không bao gồm số");
+            tilTenLoai.setError("Tên loại hàng không bao gồm số");
             check=-1;
         }
         return check;

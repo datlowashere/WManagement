@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:filterTouchesWhenObscured="true"
     android:fitsSystemWindows="false"
     android:focusableInTouchMode="true"
-    android:minWidth="400dp"
-    android:orientation="vertical">
-
+    android:minWidth="400dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:minWidth="400dp">
 
     <TextView
         android:id="@+id/textView5"
@@ -28,6 +31,7 @@
         android:textAlignment="center" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilTenHang"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,6 +67,7 @@
         android:layout_marginBottom="5dp" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilSoLuongNhap"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -79,6 +84,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilDonGia"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,6 +101,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilNgayNhap"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -111,6 +118,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilNgaySanXuat"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -153,6 +161,6 @@
             android:text="Lưu"
             android:textAllCaps="false" />
     </LinearLayout>
+    </LinearLayout>
 
-
-</LinearLayout>
+</ScrollView>

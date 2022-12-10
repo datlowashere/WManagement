@@ -85,7 +85,7 @@ public class ExportDao {
     }
 
 //    Check hang xuat
-    public boolean checkHang(String name){
+    public boolean checkHang(String name, String username){
         Cursor c=db.rawQuery("select * from XuatHang where tenHang=?",new String[]{name});
         if (c.getCount()!=0){
             return true;

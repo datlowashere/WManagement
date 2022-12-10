@@ -34,6 +34,7 @@ import com.edu.project1.Models.TypeItems;
 import com.edu.project1.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,6 +52,7 @@ public class ImportItemFragment extends Fragment {
 
     private TextView tvMaNhapHang;
     private TextInputEditText edTenHang,edSoLuongNhap,edDonGia,edNgayNhapHang,edNgaySanXuat;
+    private TextInputLayout tilTenHang,tilSoLuong,tilDonGia,tilNgayNhap,tilNgaySX;
     private Spinner spLoaiHang;
 
     List<ImportItems> list;
@@ -181,6 +183,12 @@ public class ImportItemFragment extends Fragment {
         dialog=new Dialog(context);
         dialog.setContentView(R.layout.dialog_import_item);
         dialog.getWindow().setWindowAnimations(R.style.animationDialog);
+
+        tilTenHang=dialog.findViewById(R.id.tilTenHang);
+        tilSoLuong=dialog.findViewById(R.id.tilSoLuongNhap);
+        tilDonGia=dialog.findViewById(R.id.tilDonGia);
+        tilNgayNhap=dialog.findViewById(R.id.tilNgayNhap);
+        tilNgaySX=dialog.findViewById(R.id.tilNgaySanXuat);
 
         tvMaNhapHang=dialog.findViewById(R.id.tvMaNhapHangDiaLogImport);
         tvMaNhapHang.setVisibility(View.GONE);
@@ -350,27 +358,78 @@ public class ImportItemFragment extends Fragment {
     }
     private int checkInput() throws ParseException {
         int check=1;
-        if(edTenHang.getText().toString().isEmpty() || edSoLuongNhap.getText().toString().isEmpty() || edDonGia.getText().toString().isEmpty() || edNgayNhapHang.getText().toString().isEmpty() || edNgaySanXuat.getText().toString().isEmpty()){
-            customToasts.warningToast(getContext(),"Phải điền đầy đủ thông tin");
+        if(edTenHang.getText().toString().isEmpty()){
+            tilTenHang.setError("Chưa nhập tên hàng!!!");
             check=-1;
-        }else {
+        }else{
             if (edTenHang.getText().toString().matches("\\d+")) {
-                customToasts.warningToast(getContext(), "Tên hàng không phải là số !");
+                tilTenHang.setError("Tên hàng phải là chữ");
                 check = -1;
-            }
-            if (!edSoLuongNhap.getText().toString().matches("\\d+")) {
-                customToasts.warningToast(getContext(), "Số lượng phải là số!!");
-                check = -1;
-            }
-            if (!edDonGia.getText().toString().matches("[+-]?([0-9]*[.])?[0-9]+")) {
-                customToasts.warningToast(getContext(), "Đơn giá phải là số!!");
-                check = -1;
-            }
-            if (!sdf.parse(edNgayNhapHang.getText().toString()).after(sdf.parse(edNgaySanXuat.getText().toString()))) {
-                customToasts.warningToast(getContext(), "Ngày nhập hàng phải lớn hơn ngày sản xuất!");
-                check = -1;
+            }else{
+                tilTenHang.setError("");
             }
         }
+        if(edSoLuongNhap.getText().toString().isEmpty()){
+            tilSoLuong.setError("Chưa nhập số lượng nhập!!!");
+            check=-1;
+        }else{
+            if (!edSoLuongNhap.getText().toString().matches("\\d+")) {
+                tilSoLuong.setError("Số lượng phải là số!!");
+                check = -1;
+            }else{
+                tilSoLuong.setError("");
+            }
+        }
+        if(edDonGia.getText().toString().isEmpty()){
+            tilDonGia.setError("Chưa nhập đơn giá!!!");
+            check=-1;
+        }else{
+            if (!edDonGia.getText().toString().matches("[+-]?([0-9]*[.])?[0-9]+")) {
+                tilDonGia.setError("Đơn giá sai!!");
+                check = -1;
+            }else {
+                tilDonGia.setError("");
+            }
+        }
+        if( edNgayNhapHang.getText().toString().isEmpty()){
+            tilNgayNhap.setError("Chưa chọn ngày nhập hàng!!!");
+            check=-1;
+        }else{
+            if (!sdf.parse(edNgayNhapHang.getText().toString()).after(sdf.parse(edNgaySanXuat.getText().toString()))) {
+                tilNgayNhap.setError("Ngày nhập phải sau ngày sản xuất!!!");
+                check = -1;
+            }else {
+                tilNgayNhap.setError("");
+            }
+        }
+        if(edNgaySanXuat.getText().toString().isEmpty()){
+            tilNgaySX.setError("Chưa chọn ngày sản xuất");
+            check=-1;
+        }else{
+            tilNgaySX.setError("");
+        }
+//        if(edTenHang.getText().toString().isEmpty() || edSoLuongNhap.getText().toString().isEmpty() || edDonGia.getText().toString().isEmpty() || edNgayNhapHang.getText().toString().isEmpty() || edNgaySanXuat.getText().toString().isEmpty()){
+//            customToasts.warningToast(getContext(),"Phải điền đầy đủ thông tin");
+//            check=-1;
+//
+//        }else {
+//            if (edTenHang.getText().toString().matches("\\d+")) {
+//                tilTenHang.setError("Tên hàng phải là chữ");
+//                check = -1;
+//            }
+//            if (!edSoLuongNhap.getText().toString().matches("\\d+")) {
+//                tilSoLuong.setError("Số lượng phải là số!!");
+//                check = -1;
+//            }
+//            if (!edDonGia.getText().toString().matches("[+-]?([0-9]*[.])?[0-9]+")) {
+//                tilDonGia.setError("Đơn giá sai!!");
+//                check = -1;
+//            }
+//            if (!sdf.parse(edNgayNhapHang.getText().toString()).after(sdf.parse(edNgaySanXuat.getText().toString()))) {
+//                tilNgayNhap.setError("Ngày nhập phải sau ngày sản xuất!!!");
+//                check = -1;
+//            }
+//        }
         return check;
     }
     private void reLoadData(){

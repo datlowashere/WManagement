@@ -38,6 +38,7 @@ import com.edu.project1.Models.TypeItems;
 import com.edu.project1.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -70,6 +71,7 @@ public class ExportFragment extends Fragment {
 
     private Dialog dialog;
     private TextInputEditText edSoLuongXuat,edDonGia,edNgayXuatHang;
+    private TextInputLayout tilSoLuongXuat,tilDonGia,tilNgayXuat;
     private TextView tvMaXuat,tvTenLoaiHang;
     private Spinner spTenHang,spLoaiHang;
 
@@ -197,6 +199,10 @@ public class ExportFragment extends Fragment {
         dialog=new Dialog(context);
         dialog.setContentView(R.layout.dialog_export_item);
         dialog.getWindow().setWindowAnimations(R.style.animationDialog);
+
+        tilDonGia=dialog.findViewById(R.id.tilDonGiaXuat);
+        tilSoLuongXuat=dialog.findViewById(R.id.tilSoLuongXuat);
+        tilNgayXuat=dialog.findViewById(R.id.tilNgayXuatHang);
 
         tvMaXuat=dialog.findViewById(R.id.tvMaXH);
         tvMaXuat.setVisibility(View.GONE);
@@ -405,36 +411,82 @@ public class ExportFragment extends Fragment {
     }
     private int checkInput()  {
         int check=1;
-        if(edDonGia.getText().toString().isEmpty() || edSoLuongXuat.getText().toString().isEmpty() || edNgayXuatHang.getText().toString().isEmpty()){
-            customToasts.warningToast(getContext(),"Phải điền đầy đủ thông tin");
+        importItems=(ImportItems) spTenHang.getSelectedItem();
+        if(edSoLuongXuat.getText().toString().isEmpty()){
+            tilSoLuongXuat.setError("Chưa nhập số lượng xuất!!!");
             check=-1;
-        }else {
-            if (!edSoLuongXuat.getText().toString().matches("[0-9]+")) {
-                customToasts.errorToast(getContext(), "Số lượng phải là số!");
-                check = -1;
-            }
-            if (!edDonGia.getText().toString().matches("[+-]?([0-9]*[.])?[0-9]+")) {
-                customToasts.errorToast(getContext(), "Đơn giá không đúng !");
-                check = -1;
-            }
-            importItems=(ImportItems) spTenHang.getSelectedItem();
+        }else{
             try {
                 if (Integer.parseInt("" + edSoLuongXuat.getText().toString()) > importItems.getSoLuongNhap()) {
-                    customToasts.warningToast(getContext(), "Số lượng xuất phải nhỏ hơn hoặc bằng số lượng nhập: "+importItems.getSoLuongNhap());
+                    tilSoLuongXuat.setError("Số lượng xuất phải nhỏ hơn hoặc bằng số lượng nhập: "+importItems.getSoLuongNhap());
                     check=-1;
+                }else if(!edSoLuongXuat.getText().toString().matches("[0-9]+")) {
+                    tilSoLuongXuat.setError("Số lượng phải là số");
+                    check = -1;
+                }else{
+                    tilSoLuongXuat.setError("");
                 }
             }catch (Exception e){
                 e.printStackTrace();
             }
+        }
+        if(edDonGia.getText().toString().isEmpty()){
+            tilDonGia.setError("Chưa nhập đơn giá!!");
+            check=-1;
+        }else{
+            if (!edDonGia.getText().toString().matches("[+-]?([0-9]*[.])?[0-9]+")) {
+                tilDonGia.setError("Đơn giá không đúng!!!");
+                check = -1;
+            }else {
+                tilDonGia.setError("");
+            }
+        }
+        if(edNgayXuatHang.getText().toString().isEmpty()){
+            tilNgayXuat.setError("Chưa chọn ngày xuất hàng");
+            check=-1;
+        }else{
             try {
                 if(sdf.parse(edNgayXuatHang.getText().toString()).before(importItems.getNgayNhapHang())){
-                    customToasts.warningToast(getContext(),"Ngày xuất hàng phải sau ngày nhập hàng: "+sdf.format(importItems.getNgayNhapHang()));
+                    tilNgayXuat.setError("Ngày xuất hàng phải sau ngày nhập hàng: "+sdf.format(importItems.getNgayNhapHang()));
                     check=-1;
+                }else{
+                    tilNgayXuat.setError("");
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
+
+//        if(edDonGia.getText().toString().isEmpty() || edSoLuongXuat.getText().toString().isEmpty() || edNgayXuatHang.getText().toString().isEmpty()){
+//            customToasts.warningToast(getContext(),"Phải điền đầy đủ thông tin");
+//            check=-1;
+//        }else {
+//            if (!edSoLuongXuat.getText().toString().matches("[0-9]+")) {
+//                customToasts.errorToast(getContext(), "Số lượng phải là số!");
+//                check = -1;
+//            }
+//            if (!edDonGia.getText().toString().matches("[+-]?([0-9]*[.])?[0-9]+")) {
+//                customToasts.errorToast(getContext(), "Đơn giá không đúng !");
+//                check = -1;
+//            }
+//            importItems=(ImportItems) spTenHang.getSelectedItem();
+//            try {
+//                if (Integer.parseInt("" + edSoLuongXuat.getText().toString()) > importItems.getSoLuongNhap()) {
+//                    customToasts.warningToast(getContext(), "Số lượng xuất phải nhỏ hơn hoặc bằng số lượng nhập: "+importItems.getSoLuongNhap());
+//                    check=-1;
+//                }
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
+//            try {
+//                if(sdf.parse(edNgayXuatHang.getText().toString()).before(importItems.getNgayNhapHang())){
+//                    customToasts.warningToast(getContext(),"Ngày xuất hàng phải sau ngày nhập hàng: "+sdf.format(importItems.getNgayNhapHang()));
+//                    check=-1;
+//                }
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         return check;
     }
