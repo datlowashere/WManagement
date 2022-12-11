@@ -11,10 +11,12 @@ import com.edu.project1.Helper.CustomToast;
 import com.edu.project1.MainActivity;
 import com.edu.project1.R;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
 
     private TextInputEditText edUsername,edPassword;
+    private TextInputLayout tilUsername,tilPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +24,8 @@ public class LoginActivity extends AppCompatActivity {
 
         edUsername=findViewById(R.id.edUsername);
         edPassword=findViewById(R.id.edPass);
+        tilUsername=findViewById(R.id.tilUsername);
+        tilPassword=findViewById(R.id.tilPass);
 
 //        Bắt sự kiện onlick khi click vào nút đăng ký
         findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
@@ -46,20 +50,38 @@ public class LoginActivity extends AppCompatActivity {
         CustomToast customToast=new CustomToast();
         UserDao dao=new UserDao(LoginActivity.this);
 
-        if(user.isEmpty() || pass.isEmpty()){
-            customToast.warningToast(LoginActivity.this,"Tên đăng nhập và mật khẩu không được để trống");
-        }else {
-            if (dao.checkLogin(user, pass) > 0) {
-                customToast.successToast(LoginActivity.this,"Đăng nhập thành công");
-                Intent ilogin=new Intent(getApplicationContext(), MainActivity.class);
-                overridePendingTransition(R.anim.in_right_animation,R.anim.out_left_animation);
-                ilogin.putExtra("username",user);
-                ilogin.putExtra("pass",pass);
-                startActivity(ilogin);
-                finish();
+        int check=1;
+
+        if(user.isEmpty()){
+            tilUsername.setError("Chưa nhập tên đăng nhập!!!");
+            check=-1;
+        }else{
+            if(!dao.checkUsername(user)){
+                tilUsername.setError("Tên đăng nhập không đúng!!!");
+                check=-1;
             }else{
-                customToast.errorToast(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu sai");
+                tilUsername.setError("");
             }
+        }
+        if(pass.isEmpty()){
+            tilPassword.setError("Chưa nhập mật khẩu!!!");
+            check=-1;
+        }else{
+            if(!dao.checkPass(pass)){
+                tilPassword.setError("mật khẩu không không đúng!!!");
+                check=-1;
+            }else{
+                tilPassword.setError("");
+            }
+        }
+        if(check>0){
+            customToast.successToast(LoginActivity.this,"Đăng nhập thành công");
+            Intent ilogin=new Intent(getApplicationContext(), MainActivity.class);
+            overridePendingTransition(R.anim.in_right_animation,R.anim.out_left_animation);
+            ilogin.putExtra("username",user);
+            ilogin.putExtra("pass",pass);
+            startActivity(ilogin);
+            finish();
         }
 
     }

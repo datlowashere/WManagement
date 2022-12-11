@@ -57,10 +57,4 @@ public class ReportFragment extends Fragment {
         }).attach();
         return view;
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        adapter.notifyDataSetChanged();
-    }
 }

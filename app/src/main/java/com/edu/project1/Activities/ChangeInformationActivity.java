@@ -22,6 +22,7 @@ import com.edu.project1.Helper.CustomToast;
 import com.edu.project1.Models.User;
 import com.edu.project1.R;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -31,6 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChangeInformationActivity extends AppCompatActivity {
     private TextInputEditText edName,edWName,edEmail,edOldPass,edNewPass,edReNewPass;
+    private TextInputLayout tilName,tilWName,tilEmail,tilOldPass,tilNewPass,tilRePass;
     private CircleImageView imgUser;
     User obj=new User();
     UserDao dao;
@@ -47,6 +49,13 @@ public class ChangeInformationActivity extends AppCompatActivity {
         Intent itoChangePass=getIntent();
         String username=itoChangePass.getStringExtra("username");
         String oldpass=itoChangePass.getStringExtra("pass");
+
+        tilName=findViewById(R.id.tilChangeName);
+        tilWName=findViewById(R.id.tilChangeWName);
+        tilEmail=findViewById(R.id.tilChangeEmail);
+        tilOldPass=findViewById(R.id.tilChangeOldpass);
+        tilNewPass=findViewById(R.id.tilChangeNewPass);
+        tilRePass=findViewById(R.id.tilChangeReNewPass);
 
         edName=findViewById(R.id.edChangeName);
         edWName=findViewById(R.id.edChangeWareHouseName);
@@ -156,26 +165,67 @@ public class ChangeInformationActivity extends AppCompatActivity {
         Intent itoChangePass=getIntent();
         String oldpass=itoChangePass.getStringExtra("pass");
         int check=1;
-        if(edName.getText().toString().isEmpty() || edWName.getText().toString().isEmpty() || edEmail.getText().toString().isEmpty() || edOldPass.getText().toString().isEmpty() || edNewPass.getText().toString().isEmpty() || edReNewPass.getText().toString().isEmpty()){
-            customToasts.warningToast(ChangeInformationActivity.this,"Chưa điền đầy đủ thông tin");
+
+        if(edName.getText().toString().isEmpty()){
+            tilName.setError("Chưa nhập họ tên người dùng!!!");
             check=-1;
-        }else {
+        }else{
             if(edName.getText().toString().matches("[0-9]+")){
-                customToasts.errorToast(ChangeInformationActivity.this,"Tên không được là số!!");
+                tilName.setError("Họ tên người dùng không bao gồm số!!!");
                 check=-1;
-            }
-            if(!Patterns.EMAIL_ADDRESS.matcher(edEmail.getText().toString()).matches()){
-                customToasts.errorToast(ChangeInformationActivity.this,"Email định dạng không đúng!!");
-                check=-1;
-            }
-            if(!edReNewPass.getText().toString().equals(edNewPass.getText().toString())){
-                customToasts.errorToast(ChangeInformationActivity.this,"Mật khẩu mới không trùng");
-                check=-1;
-            }else if(!edOldPass.getText().toString().equals(oldpass)){
-                customToasts.errorToast(ChangeInformationActivity.this,"Mật khẩu cũ không đúng");
-                check=-1;
+            }else{
+                tilName.setError("");
             }
         }
+
+        if(edWName.getText().toString().isEmpty()){
+            tilWName.setError("Chưa nhập tên kho hàng!!!");
+            check=-1;
+        }else {
+            tilWName.setError("");
+        }
+
+        if(edEmail.getText().toString().isEmpty()){
+            tilEmail.setError("Chưa nhập email!!!");
+            check=-1;
+        }else{
+            if(!Patterns.EMAIL_ADDRESS.matcher(edEmail.getText().toString()).matches()){
+                tilEmail.setError("Email định dạng không đúng!!!");
+                check=-1;
+            }else{
+                tilEmail.setError("");
+            }
+        }
+
+        if(edOldPass.getText().toString().isEmpty()){
+            tilOldPass.setError("Chưa nhập mật khẩu cũ!!!");
+            check=-1;
+        }else{
+            if(!edOldPass.getText().toString().equals(oldpass)){
+                tilOldPass.setError("Mật khẩu cũ không đúng!!!");
+                check=-1;
+            }else{
+                tilOldPass.setError("");
+            }
+        }
+        if(edNewPass.getText().toString().isEmpty()){
+            tilNewPass.setError("Chưa nhập mật khẩu mới!!!");
+            check=-1;
+        }else{
+            tilNewPass.setError("");
+        }
+        if(edReNewPass.getText().toString().isEmpty()){
+            tilRePass.setError("Chưa nhập lại mật khẩu mới!!!");
+            check=-1;
+        }else{
+            if(!edReNewPass.getText().toString().equals(edNewPass.getText().toString())){
+                tilRePass.setError("Mật khẩu mới không trùng!!!");
+                check=-1;
+            }else{
+                tilRePass.setError("");
+            }
+        }
+
         return check;
     }
 

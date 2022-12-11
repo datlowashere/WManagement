@@ -17,13 +17,16 @@ import com.edu.project1.Helper.CustomToast;
 import com.edu.project1.Models.User;
 import com.edu.project1.R;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.ByteArrayOutputStream;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private TextInputEditText edUsername,edName,edEmail,edKhoHang,edPassword;
+    private TextInputLayout tilUsername,tilName,tilEmail,tilKhoHang,tilPassword;
     CustomToast customToasts=new CustomToast();
+    UserDao dao;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,12 @@ public class RegisterActivity extends AppCompatActivity {
         edEmail=findViewById(R.id.edRegisterEmail);
         edKhoHang=findViewById(R.id.edRegisterKhoHang);
         edPassword=findViewById(R.id.edRegisterPass);
+
+        tilUsername=findViewById(R.id.tilRegisterUsername);
+        tilName=findViewById(R.id.tilRegisterHoTen);
+        tilEmail=findViewById(R.id.tilRegisterEmail);
+        tilKhoHang=findViewById(R.id.tilRegisterKhoHang);
+        tilPassword=findViewById(R.id.tilRegisterPass);
 
 //        Chuyển đến màn hình đăng nhập
         findViewById(R.id.tvLogin).setOnClickListener(new View.OnClickListener() {
@@ -61,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
         String tenKho=edKhoHang.getText().toString();
         String pass=edPassword.getText().toString();
 
-        UserDao dao=new UserDao(RegisterActivity.this);
+        dao=new UserDao(RegisterActivity.this);
         User list=new User();
         Resources res = getResources();
 //     add các thông tin nhập từ textinput editext vào list trừ ảnh là lấy tạm 1 1 tệp trong drawable
@@ -73,20 +82,16 @@ public class RegisterActivity extends AppCompatActivity {
         list.setPassword(pass);
 //        nếu các trường nhập đúng thì thêm các thông tin nhập vào bảng và ngược lại
         if(checkInput()>0){
-            boolean check=dao.checkUsername(user);
-            if(check==false){
-                try {
-                    dao.insert(list);
-                    customToasts.successToast(RegisterActivity.this, "Đăng ký thành công");
-                    clear();
-                }catch (Exception e){
-                    e.printStackTrace();
-                    System.out.println("Lỗi"+e);
-                    customToasts.errorToast(RegisterActivity.this, "Lỗi");
-                }
-            }else{
-                customToasts.errorToast(RegisterActivity.this,"Tên đăng nhập đã tồn tại!!!");
+            try {
+                dao.insert(list);
+                customToasts.successToast(RegisterActivity.this, "Đăng ký thành công");
+                clear();
+            }catch (Exception e){
+                e.printStackTrace();
+                System.out.println("Lỗi"+e);
+                customToasts.errorToast(RegisterActivity.this, "Lỗi");
             }
+
         }
     }
 //    validate đăng ký
@@ -96,19 +101,57 @@ public class RegisterActivity extends AppCompatActivity {
         String email=edEmail.getText().toString();
         String tenKho=edKhoHang.getText().toString();
         String pass=edPassword.getText().toString();
+
+        dao=new UserDao(RegisterActivity.this);
+
         int check=1;
-        if(user.isEmpty() || name.isEmpty() || email.isEmpty() || tenKho.isEmpty() || pass.isEmpty()){
-            customToasts.warningToast(RegisterActivity.this,"Phải điền đầy đủ thông tin");
+
+        if(user.isEmpty()){
+            tilUsername.setError("Chưa nhập username!!!");
             check=-1;
+        }else{
+            if(dao.checkUsername(user)){
+                tilUsername.setError("Username tồn tại!!!");
+                check=-1;
+            }else{
+                tilUsername.setError("");
+            }
         }
-        if(name.matches("\\d+")){
-            customToasts.warningToast(RegisterActivity.this,"Họ tên không được là số");
+        if(name.isEmpty()){
+            tilName.setError("Chưa nhập họ tên người dùng!!!");
             check=-1;
+        }else{
+            if(name.matches("\\d+")){
+                tilName.setError("Họ tên không bao gồm số!!!");
+                check=-1;
+            }else{
+                tilName.setError("");
+            }
         }
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            customToasts.warningToast(RegisterActivity.this,"Email không hợp lệ");
+        if(tenKho.isEmpty()){
+            tilKhoHang.setError("Chưa nhập tên kho hàng");
             check=-1;
+        }else{
+            tilKhoHang.setError("");
         }
+        if(email.isEmpty()){
+            tilEmail.setError("Chưa nhập email!!!");
+            check=-1;
+        }else{
+            if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                tilEmail.setError("Email không đúng định dạng!!!");
+                check=-1;
+            }else {
+                tilEmail.setError("");
+            }
+        }
+        if(pass.isEmpty()){
+            tilPassword.setError("Chưa nhập password!!!");
+            check=-1;
+        }else{
+            tilPassword.setError("");
+        }
+
         return check;
     }
 // chuyển tệp drawable thành byte[]

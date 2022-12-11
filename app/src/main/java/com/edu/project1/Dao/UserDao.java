@@ -62,13 +62,13 @@ public class UserDao {
         }
         return list;
     }
-    //  Lấy theo ID
+    //  Lấy thông tin theo user
     public User getID(String id){
         String sql="select * from User where username=?";
         list=getData(sql,id);
         return list.get(0);
     }
-//    Dang Nhap
+//    Đăng nhập
     public int checkLogin(String username,String password){
         String sql="select * from User where username=? and password=?";
         List<User> list=getData(sql,username,password);
@@ -77,12 +77,21 @@ public class UserDao {
         }
         return 1;
     }
-//    lay username
+//    Check username
     public boolean checkUsername(String username){
         Cursor c=db.rawQuery("select * from User where username=?",new String[]{username});
         if (c.getCount()!=0){
             return true;
         }else {
+            return false;
+        }
+    }
+//    check pass
+    public boolean checkPass(String pass){
+        Cursor c=db.rawQuery("select * from User where password=?",new String[]{pass});
+        if(c.getCount()!=0){
+            return true;
+        }else{
             return false;
         }
     }
