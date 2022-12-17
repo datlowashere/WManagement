@@ -185,7 +185,7 @@ public class ExportFragment extends Fragment {
                     }
                 });
                 AlertDialog alertDialog=builder.create();
-                alertDialog.getWindow().setWindowAnimations(R.style.animationDialog);
+                alertDialog.getWindow().setWindowAnimations(R.style.animationDialog2);
                 alertDialog.show();
 
             }
@@ -417,12 +417,13 @@ public class ExportFragment extends Fragment {
             check=-1;
         }else{
             try {
+                if(!edSoLuongXuat.getText().toString().matches("\\d+")) {
+                    tilSoLuongXuat.setError("Số lượng phải là số");
+                    check = -1;
+                }
                 if (Integer.parseInt("" + edSoLuongXuat.getText().toString()) > importItems.getSoLuongNhap()) {
                     tilSoLuongXuat.setError("Số lượng xuất phải nhỏ hơn hoặc bằng số lượng nhập: "+importItems.getSoLuongNhap());
                     check=-1;
-                }else if(!edSoLuongXuat.getText().toString().matches("[0-9]+")) {
-                    tilSoLuongXuat.setError("Số lượng phải là số");
-                    check = -1;
                 }else{
                     tilSoLuongXuat.setError("");
                 }
@@ -456,37 +457,6 @@ public class ExportFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-
-//        if(edDonGia.getText().toString().isEmpty() || edSoLuongXuat.getText().toString().isEmpty() || edNgayXuatHang.getText().toString().isEmpty()){
-//            customToasts.warningToast(getContext(),"Phải điền đầy đủ thông tin");
-//            check=-1;
-//        }else {
-//            if (!edSoLuongXuat.getText().toString().matches("[0-9]+")) {
-//                customToasts.errorToast(getContext(), "Số lượng phải là số!");
-//                check = -1;
-//            }
-//            if (!edDonGia.getText().toString().matches("[+-]?([0-9]*[.])?[0-9]+")) {
-//                customToasts.errorToast(getContext(), "Đơn giá không đúng !");
-//                check = -1;
-//            }
-//            importItems=(ImportItems) spTenHang.getSelectedItem();
-//            try {
-//                if (Integer.parseInt("" + edSoLuongXuat.getText().toString()) > importItems.getSoLuongNhap()) {
-//                    customToasts.warningToast(getContext(), "Số lượng xuất phải nhỏ hơn hoặc bằng số lượng nhập: "+importItems.getSoLuongNhap());
-//                    check=-1;
-//                }
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//            try {
-//                if(sdf.parse(edNgayXuatHang.getText().toString()).before(importItems.getNgayNhapHang())){
-//                    customToasts.warningToast(getContext(),"Ngày xuất hàng phải sau ngày nhập hàng: "+sdf.format(importItems.getNgayNhapHang()));
-//                    check=-1;
-//                }
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//        }
 
         return check;
     }

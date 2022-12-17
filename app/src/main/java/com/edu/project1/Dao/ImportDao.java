@@ -23,7 +23,6 @@ public class ImportDao {
         DBHelper dbHelper=new DBHelper(context);
         db=dbHelper.getWritableDatabase();
     }
-//    Thêm hàng/ nhập hàng
     public long insert(ImportItems obj){
         ContentValues values=new ContentValues();
         values.put("tenHang",obj.getTenHang());
@@ -36,7 +35,6 @@ public class ImportDao {
         values.put("username",obj.getUsername());
         return db.insert("NhapHang",null,values);
     }
-//    Sửa nhập đã hàng
     public int update(ImportItems obj){
         ContentValues values=new ContentValues();
         values.put("tenHang",obj.getTenHang());
@@ -49,11 +47,9 @@ public class ImportDao {
         values.put("username",obj.getUsername());
         return db.update("NhapHang",values,"maNhapHang=?",new String[]{String.valueOf(obj.getMaNhapHang())});
     }
-//    Xóa hàng
     public int delete(String id){
         return db.delete("NhapHang","maNhapHang=?",new String[]{id});
     }
-//    Lấy data nhiều tham số
     @SuppressLint("Range")
     private List<ImportItems>getData(String sql, String...selectionArgs){
         list=new ArrayList<>();
@@ -83,7 +79,6 @@ public class ImportDao {
         return list;
     }
 
-//  Check hàng đã nhập theo tên
     public boolean checkHang(String name, String username){
         Cursor c=db.rawQuery("select * from NhapHang where tenHang=? and username=?",new String[]{name,username});
         if (c.getCount()!=0){
@@ -93,18 +88,15 @@ public class ImportDao {
         }
     }
 
-//    Lấy data theo mã
     public ImportItems getById(String id){
         String sql="select * from NhapHang where maNhapHang=?";
         list=getData(sql,id);
         return list.get(0);
     }
-//    Lấy danh sách hàng theo user
     public List<ImportItems>getAllByUsername(String id){
         String sql="select * from NhapHang where username=?";
         return getData(sql,id);
     }
-//    Lấy danh sách hàng theo mã loại hàng
     public List<ImportItems>getAllByMaLoaiHang(String id){
         String sql="select * from NhapHang where maLoaiHang=?";
         return getData(sql,id);
@@ -115,7 +107,6 @@ public class ImportDao {
         String sql="select * from NhapHang where tenHang=?";
         return getData(sql,name);
 }
-    //    Lấy danh sách hàng theo user
     public List<ImportItems>getAllByUserGroupByMaLoai(String id){
         String sql="select * from NhapHang where username=? group by tenloaihang" ;
         return getData(sql,id);

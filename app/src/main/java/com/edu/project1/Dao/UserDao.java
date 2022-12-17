@@ -19,7 +19,6 @@ public class UserDao {
         DBHelper dbHelper=new DBHelper(context);
         db=dbHelper.getWritableDatabase();
     }
-//    Đăng ký người dùng
     public long insert(User obj){
         ContentValues values=new ContentValues();
         values.put("username",obj.getUsername());
@@ -30,7 +29,6 @@ public class UserDao {
         values.put("password",obj.getPassword());
         return db.insert("User",null,values);
     }
-//    Doi thong tin
     public int update(User obj){
         ContentValues values=new ContentValues();
         values.put("anh",obj.getImg());
@@ -40,11 +38,9 @@ public class UserDao {
         values.put("password",obj.getPassword());
         return db.update("User",values,"username=?",new String[]{obj.getUsername()});
     }
-//    xóa tài khoản
     public int delete(String id){
         return db.delete("User","username=?",new String[]{id});
     }
-    //Lấy Data nhiều tham số
     @SuppressLint("Range")
     private List<User> getData(String sql, String...selectionArgs){
         list=new ArrayList<>();
@@ -62,13 +58,11 @@ public class UserDao {
         }
         return list;
     }
-    //  Lấy thông tin theo user
     public User getID(String id){
         String sql="select * from User where username=?";
         list=getData(sql,id);
         return list.get(0);
     }
-//    Đăng nhập
     public int checkLogin(String username,String password){
         String sql="select * from User where username=? and password=?";
         List<User> list=getData(sql,username,password);
@@ -77,7 +71,6 @@ public class UserDao {
         }
         return 1;
     }
-//    Check username
     public boolean checkUsername(String username){
         Cursor c=db.rawQuery("select * from User where username=?",new String[]{username});
         if (c.getCount()!=0){
@@ -86,7 +79,6 @@ public class UserDao {
             return false;
         }
     }
-//    check pass
     public boolean checkPass(String pass){
         Cursor c=db.rawQuery("select * from User where password=?",new String[]{pass});
         if(c.getCount()!=0){

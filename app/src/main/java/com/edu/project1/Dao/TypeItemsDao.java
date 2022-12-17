@@ -20,24 +20,20 @@ public class TypeItemsDao {
         DBHelper dbHelper=new DBHelper(context);
         db=dbHelper.getReadableDatabase();
     }
-//    Thêm loại hàng
     public  long insert(TypeItems obj){
         ContentValues values=new ContentValues();
         values.put("tenLoaiHang",obj.getTenLoaiHang());
         values.put("username",obj.getUsername());
         return db.insert("LoaiHang",null,values);
     }
-//    Sửa loại hàng
     public int update(TypeItems obj){
         ContentValues values=new ContentValues();
         values.put("tenLoaiHang",obj.getTenLoaiHang());
         return db.update("LoaiHang",values,"maLoaiHang=?",new String[]{String.valueOf(obj.getMaLoaiHang())});
     }
-//    xóa loại hàng
     public int delete(String id){
         return db.delete("LoaiHang","maLoaiHang=?",new String[]{id});
     }
-//    Lấy data nhiều tham số
     @SuppressLint("Range")
     private List<TypeItems> getData(String sql, String...selectionArgs){
         list=new ArrayList<>();
@@ -51,7 +47,6 @@ public class TypeItemsDao {
         }
         return list;
     }
-//    Check tên loại hàng
     public boolean checkTenLoai(String name,String username){
         Cursor c=db.rawQuery("select * from LoaiHang where tenLoaiHang=? and username=?",new String[]{name,username});
         if (c.getCount()!=0){
@@ -60,18 +55,15 @@ public class TypeItemsDao {
             return false;
         }
 }
-//    Lấy data theo mã loại
     public TypeItems getByID(String id){
         String sql="select * from LoaiHang where maLoaiHang=?";
         list=getData(sql,id);
         return list.get(0);
     }
-//    Lấy toàn bộ ds loại hàng theo user
     public List<TypeItems> getAllByUser(String id){
         String sql="select * from LoaiHang where username=?";
         return getData(sql,id);
     }
-//    Search loại hàng theo tên loại hàng
     @SuppressLint("Range")
     public List<TypeItems> searchByName(String name){
         String sql="select * from LoaiHang where tenLoaiHang =?";

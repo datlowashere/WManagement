@@ -2,7 +2,6 @@ package com.edu.project1.Dao;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -12,7 +11,6 @@ import com.edu.project1.Models.InventoryItems;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ReportDao {
@@ -30,7 +28,7 @@ public class ReportDao {
     public List<InventoryItems> getAllHangTon(String name){
         db=dbHelper.getReadableDatabase();
         list=new ArrayList<>();
-        String sql="select tenHang,tenLoaiHang,soLuongNhap,soLuongXuat,(soLuongNhap-soLuongXuat) as conLai from XuatHang where username=? and conLai>0";
+        String sql="select tenHang,tenLoaiHang,soLuongNhap,soLuongXuat,(soLuongNhap-soLuongXuat) as conLai from XuatHang where username=? and conLai>0 order by conLai";
         @SuppressLint("Recycle") Cursor c=db.rawQuery(sql,new String[]{name});
         while (c.moveToNext()){
             InventoryItems obj=new InventoryItems();
@@ -207,6 +205,42 @@ public class ReportDao {
             };
         }
         return ten.toArray(new String[ten.size()]);
+    }
+//    Đếm tổng số loại hàng
+    public int getTongLoaiHang(String username){
+        db=dbHelper.getReadableDatabase();
+        int tong = 0;
+        String sql="select count(maLoaiHang) from LoaiHang where username=?";
+        Cursor c=db.rawQuery(sql,new String[]{username});
+        if(c.getCount()!=0){
+            c.moveToFirst();
+            tong=c.getInt(0);
+        }
+        return tong;
+    }
+//    Đếm tổng hàng nhập
+    public int getTongNhapHang(String username){
+        db=dbHelper.getReadableDatabase();
+        int tong = 0;
+        String sql="select count(maNhapHang) from NhapHang where username=?";
+        Cursor c=db.rawQuery(sql,new String[]{username});
+        if(c.getCount()!=0){
+            c.moveToFirst();
+            tong=c.getInt(0);
+        }
+        return tong;
+    }
+//    Đếm tổng hàng xuất
+    public int getTongXuatHang(String username){
+        db=dbHelper.getReadableDatabase();
+        int tong = 0;
+        String sql="select count(maXuatHang) from XuatHang where username=?";
+        Cursor c=db.rawQuery(sql,new String[]{username});
+        if(c.getCount()!=0){
+            c.moveToFirst();
+            tong=c.getInt(0);
+        }
+        return tong;
     }
 
 }

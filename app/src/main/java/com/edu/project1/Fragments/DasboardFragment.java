@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,10 +75,10 @@ public class DasboardFragment extends Fragment {
         gridView=view.findViewById(R.id.gridFeatures);
 
         featureList=new ArrayList<>();
-        featureList.add(new FeaturesModel("Nhập Hàng"," ","", R.drawable.im));
-        featureList.add(new FeaturesModel("Xuất Hàng"," "," ", R.drawable.ex));
-        featureList.add(new FeaturesModel("Thống Kê","","", R.drawable.barchart));
-        featureList.add(new FeaturesModel("Tài Khoản","","", R.drawable.account));
+        featureList.add(new FeaturesModel("Nhập Hàng","Thêm hàng vào kho ","Loại: "+tongLoai()+" - Nhập: "+tongNhap(), R.drawable.im));
+        featureList.add(new FeaturesModel("Xuất Hàng","Xuất hàng khỏi kho","Xuất:  "+tongXuat(), R.drawable.ex));
+        featureList.add(new FeaturesModel("Thống Kê","Báo cáo tổng quan","", R.drawable.barchart));
+        featureList.add(new FeaturesModel("Tài Khoản","Thông tin tài khoản","", R.drawable.account));
         featuresAdapter=new FeaturesAdapter(featureList,getContext());
         gridView.setAdapter(featuresAdapter);
 
@@ -88,5 +89,25 @@ public class DasboardFragment extends Fragment {
             }
         });
         return view;
+    }
+    private String getUsername(){
+        MainActivity activity=(MainActivity)getActivity();
+        String username=activity.getUsername();
+        return username;
+    }
+    private int tongLoai(){
+        ReportDao dao=new ReportDao(getContext());
+        int tongLoai=dao.getTongLoaiHang(getUsername());
+        return tongLoai;
+    }
+    private int tongNhap(){
+        ReportDao dao=new ReportDao(getContext());
+        int tongNhap=dao.getTongNhapHang(getUsername());
+        return tongNhap;
+    }
+    private int tongXuat(){
+        ReportDao dao=new ReportDao(getContext());
+        int tongXuat=dao.getTongXuatHang(getUsername());
+        return tongXuat;
     }
 }

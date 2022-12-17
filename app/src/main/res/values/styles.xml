@@ -32,6 +32,10 @@
         <item name="android:windowEnterAnimation">@anim/top_animation</item>
         <item name="android:windowExitAnimation">@anim/top_bot_animation</item>
     </style>
+    <style name="animationDialog2">
+        <item name="android:windowEnterAnimation">@anim/bottom_animation</item>
+        <item name="android:windowExitAnimation">@anim/bottom_top_animation</item>
+    </style>
     <style name="openSanFont">
         <item name="fontFamily">@font/open_sans_bold</item>
     </style>

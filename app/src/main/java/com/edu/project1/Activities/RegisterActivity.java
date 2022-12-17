@@ -45,7 +45,6 @@ public class RegisterActivity extends AppCompatActivity {
         tilKhoHang=findViewById(R.id.tilRegisterKhoHang);
         tilPassword=findViewById(R.id.tilRegisterPass);
 
-//        Chuyển đến màn hình đăng nhập
         findViewById(R.id.tvLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +61,6 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-//    Kiểm tra đk
     private void checkRegister(){
         String user=edUsername.getText().toString();
         String name=edName.getText().toString();
@@ -73,14 +71,12 @@ public class RegisterActivity extends AppCompatActivity {
         dao=new UserDao(RegisterActivity.this);
         User list=new User();
         Resources res = getResources();
-//     add các thông tin nhập từ textinput editext vào list trừ ảnh là lấy tạm 1 1 tệp trong drawable
         list.setUsername(user);
         list.setImg(drawableToByte(R.drawable.user));
         list.setHoTen(name);
         list.setEmail(email);
         list.setTenKhoHang(tenKho);
         list.setPassword(pass);
-//        nếu các trường nhập đúng thì thêm các thông tin nhập vào bảng và ngược lại
         if(checkInput()>0){
             try {
                 dao.insert(list);
@@ -94,7 +90,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
     }
-//    validate đăng ký
     private int checkInput(){
         String user=edUsername.getText().toString();
         String name=edName.getText().toString();
@@ -111,7 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
             check=-1;
         }else{
             if(dao.checkUsername(user)){
-                tilUsername.setError("Username tồn tại!!!");
+                tilUsername.setError("Username đã tồn tại!!!");
                 check=-1;
             }else{
                 tilUsername.setError("");
@@ -154,7 +149,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         return check;
     }
-// chuyển tệp drawable thành byte[]
     private byte[] drawableToByte(int id){
         Resources res=getResources();
         Drawable drawable=res.getDrawable(id);
@@ -164,7 +158,6 @@ public class RegisterActivity extends AppCompatActivity {
         byte[] bitMapData = stream.toByteArray();
         return bitMapData;
     }
-//    xóa trắng các trường
     private void clear(){
         edUsername.setText("");
         edName.setText("");

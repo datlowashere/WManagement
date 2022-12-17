@@ -171,7 +171,7 @@ public class ImportItemFragment extends Fragment {
                     }
                 });
                 AlertDialog alertDialog=builder.create();
-                alertDialog.getWindow().setWindowAnimations(R.style.animationDialog);
+                alertDialog.getWindow().setWindowAnimations(R.style.animationDialog2);
                 alertDialog.show();
             }
         });
@@ -408,28 +408,6 @@ public class ImportItemFragment extends Fragment {
         }else{
             tilNgaySX.setError("");
         }
-//        if(edTenHang.getText().toString().isEmpty() || edSoLuongNhap.getText().toString().isEmpty() || edDonGia.getText().toString().isEmpty() || edNgayNhapHang.getText().toString().isEmpty() || edNgaySanXuat.getText().toString().isEmpty()){
-//            customToasts.warningToast(getContext(),"Phải điền đầy đủ thông tin");
-//            check=-1;
-//
-//        }else {
-//            if (edTenHang.getText().toString().matches("\\d+")) {
-//                tilTenHang.setError("Tên hàng phải là chữ");
-//                check = -1;
-//            }
-//            if (!edSoLuongNhap.getText().toString().matches("\\d+")) {
-//                tilSoLuong.setError("Số lượng phải là số!!");
-//                check = -1;
-//            }
-//            if (!edDonGia.getText().toString().matches("[+-]?([0-9]*[.])?[0-9]+")) {
-//                tilDonGia.setError("Đơn giá sai!!");
-//                check = -1;
-//            }
-//            if (!sdf.parse(edNgayNhapHang.getText().toString()).after(sdf.parse(edNgaySanXuat.getText().toString()))) {
-//                tilNgayNhap.setError("Ngày nhập phải sau ngày sản xuất!!!");
-//                check = -1;
-//            }
-//        }
         return check;
     }
     private void reLoadData(){

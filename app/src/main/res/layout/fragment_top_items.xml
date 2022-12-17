@@ -97,7 +97,7 @@
                     android:id="@+id/barchartTopNhap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="500dp" />
+                    android:minHeight="650dp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -124,7 +124,7 @@
                     android:id="@+id/barchartTopXuất"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="500dp" />
+                    android:minHeight="650dp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

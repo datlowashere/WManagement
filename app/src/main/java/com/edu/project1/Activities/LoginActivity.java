@@ -27,14 +27,12 @@ public class LoginActivity extends AppCompatActivity {
         tilUsername=findViewById(R.id.tilUsername);
         tilPassword=findViewById(R.id.tilPass);
 
-//        Bắt sự kiện onlick khi click vào nút đăng ký
         findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkLogin();
             }
         });
-//      Chuyển đến màn hình đăng ký
         findViewById(R.id.tvRegister).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

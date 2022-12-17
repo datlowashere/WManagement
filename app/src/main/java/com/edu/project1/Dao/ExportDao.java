@@ -25,7 +25,6 @@ public class ExportDao {
     }
 
 
-    //    xuat hang
     public long insert(ExportItems obj){
         ContentValues values=new ContentValues();
         values.put("tenHang",obj.getTenHang());
@@ -39,7 +38,6 @@ public class ExportDao {
         values.put("username",obj.getUsername());
         return db.insert("XuatHang",null,values);
     }
-    //    sua hang xuat
     public int update(ExportItems obj){
         ContentValues values=new ContentValues();
         values.put("tenHang",obj.getTenHang());
@@ -53,11 +51,9 @@ public class ExportDao {
         values.put("username",obj.getUsername());
         return db.update("XuatHang",values,"maXuatHang=?",new String[]{String.valueOf(obj.getMaXuatHang())});
     }
-    //    xoa hang xuat
     public int delete(String id){
         return db.delete("XuatHang","maXuatHang=?",new String[]{id});
     }
-    //    lay data nhieu tham so
     @SuppressLint("Range")
     private List<ExportItems>getData(String sql, String...selectionArgs){
         list=new ArrayList<>();
@@ -84,7 +80,6 @@ public class ExportDao {
         return list;
     }
 
-//    Check hang xuat
     public boolean checkHang(String name, String username){
         Cursor c=db.rawQuery("select * from XuatHang where tenHang=?",new String[]{name});
         if (c.getCount()!=0){
@@ -94,24 +89,20 @@ public class ExportDao {
         }
     }
 
-    //    lay data theo id
     public ExportItems getById(String id){
         String sql="select * from XuatHang where maXuatHang=?";
         list=getData(sql,id);
         return list.get(0);
     }
-    //    lay toan bo danh sach hang da nhap theo nguoi dung
     public List<ExportItems>getAllByUsername(String id){
         String sql="select * from XuatHang where username=?";
         return getData(sql,id);
     }
-//    search theo ten
     @SuppressLint("Range")
     public List<ExportItems>searchByName(String name){
         String sql="select * from XuatHang where tenHang=?";
         return getData(sql,name);
     }
-//    lay danh sach hang theo tenLoaiHang
     public List<ExportItems>getAllByTenLoaiHang(String name){
         String sql="select * from XuatHang where tenLoaiHang=?";
         return getData(sql,name);
